@@ -1,0 +1,61 @@
+# https://taskfile.dev
+
+version: '3'
+
+silent: true
+
+vars:
+  GO_MODULE: github.com/Antonboom/tinkoff-invest-robot-contest-2022
+  GO_FILES:
+    sh: find . -type f -name '*.go' -not -path "./.gocache/*" -not -path "./.go/*" -not -path "./vendor/*" -not -path "*.pb.go" -not -path "*generated*.go" | tr "\n" " "
+
+  DEV_TOOLS: |
+    github.com/daixiang0/gci
+    google.golang.org/grpc/cmd/protoc-gen-go-grpc
+    google.golang.org/protobuf/cmd/protoc-gen-go
+    mvdan.cc/gofumpt
+
+tasks:
+  default:
+    cmds:
+      - task: tidy
+      - task: fmt
+      - task: lint
+
+  tidy:
+    - echo "- Tidy & vendor"
+    - go mod tidy
+    - go mod vendor
+
+  fmt:
+    - echo "- Format"
+    - gofumpt -w {{.GO_FILES}}
+    - gci write -s Std -s Def -s "Prefix({{.GO_MODULE}})" {{.GO_FILES}} 2> /dev/null
+
+  lint:
+    cmds:
+      - echo "Lint"
+      - golangci-lint run --fix ./...
+
+  dev-tools:install:
+    dir: tools
+    cmds:
+      - echo "- Install dev tools"
+      - go mod tidy
+      - go install {{ .DEV_TOOLS | splitLines | join " " }}
+
+  contracts:generate:
+    vars:
+      IN: api/tinkoff-invest/*.proto
+      OUT: internal/clients/tinkoffinvest/pb
+    cmds:
+      - echo "- Generate .go from protos"
+      - rm -rf {{.OUT}} && mkdir -p {{.OUT}}
+      - |
+        protoc \
+          -I api/tinkoff-invest \
+          --go_opt=paths=source_relative \
+          --go-grpc_opt=paths=source_relative \
+          --go-grpc_out={{.OUT}} \
+          --go_out={{.OUT}} \
+          {{.IN}}
