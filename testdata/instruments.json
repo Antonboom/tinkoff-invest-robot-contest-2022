@@ -1,0 +1,2598 @@
+[
+  {
+    "FIGI": "BBG00NTC1SR9",
+    "Name": "ARAB REPUBLIC"
+  },
+  {
+    "FIGI": "BBG00PNDYR58",
+    "Name": "Alfa Bank"
+  },
+  {
+    "FIGI": "BBG00JS9D851",
+    "Name": "Alfa Bond Issuance PLC"
+  },
+  {
+    "FIGI": "TCS878009866",
+    "Name": "BCS Structured Products 20jun2023"
+  },
+  {
+    "FIGI": "BBG00PKCLPS6",
+    "Name": "BCS Structured Products 27jun2024"
+  },
+  {
+    "FIGI": "BBG00NR70S66",
+    "Name": "BCS Structured Products 27jun2024 выпуск 2"
+  },
+  {
+    "FIGI": "BBG00GXQKMJ9",
+    "Name": "Belarus"
+  },
+  {
+    "FIGI": "BBG00G9DSXZ5",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG00RHTYB60",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG007KHNMS0",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG00N8HZBK8",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG012G07QT0",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG00NN90XV7",
+    "Name": "Credit Bank of Moscow"
+  },
+  {
+    "FIGI": "BBG00NJHVPW6",
+    "Name": "EuroChem"
+  },
+  {
+    "FIGI": "BBG00NQ976S0",
+    "Name": "Evraz"
+  },
+  {
+    "FIGI": "BBG00G4V94J3",
+    "Name": "Evraz"
+  },
+  {
+    "FIGI": "BBG01391D0C2",
+    "Name": "Ferroni выпуск 1"
+  },
+  {
+    "FIGI": "BBG013J0LT31",
+    "Name": "Freedom Finance"
+  },
+  {
+    "FIGI": "BBG00QN36P08",
+    "Name": "GMK NorNickel"
+  },
+  {
+    "FIGI": "BBG00GCZK5M5",
+    "Name": "GMK NorNickel"
+  },
+  {
+    "FIGI": "BBG00XXVWNC3",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00QDT3B79",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00GQJ3PG8",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00HKB9M89",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00S4VCXS9",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00NV9NH48",
+    "Name": "GTLK"
+  },
+  {
+    "FIGI": "BBG00RRSRHF6",
+    "Name": "Gazprom"
+  },
+  {
+    "FIGI": "BBG0000JWX54",
+    "Name": "Gazprom"
+  },
+  {
+    "FIGI": "BBG00J7PCW56",
+    "Name": "Gazprom"
+  },
+  {
+    "FIGI": "BBG00008WPG3",
+    "Name": "Gazprom"
+  },
+  {
+    "FIGI": "BBG00XV188K2",
+    "Name": "Gazprom Perp EUR"
+  },
+  {
+    "FIGI": "BBG00XV2BDX1",
+    "Name": "Gazprom Perp USD"
+  },
+  {
+    "FIGI": "BBG005MCTC09",
+    "Name": "Gazpromneft"
+  },
+  {
+    "FIGI": "TCS00A103Q08",
+    "Name": "HENDERSON выпуск 1"
+  },
+  {
+    "FIGI": "BBG00TJF05J0",
+    "Name": "Lukoil"
+  },
+  {
+    "FIGI": "BBG0000J5D76",
+    "Name": "Lukoil"
+  },
+  {
+    "FIGI": "BBG00F3406Z2",
+    "Name": "Lukoil"
+  },
+  {
+    "FIGI": "BBG00B59DR33",
+    "Name": "MMC Finance DAC"
+  },
+  {
+    "FIGI": "BBG00PC6QBX8",
+    "Name": "MMK"
+  },
+  {
+    "FIGI": "BBG004M1PTN8",
+    "Name": "MTS International Funding"
+  },
+  {
+    "FIGI": "BBG0136Y8NS2",
+    "Name": "NexTouch выпуск 1"
+  },
+  {
+    "FIGI": "BBG003PNSC99",
+    "Name": "Novatek"
+  },
+  {
+    "FIGI": "BBG00JRK86V8",
+    "Name": "Phosagro"
+  },
+  {
+    "FIGI": "BBG00FWXCM88",
+    "Name": "Polyus"
+  },
+  {
+    "FIGI": "BBG00KMWBXK3",
+    "Name": "Republic of Turkey"
+  },
+  {
+    "FIGI": "BBG00JQ3B6W2",
+    "Name": "Republic of Turkey"
+  },
+  {
+    "FIGI": "BBG00XV1FN94",
+    "Name": "Rolls-Royce PLC"
+  },
+  {
+    "FIGI": "BBG0000644P5",
+    "Name": "Russia"
+  },
+  {
+    "FIGI": "BBG00H0HV5C5",
+    "Name": "Russia"
+  },
+  {
+    "FIGI": "BBG000056Z49",
+    "Name": "Russia"
+  },
+  {
+    "FIGI": "BBG00P5B0SC9",
+    "Name": "Russian Railways"
+  },
+  {
+    "FIGI": "BBG00Q994JS7",
+    "Name": "Sibur"
+  },
+  {
+    "FIGI": "BBG00K87T9V6",
+    "Name": "Sovcombank"
+  },
+  {
+    "FIGI": "BBG00D2QX2B8",
+    "Name": "Sovcomflot"
+  },
+  {
+    "FIGI": "BBG00JQC34S1",
+    "Name": "Sultanate of Oman"
+  },
+  {
+    "FIGI": "BBG00JQC5C47",
+    "Name": "Sultanate of Oman"
+  },
+  {
+    "FIGI": "BBG00NDMW359",
+    "Name": "The Arab Republic of Egypt"
+  },
+  {
+    "FIGI": "BBG00NBJSLV4",
+    "Name": "Turk Telekomunikasyon A.S."
+  },
+  {
+    "FIGI": "BBG001CYCG37",
+    "Name": "Turkey"
+  },
+  {
+    "FIGI": "BBG00GH607J6",
+    "Name": "Turkiye Is Bankasi"
+  },
+  {
+    "FIGI": "BBG0044FD516",
+    "Name": "VEB"
+  },
+  {
+    "FIGI": "BBG0018V9PN0",
+    "Name": "VEB"
+  },
+  {
+    "FIGI": "BBG0035DDKL7",
+    "Name": "VEB"
+  },
+  {
+    "FIGI": "TCS00A103QK3",
+    "Name": "VK выпуск 1"
+  },
+  {
+    "FIGI": "BBG003824NB3",
+    "Name": "VTB Perp"
+  },
+  {
+    "FIGI": "BBG00NPGTY64",
+    "Name": "Vakifbank"
+  },
+  {
+    "FIGI": "BBG00CSJ8ZX9",
+    "Name": "X5 выпуск 6"
+  },
+  {
+    "FIGI": "TCS00A103935",
+    "Name": "re:Store выпуск 1"
+  },
+  {
+    "FIGI": "BBG014VTFQJ8",
+    "Name": "А Девелопмент"
+  },
+  {
+    "FIGI": "BBG00PVVTDW6",
+    "Name": "АПРИ Флай Плэнинг БО-П2"
+  },
+  {
+    "FIGI": "BBG00QXGQYZ9",
+    "Name": "АПРИ Флай Плэнинг БО-П3"
+  },
+  {
+    "FIGI": "BBG00YNJ37B7",
+    "Name": "АПРИ Флай Плэнинг БО-П4"
+  },
+  {
+    "FIGI": "BBG012F27YT0",
+    "Name": "АПРИ Флай Плэнинг БО-П5"
+  },
+  {
+    "FIGI": "BBG0149NW6B9",
+    "Name": "АСПЭК-Домстрой выпуск 1"
+  },
+  {
+    "FIGI": "BBG00B4MWD80",
+    "Name": "АФК Система выпуск 1"
+  },
+  {
+    "FIGI": "BBG00NRGHQQ0",
+    "Name": "АФК Система выпуск 10"
+  },
+  {
+    "FIGI": "BBG00V3L30M3",
+    "Name": "АФК Система выпуск 13"
+  },
+  {
+    "FIGI": "BBG00X5FK880",
+    "Name": "АФК Система выпуск 15"
+  },
+  {
+    "FIGI": "BBG00YG1RQV4",
+    "Name": "АФК Система выпуск 16"
+  },
+  {
+    "FIGI": "TCS00A102FT9",
+    "Name": "АФК Система выпуск 17"
+  },
+  {
+    "FIGI": "BBG00ZH9RB82",
+    "Name": "АФК Система выпуск 18"
+  },
+  {
+    "FIGI": "BBG00ZHPT667",
+    "Name": "АФК Система выпуск 19"
+  },
+  {
+    "FIGI": "BBG0110X9D23",
+    "Name": "АФК Система выпуск 20"
+  },
+  {
+    "FIGI": "TCS00A103C95",
+    "Name": "АФК Система выпуск 21"
+  },
+  {
+    "FIGI": "TCS00A104693",
+    "Name": "АФК Система выпуск 23"
+  },
+  {
+    "FIGI": "BBG00F6NJY77",
+    "Name": "АФК Система выпуск 4"
+  },
+  {
+    "FIGI": "BBG00FB978L6",
+    "Name": "АФК Система выпуск 5"
+  },
+  {
+    "FIGI": "BBG00GF6BJZ2",
+    "Name": "АФК Система выпуск 6"
+  },
+  {
+    "FIGI": "BBG00JX82779",
+    "Name": "АФК Система выпуск 7"
+  },
+  {
+    "FIGI": "BBG00K4MR057",
+    "Name": "АФК Система выпуск 8"
+  },
+  {
+    "FIGI": "BBG00NHLC0N5",
+    "Name": "АФК Система выпуск 9"
+  },
+  {
+    "FIGI": "BBG00PVL2PM1",
+    "Name": "АФК Система выпуск 11"
+  },
+  {
+    "FIGI": "BBG00QTDV828",
+    "Name": "АФК Система выпуск 12"
+  },
+  {
+    "FIGI": "BBG012JC0J32",
+    "Name": "Автобан-Финанс выпуск 3"
+  },
+  {
+    "FIGI": "BBG00NPS4MC4",
+    "Name": "Автобан-Финанс выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A104CJ3",
+    "Name": "Автодом выпуск 1"
+  },
+  {
+    "FIGI": "BBG00R7TP2Y0",
+    "Name": "Автодор БО-2 выпуск 5"
+  },
+  {
+    "FIGI": "BBG00YJJPT66",
+    "Name": "Автодор БО-3 выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PYMSNH9",
+    "Name": "Агрофирма Рубеж выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZCTRLC6",
+    "Name": "Агрофирма-племзавод Победа выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PM8S500",
+    "Name": "Азбука Вкуса выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A104JV3",
+    "Name": "Айди Коллект выпуск 2"
+  },
+  {
+    "FIGI": "BBG00QPS5TX8",
+    "Name": "Акрон выпуск 3"
+  },
+  {
+    "FIGI": "BBG00ZCTLKQ9",
+    "Name": "Альфа-Банк 002Р выпуск 10"
+  },
+  {
+    "FIGI": "BBG0105J8GV3",
+    "Name": "Альфа-Банк 002Р выпуск 11"
+  },
+  {
+    "FIGI": "BBG012QS03Q9",
+    "Name": "Альфа-Банк 002Р выпуск 14"
+  },
+  {
+    "FIGI": "BBG014578XG1",
+    "Name": "Альфа-Банк 002Р выпуск 16"
+  },
+  {
+    "FIGI": "BBG00MSGYVV5",
+    "Name": "Альфа-Банк 002Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00Y1BKK93",
+    "Name": "Альфа-Банк 002Р выпуск 8"
+  },
+  {
+    "FIGI": "BBG00YMT3ZH8",
+    "Name": "Альфа-Банк 002Р выпуск 9"
+  },
+  {
+    "FIGI": "BBG00FRWYRH1",
+    "Name": "Альфа-Банк выпуск 18"
+  },
+  {
+    "FIGI": "BBG00HTLYK93",
+    "Name": "Альфа-Банк выпуск 21"
+  },
+  {
+    "FIGI": "BBG00K4MPZ61",
+    "Name": "Альфа-Банк выпуск 40"
+  },
+  {
+    "FIGI": "TCS00A1036E6",
+    "Name": "АльфаБанк 002Р выпуск 12"
+  },
+  {
+    "FIGI": "BBG00PYR5CH7",
+    "Name": "АльфаБанк 002Р выпуск 5"
+  },
+  {
+    "FIGI": "TCS00A104C78",
+    "Name": "Аренза-Про выпуск 1"
+  },
+  {
+    "FIGI": "BBG00YS45GT4",
+    "Name": "Асфальтобетонный завод № 1 выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1046N6",
+    "Name": "Асфальтобетонный завод № 1 выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102VY6",
+    "Name": "Атомстройкомплекс БО-П01"
+  },
+  {
+    "FIGI": "BBGHUYNYA015",
+    "Name": "Атомстройкомплекс выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103943",
+    "Name": "Аэрофлот выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102T97",
+    "Name": "Аэрофьюэлз выпуск 1"
+  },
+  {
+    "FIGI": "BBG012R5Y2V7",
+    "Name": "Аэрофьюэлз выпуск 2"
+  },
+  {
+    "FIGI": "BBG011RXTDD0",
+    "Name": "БЭЛТИ-ГРАНД выпуск 4"
+  },
+  {
+    "FIGI": "BBG00PVB9CH1",
+    "Name": "Балтийский лизинг БО-П02"
+  },
+  {
+    "FIGI": "BBG00WFBVRN9",
+    "Name": "Балтийский лизинг БО-П03"
+  },
+  {
+    "FIGI": "BBG012BTL6Y4",
+    "Name": "Балтийский лизинг БО-П04"
+  },
+  {
+    "FIGI": "BBG00R4C5FF4",
+    "Name": "Банк Зенит выпуск 5"
+  },
+  {
+    "FIGI": "BBG00G9GSYG7",
+    "Name": "Банк Открытие БО-П выпуск 03"
+  },
+  {
+    "FIGI": "BBG00S6QMBP8",
+    "Name": "Банк Открытие БО-П выпуск 6"
+  },
+  {
+    "FIGI": "BBG00Z8KGGC3",
+    "Name": "Банк Открытие БО-П выпуск 7"
+  },
+  {
+    "FIGI": "BBG00JYHHXN7",
+    "Name": "Башкирская содовая компания выпуск 1"
+  },
+  {
+    "FIGI": "BBG00VWZ21H5",
+    "Name": "Башкирская содовая компания выпуск 2"
+  },
+  {
+    "FIGI": "BBG0043FH1D9",
+    "Name": "Башнефть выпуск 6"
+  },
+  {
+    "FIGI": "BBG00445QP01",
+    "Name": "Башнефть выпуск 8"
+  },
+  {
+    "FIGI": "TCS00A102GU5",
+    "Name": "Белуга БО-П04"
+  },
+  {
+    "FIGI": "BBG00GVJ8HC9",
+    "Name": "Белуга Групп БО-П01"
+  },
+  {
+    "FIGI": "BBG00PYL6030",
+    "Name": "Белуга Групп БО-П02"
+  },
+  {
+    "FIGI": "BBG00R2FH979",
+    "Name": "Белуга Групп БО-П03"
+  },
+  {
+    "FIGI": "BBG00X0V9H83",
+    "Name": "Бизнес-Недвижимость выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A104BY4",
+    "Name": "Бизнес-Недвижимость выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1043Z7",
+    "Name": "Биннофарм Групп выпуск 1"
+  },
+  {
+    "FIGI": "BBG011CG00T5",
+    "Name": "Бифорком Тек выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZGVRGJ1",
+    "Name": "Боржоми выпуск 1"
+  },
+  {
+    "FIGI": "ISSUANCEBRUS",
+    "Name": "Брусника 001P-01"
+  },
+  {
+    "FIGI": "RU000A101HU5",
+    "Name": "Брусника выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZX8S6G7",
+    "Name": "Брусника выпуск 2"
+  },
+  {
+    "FIGI": "BBG0141LK3L0",
+    "Name": "Брусника выпуск 2Р-1"
+  },
+  {
+    "FIGI": "BBG00PGSFB22",
+    "Name": "Буровая компания Евразия выпуск 3"
+  },
+  {
+    "FIGI": "BBG000000009",
+    "Name": "Быстроденьги 001P-01"
+  },
+  {
+    "FIGI": "BBG00XYH8FH2",
+    "Name": "ВИС Финанс выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102VK5",
+    "Name": "ВИС Финанс выпуск 2"
+  },
+  {
+    "FIGI": "BBG011JGPY99",
+    "Name": "ВТБ"
+  },
+  {
+    "FIGI": "BBG01496DQ23",
+    "Name": "ВТБ"
+  },
+  {
+    "FIGI": "BBG01172JM41",
+    "Name": "ВТБ СУБ выпуск 5"
+  },
+  {
+    "FIGI": "BBG00JM14CY3",
+    "Name": "Верхнебаканский цементный завод 001P выпуск 1"
+  },
+  {
+    "FIGI": "ISSUANCEVITA",
+    "Name": "Вита Лайн 001Р выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102B97",
+    "Name": "Вита Лайн 001Р выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1036X6",
+    "Name": "Вита Лайн 001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00RP6D594",
+    "Name": "Вита Лайн выпуск 1"
+  },
+  {
+    "FIGI": "BBG00GSNVXC3",
+    "Name": "Волгоградская область выпуск 7"
+  },
+  {
+    "FIGI": "BBG00YGKVB04",
+    "Name": "Восточная Стивидорная Компания выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A104362",
+    "Name": "Восточная Стивидорная Компания выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102M86",
+    "Name": "Всеинструменты.ру выпуск 3"
+  },
+  {
+    "FIGI": "BBG0116QGN40",
+    "Name": "Всеинструменты.ру выпуск 4"
+  },
+  {
+    "FIGI": "BBG00R83FV73",
+    "Name": "Всеинструменты.ру выпуск 2"
+  },
+  {
+    "FIGI": "BBG0147HX1H8",
+    "Name": "ГК ЕКС выпуск 1"
+  },
+  {
+    "FIGI": "BBG00R4C49T4",
+    "Name": "ГК Пионер-001P выпуск 4"
+  },
+  {
+    "FIGI": "TCS00A104735",
+    "Name": "ГК Пионер-001P выпуск 6"
+  },
+  {
+    "FIGI": "BBG00YN4P9Q6",
+    "Name": "ГК Пионер-001Р выпуск 5"
+  },
+  {
+    "FIGI": "BBG0129FDB02",
+    "Name": "ГК Самолет выпуск 10"
+  },
+  {
+    "FIGI": "BBG00Q58ZXF2",
+    "Name": "ГК Самолет выпуск 6"
+  },
+  {
+    "FIGI": "TCS00A101H43",
+    "Name": "ГК Самолет выпуск 8"
+  },
+  {
+    "FIGI": "TCS00A102RX6",
+    "Name": "ГК Самолет выпуск 9"
+  },
+  {
+    "FIGI": "BBG00QPG1GD8",
+    "Name": "ГК Самолет выпуск 7"
+  },
+  {
+    "FIGI": "BBG00ZRZX9T8",
+    "Name": "ГТЛК 002P выпуск 1"
+  },
+  {
+    "FIGI": "BBG0089PCRC1",
+    "Name": "ГТЛК БО-04"
+  },
+  {
+    "FIGI": "BBG00N9Q06D4",
+    "Name": "ГТЛК выпуск 13"
+  },
+  {
+    "FIGI": "BBG00S1L7459",
+    "Name": "ГТЛК выпуск 16"
+  },
+  {
+    "FIGI": "BBG00V6NXQF4",
+    "Name": "ГТЛК выпуск 17"
+  },
+  {
+    "FIGI": "BBG00VDF68J9",
+    "Name": "ГТЛК выпуск 18"
+  },
+  {
+    "FIGI": "BBG00VDF2563",
+    "Name": "ГТЛК выпуск 19"
+  },
+  {
+    "FIGI": "BBG00FVSZBH9",
+    "Name": "ГТЛК выпуск 3"
+  },
+  {
+    "FIGI": "BBG00GGS6C84",
+    "Name": "ГТЛК выпуск 4"
+  },
+  {
+    "FIGI": "BBG00B8SX525",
+    "Name": "ГТЛК выпуск 6"
+  },
+  {
+    "FIGI": "BBG00JRTXBC1",
+    "Name": "ГТЛК выпуск 7"
+  },
+  {
+    "FIGI": "BBG00DQFVRK3",
+    "Name": "ГТЛК выпуск 8"
+  },
+  {
+    "FIGI": "BBG00KHR8SP0",
+    "Name": "ГТЛК выпуск 9"
+  },
+  {
+    "FIGI": "BBG00L92CX58",
+    "Name": "ГТЛК выпуск 11"
+  },
+  {
+    "FIGI": "BBG00QQ73R50",
+    "Name": "ГТЛК выпуск 15"
+  },
+  {
+    "FIGI": "BBG00V93GCX5",
+    "Name": "Газпром Капитал"
+  },
+  {
+    "FIGI": "BBG00PDLTQH6",
+    "Name": "Газпром Капитал 001P-01"
+  },
+  {
+    "FIGI": "BBG00V93CKD3",
+    "Name": "Газпром капитал БО-001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00FZMB3Y3",
+    "Name": "Газпром капитал выпуск 5"
+  },
+  {
+    "FIGI": "BBG003CQ4DT8",
+    "Name": "Газпром нефть"
+  },
+  {
+    "FIGI": "BBG00YHX6J06",
+    "Name": "Газпромбанк выпуск 18"
+  },
+  {
+    "FIGI": "BBG00NJ3YSN8",
+    "Name": "Гарант-Инвест БО 001P-05"
+  },
+  {
+    "FIGI": "BBG00R4F67Z2",
+    "Name": "Гарант-Инвест БО 001P-06"
+  },
+  {
+    "FIGI": "TCS00A102X18",
+    "Name": "Гарант-Инвест БО 002P-3"
+  },
+  {
+    "FIGI": "BBG00FZYDS70",
+    "Name": "Гидромашсервис БО выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A101WH1",
+    "Name": "Гидромашсервис БО выпуск 2"
+  },
+  {
+    "FIGI": "ISSUANCEHYDR",
+    "Name": "Гидромашсервис БО выпуск 3"
+  },
+  {
+    "FIGI": "BBG01475RD30",
+    "Name": "Главторг выпуск 1"
+  },
+  {
+    "FIGI": "BBG013TSL6D8",
+    "Name": "ДОМ.РФ 001Р-09"
+  },
+  {
+    "FIGI": "BBG00JGG2N11",
+    "Name": "ДОМ.РФ ИА 002P"
+  },
+  {
+    "FIGI": "TCS00A102D46",
+    "Name": "ДОМ.РФ ИА 018P"
+  },
+  {
+    "FIGI": "TCS00A102GD1",
+    "Name": "ДОМ.РФ ИА 08"
+  },
+  {
+    "FIGI": "TCS00A102JB9",
+    "Name": "ДОМ.РФ ИА 09"
+  },
+  {
+    "FIGI": "TCS00A103N43",
+    "Name": "ДОМ.РФ ИА БО выпуск 9"
+  },
+  {
+    "FIGI": "TCS00A103125",
+    "Name": "ДОМ.РФ ИА БО-001Р-07"
+  },
+  {
+    "FIGI": "TCS00A1031K4",
+    "Name": "ДОМ.РФ ИА БО-001Р-08"
+  },
+  {
+    "FIGI": "TCS00A104AQ2",
+    "Name": "ДОМ.РФ Социальные облигации 02"
+  },
+  {
+    "FIGI": "TCS00A103RD6",
+    "Name": "ДОМ.РФ Социальные облигации выпуск 1"
+  },
+  {
+    "FIGI": "BBG00TQG4212",
+    "Name": "Детский мир выпуск 6"
+  },
+  {
+    "FIGI": "BBG00NWBZTW2",
+    "Name": "Детский мир выпуск 7"
+  },
+  {
+    "FIGI": "BBG00R2FKDT2",
+    "Name": "Детский мир выпуск 5"
+  },
+  {
+    "FIGI": "BBG00VQNQ8P9",
+    "Name": "Джи-групп выпуск 1"
+  },
+  {
+    "FIGI": "BBG0124VD0W1",
+    "Name": "Джи-групп выпуск 2"
+  },
+  {
+    "FIGI": "BBG00YRFB429",
+    "Name": "ДиректЛизинг выпуск 6"
+  },
+  {
+    "FIGI": "BBG012R0C9K9",
+    "Name": "ДиректЛизинг выпуск 7"
+  },
+  {
+    "FIGI": "BBG00JGF4LC3",
+    "Name": "Домодедово выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PNDGP98",
+    "Name": "Домодедово выпуск 2"
+  },
+  {
+    "FIGI": "BBG00XH486K6",
+    "Name": "Донской Ломбард выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PV1MX64",
+    "Name": "ЕвроХим выпуск 4"
+  },
+  {
+    "FIGI": "BBG00PSN47C0",
+    "Name": "ЕвроХим выпуск 5"
+  },
+  {
+    "FIGI": "BBG00Q3G7Y38",
+    "Name": "ЕвроХим выпуск 6"
+  },
+  {
+    "FIGI": "BBG00T7HZJG4",
+    "Name": "ЕвроХим выпуск 7"
+  },
+  {
+    "FIGI": "BBG00TCWB8X6",
+    "Name": "ЕвроХим выпуск 8"
+  },
+  {
+    "FIGI": "BBG00DY7RMW5",
+    "Name": "Европлан  БО 07"
+  },
+  {
+    "FIGI": "TCS00A102RU2",
+    "Name": "Европлан 001Р-01"
+  },
+  {
+    "FIGI": "BBG0115R0Z30",
+    "Name": "Европлан 001Р-02"
+  },
+  {
+    "FIGI": "TCS00A103KJ8",
+    "Name": "Европлан 001Р-03"
+  },
+  {
+    "FIGI": "TCS00A103S14",
+    "Name": "Европлан 001Р-04"
+  },
+  {
+    "FIGI": "BBGHUYNYA0X4",
+    "Name": "Европлан БО 03"
+  },
+  {
+    "FIGI": "BBG00NHJGKN2",
+    "Name": "Европлан БО 05"
+  },
+  {
+    "FIGI": "BBG00PC4M4X3",
+    "Name": "Европлан БО 06"
+  },
+  {
+    "FIGI": "BBG00L9H7QZ3",
+    "Name": "Европлан БО 08"
+  },
+  {
+    "FIGI": "BBGYAKUTV001",
+    "Name": "ЖКХ Якутии выпуск 1"
+  },
+  {
+    "FIGI": "BBG00Y1Q22N4",
+    "Name": "Завод КриалЭнергоСтрой выпуск 2"
+  },
+  {
+    "FIGI": "BBG012F7Y8K5",
+    "Name": "ИКС 5 Финанс 002Р выпуск 1"
+  },
+  {
+    "FIGI": "BBG00V4SVMN7",
+    "Name": "ИКС 5 Финанс выпуск 11"
+  },
+  {
+    "FIGI": "BBG00VWZ2229",
+    "Name": "ИКС 5 Финанс выпуск 12"
+  },
+  {
+    "FIGI": "BBG00QTYPGQ5",
+    "Name": "ИКС 5 Финанс выпуск 7"
+  },
+  {
+    "FIGI": "TCS00A104A39",
+    "Name": "ИНК-Капитал выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QZ0M1V2",
+    "Name": "ИС петролеум выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103DT2",
+    "Name": "ИСКЧ выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1049M2",
+    "Name": "Инкаб выпуск 1"
+  },
+  {
+    "FIGI": "BBG012QRRBN7",
+    "Name": "Интерлизинг выпуск 2"
+  },
+  {
+    "FIGI": "BBG011R5YX14",
+    "Name": "КАМАЗ БО-П08"
+  },
+  {
+    "FIGI": "BBG013RRTP42",
+    "Name": "КАМАЗ БО-П09"
+  },
+  {
+    "FIGI": "BBG00PKM6PK9",
+    "Name": "КАМАЗ выпуск 3"
+  },
+  {
+    "FIGI": "BBG00GVWHJJ9",
+    "Name": "КТЖ Финанс Серия 1"
+  },
+  {
+    "FIGI": "BBG00XH4N488",
+    "Name": "Казахстан выпуск 1"
+  },
+  {
+    "FIGI": "BBG00XH4W3N3",
+    "Name": "Казахстан выпуск 11"
+  },
+  {
+    "FIGI": "BBG011MDDKK2",
+    "Name": "Казахстан выпуск 12"
+  },
+  {
+    "FIGI": "BBG011MDDX15",
+    "Name": "Казахстан выпуск 13"
+  },
+  {
+    "FIGI": "BBG011MDB894",
+    "Name": "Казахстан выпуск 5"
+  },
+  {
+    "FIGI": "BBG00XH4RHP6",
+    "Name": "Казахстан выпуск 7"
+  },
+  {
+    "FIGI": "BBG011MDBQV9",
+    "Name": "Казахстан выпуск 8"
+  },
+  {
+    "FIGI": "BBG0148NSWQ2",
+    "Name": "Калининградская область выпуск 4"
+  },
+  {
+    "FIGI": "BBG00SY31CX0",
+    "Name": "Калита выпуск 1"
+  },
+  {
+    "FIGI": "BBG00X6ZL3Z5",
+    "Name": "Калита выпуск 2"
+  },
+  {
+    "FIGI": "BBG012XXXX33",
+    "Name": "Калита выпуск 3"
+  },
+  {
+    "FIGI": "BBG00MTS7DY5",
+    "Name": "Калужская СК выпуск 1"
+  },
+  {
+    "FIGI": "BBG00VDF8F10",
+    "Name": "Камаз"
+  },
+  {
+    "FIGI": "BBG00PVVXGW4",
+    "Name": "Камаз БО-П04"
+  },
+  {
+    "FIGI": "BBG00QPVPLY5",
+    "Name": "Камаз БО-П05"
+  },
+  {
+    "FIGI": "BBG00HS78YK1",
+    "Name": "КарМани БО выпуск 1"
+  },
+  {
+    "FIGI": "BBG00KHGQP89",
+    "Name": "КарМани БО выпуск 2"
+  },
+  {
+    "FIGI": "BBG00R289K33",
+    "Name": "КарМани БО выпуск 3"
+  },
+  {
+    "FIGI": "BBG00JKX1H22",
+    "Name": "Карачаево-Черкесская республика выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1028C7",
+    "Name": "Киви выпуск 1"
+  },
+  {
+    "FIGI": "BBG00VCVRQQ4",
+    "Name": "Кировский завод выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZQT2640",
+    "Name": "Кировский завод выпуск 2"
+  },
+  {
+    "FIGI": "BBG00HDD93V9",
+    "Name": "Краснодарский край выпуск 1"
+  },
+  {
+    "FIGI": "BBG00L2L5GP6",
+    "Name": "Краснодарский край выпуск 2"
+  },
+  {
+    "FIGI": "BBG00QXGMP19",
+    "Name": "Краснодарский край выпуск 3"
+  },
+  {
+    "FIGI": "BBG00F171QY3",
+    "Name": "Красноярский край  выпуск 12"
+  },
+  {
+    "FIGI": "BBG00HVY2MS2",
+    "Name": "Красноярский край  выпуск 13"
+  },
+  {
+    "FIGI": "BBG00J5KYZN8",
+    "Name": "Красноярский край  выпуск 14"
+  },
+  {
+    "FIGI": "BBG00QKHL1Q8",
+    "Name": "Кредит Европа Банк выпуск 3"
+  },
+  {
+    "FIGI": "BBG00HT45YG5",
+    "Name": "Курская область выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A101GW3",
+    "Name": "ЛЕГЕНДА выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A103CD8",
+    "Name": "ЛК Дельта выпуск 1"
+  },
+  {
+    "FIGI": "BBG00HTSM1G5",
+    "Name": "ЛСР выпуск 3"
+  },
+  {
+    "FIGI": "RU000A102T63",
+    "Name": "ЛСР выпуск 6"
+  },
+  {
+    "FIGI": "TCS00A103PX8",
+    "Name": "ЛСР выпуск 7"
+  },
+  {
+    "FIGI": "BBG00QJ5KYT2",
+    "Name": "ЛСР выпуск 4"
+  },
+  {
+    "FIGI": "BBG00QRKJF13",
+    "Name": "ЛСР выпуск 5"
+  },
+  {
+    "FIGI": "BBG00Z95Q9G6",
+    "Name": "Лайфстрим выпуск 1"
+  },
+  {
+    "FIGI": "BBG00WH3QVR8",
+    "Name": "Легенда выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A102Y66",
+    "Name": "Легенда выпуск 4"
+  },
+  {
+    "FIGI": "BBG00NNMVRW6",
+    "Name": "Лента БО-001P выпуск 2"
+  },
+  {
+    "FIGI": "BBG00V92S1V0",
+    "Name": "Лента БО-001P выпуск 4"
+  },
+  {
+    "FIGI": "BBG00A1034X1",
+    "Name": "Лизинг трейд выпуск 3"
+  },
+  {
+    "FIGI": "BBG00XZ93N78",
+    "Name": "Лизинг-Трейд выпуск 2"
+  },
+  {
+    "FIGI": "BBG00RJSK9S6",
+    "Name": "Лизинг-Трейд выпуск 1"
+  },
+  {
+    "FIGI": "BBG010SC6Q70",
+    "Name": "Литана выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103117",
+    "Name": "М.Видео выпуск 1"
+  },
+  {
+    "FIGI": "BBG01237K1S0",
+    "Name": "М.Видео выпуск 2"
+  },
+  {
+    "FIGI": "BBG00VHHC305",
+    "Name": "МБЭС выпуск 2"
+  },
+  {
+    "FIGI": "BBG00QHSP5W8",
+    "Name": "МКБ 001P выпуск 1"
+  },
+  {
+    "FIGI": "BBG011Y7LMW6",
+    "Name": "МКБ 001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00QXGFHS6",
+    "Name": "МОЭК выпуск 3"
+  },
+  {
+    "FIGI": "BBG00WFCV2B5",
+    "Name": "МОЭК выпуск 4"
+  },
+  {
+    "FIGI": "BBG00RVF4P66",
+    "Name": "МОЭСК 001P выпуск 2"
+  },
+  {
+    "FIGI": "BBG00PNLY692",
+    "Name": "МСБ-Лизинг 002P выпуск 2"
+  },
+  {
+    "FIGI": "BBG012YS2TP2",
+    "Name": "МСБ-Лизинг 002P выпуск 5"
+  },
+  {
+    "FIGI": "TCS00A104SU6",
+    "Name": "МТС"
+  },
+  {
+    "FIGI": "BBG00A1034T9",
+    "Name": "МТС Банк выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PN9H616",
+    "Name": "МТС выпуск 10"
+  },
+  {
+    "FIGI": "BBG00QS35B41",
+    "Name": "МТС выпуск 12"
+  },
+  {
+    "FIGI": "BBG00V9SW0H6",
+    "Name": "МТС выпуск 17"
+  },
+  {
+    "FIGI": "TCS00A102VL3",
+    "Name": "МТС выпуск 18"
+  },
+  {
+    "FIGI": "BBG00J3MJ9F0",
+    "Name": "МТС выпуск 3"
+  },
+  {
+    "FIGI": "BBG00K64TZR2",
+    "Name": "МТС выпуск 6"
+  },
+  {
+    "FIGI": "BBG00N6FS8J1",
+    "Name": "МТС выпуск 7"
+  },
+  {
+    "FIGI": "BBG00NZHSKP1",
+    "Name": "МТС выпуск 8"
+  },
+  {
+    "FIGI": "BBG00NZHT902",
+    "Name": "МТС выпуск 9"
+  },
+  {
+    "FIGI": "BBG00R7THC95",
+    "Name": "МТС выпуск 13"
+  },
+  {
+    "FIGI": "BBG00RTTRKD7",
+    "Name": "МТС выпуск 14"
+  },
+  {
+    "FIGI": "BBG00ZJX2024",
+    "Name": "МФК Займер выпуск 1"
+  },
+  {
+    "FIGI": "BBG011QKQ291",
+    "Name": "МФК Займер выпуск 2"
+  },
+  {
+    "FIGI": "BBG012NJPWN4",
+    "Name": "МФК Займер выпуск 3"
+  },
+  {
+    "FIGI": "BBG0147H0889",
+    "Name": "МФК Лайм-Займ выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZHYDZW2",
+    "Name": "МФК ЦФП выпуск 1"
+  },
+  {
+    "FIGI": "BBG0120X4T49",
+    "Name": "МФК ЦФП выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1043L7",
+    "Name": "МФК Эйрлоанс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00JHSCRH7",
+    "Name": "Магаданская область выпуск 1"
+  },
+  {
+    "FIGI": "BBG00RVD9KF7",
+    "Name": "Магнит 002Р выпуск 1"
+  },
+  {
+    "FIGI": "BBG00TJW91Z5",
+    "Name": "Магнит 002Р выпуск 2"
+  },
+  {
+    "FIGI": "BBG00R7TPVR4",
+    "Name": "Магнит 003Р выпуск 5"
+  },
+  {
+    "FIGI": "BBG00V1K0LJ8",
+    "Name": "Магнит выпуск 5"
+  },
+  {
+    "FIGI": "TCS00A101XD8",
+    "Name": "МаксимаТелеком выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102DK3",
+    "Name": "МаксимаТелеком выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1032D7",
+    "Name": "Маныч-Агро выпуск 1"
+  },
+  {
+    "FIGI": "BBG00HTR61W7",
+    "Name": "МегаФон БО-1 выпуск 3"
+  },
+  {
+    "FIGI": "BBG00RQ1DXY5",
+    "Name": "Металлоинвест БО выпуск 4"
+  },
+  {
+    "FIGI": "BBG00PVTK9T3",
+    "Name": "МигКредит БО выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103KA7",
+    "Name": "Мираторг выпуск 1"
+  },
+  {
+    "FIGI": "BBG00008RB70",
+    "Name": "Москва выпуск 48"
+  },
+  {
+    "FIGI": "BBG010GVNPK9",
+    "Name": "Москва выпуск 72"
+  },
+  {
+    "FIGI": "BBG010JBJ976",
+    "Name": "Москва выпуск 73"
+  },
+  {
+    "FIGI": "BBG011616RM7",
+    "Name": "Москва выпуск 74"
+  },
+  {
+    "FIGI": "BBG00FBB67V3",
+    "Name": "Московская область выпуск 10"
+  },
+  {
+    "FIGI": "BBG00JKWL7Y9",
+    "Name": "Московская область выпуск 11"
+  },
+  {
+    "FIGI": "BBG00QKPP373",
+    "Name": "Московская область выпуск 12"
+  },
+  {
+    "FIGI": "TCS00A102BF7",
+    "Name": "НК Продкорпорация выпуск 1"
+  },
+  {
+    "FIGI": "BBG00MT69C64",
+    "Name": "НКНХ выпуск 1"
+  },
+  {
+    "FIGI": "BBG0121GPL12",
+    "Name": "НПО Химтэк выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZQYML62",
+    "Name": "Нафтатранс Плюс выпуск 3"
+  },
+  {
+    "FIGI": "BBG00N8SH448",
+    "Name": "Нафтатранс Плюс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QPGLLB7",
+    "Name": "Нафтатранс Плюс выпуск 2"
+  },
+  {
+    "FIGI": "BBG00J5KZDG4",
+    "Name": "Ненецкий АО выпуск 1"
+  },
+  {
+    "FIGI": "BBG00R4D6C68",
+    "Name": "Нижегородская область выпуск 14"
+  },
+  {
+    "FIGI": "BBG013PZT8B6",
+    "Name": "Нижегородская область выпуск 16"
+  },
+  {
+    "FIGI": "BBG00QXSLFN2",
+    "Name": "Новосибирская область"
+  },
+  {
+    "FIGI": "BBG00XX7H140",
+    "Name": "Новосибирская область выпуск 21"
+  },
+  {
+    "FIGI": "TCS00A1043E2",
+    "Name": "Новосибирская область выпуск 22"
+  },
+  {
+    "FIGI": "TCS00A103133",
+    "Name": "Новотранс выпуск 2"
+  },
+  {
+    "FIGI": "BBG00R2HQKS7",
+    "Name": "Новотранс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QG1PSL0",
+    "Name": "Норильский Никель БО-001Р выпуск 1"
+  },
+  {
+    "FIGI": "BBG00NZHNQH2",
+    "Name": "О'КЕЙ выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102BK7",
+    "Name": "О'КЕЙ выпуск 4"
+  },
+  {
+    "FIGI": "BBG000000006",
+    "Name": "О'КЕЙ выпуск 3"
+  },
+  {
+    "FIGI": "BBG00KHD7983",
+    "Name": "ОГК-2 выпуск 3"
+  },
+  {
+    "FIGI": "BBG00Q2FD966",
+    "Name": "ОФЗ 24020"
+  },
+  {
+    "FIGI": "BBG00RKDZWG3",
+    "Name": "ОФЗ 24021"
+  },
+  {
+    "FIGI": "BBG00RRT3TX4",
+    "Name": "ОФЗ 25084"
+  },
+  {
+    "FIGI": "BBG002PD3452",
+    "Name": "ОФЗ 26207"
+  },
+  {
+    "FIGI": "BBG00386NQK6",
+    "Name": "ОФЗ 26209"
+  },
+  {
+    "FIGI": "BBG003TTSBB1",
+    "Name": "ОФЗ 26211"
+  },
+  {
+    "FIGI": "BBG00425VG07",
+    "Name": "ОФЗ 26212"
+  },
+  {
+    "FIGI": "BBG0058ZL5S7",
+    "Name": "ОФЗ 26215"
+  },
+  {
+    "FIGI": "BBG00B9PJ7V0",
+    "Name": "ОФЗ 26218"
+  },
+  {
+    "FIGI": "BBG00D6Q7LY6",
+    "Name": "ОФЗ 26219"
+  },
+  {
+    "FIGI": "BBG00FX0RDF5",
+    "Name": "ОФЗ 26220"
+  },
+  {
+    "FIGI": "BBG00G6V7252",
+    "Name": "ОФЗ 26221"
+  },
+  {
+    "FIGI": "BBG00GLT6144",
+    "Name": "ОФЗ 26222"
+  },
+  {
+    "FIGI": "BBG00K53DJP0",
+    "Name": "ОФЗ 26223"
+  },
+  {
+    "FIGI": "BBG00K53FBX6",
+    "Name": "ОФЗ 26224"
+  },
+  {
+    "FIGI": "BBG00K53FX22",
+    "Name": "ОФЗ 26225"
+  },
+  {
+    "FIGI": "BBG00N8J90K7",
+    "Name": "ОФЗ 26226"
+  },
+  {
+    "FIGI": "BBG00NQBGZX5",
+    "Name": "ОФЗ 26227"
+  },
+  {
+    "FIGI": "BBG00NZHWSQ8",
+    "Name": "ОФЗ 26228"
+  },
+  {
+    "FIGI": "BBG00PBZNT41",
+    "Name": "ОФЗ 26229"
+  },
+  {
+    "FIGI": "BBG00PBZNWM4",
+    "Name": "ОФЗ 26230"
+  },
+  {
+    "FIGI": "BBG00R0Z4YW8",
+    "Name": "ОФЗ 26232"
+  },
+  {
+    "FIGI": "BBG00RRT3V69",
+    "Name": "ОФЗ 26233"
+  },
+  {
+    "FIGI": "BBG00VCY76T1",
+    "Name": "ОФЗ 26234"
+  },
+  {
+    "FIGI": "BBG00Y04Q3V7",
+    "Name": "ОФЗ 26235"
+  },
+  {
+    "FIGI": "BBG00YB8K0V8",
+    "Name": "ОФЗ 26236"
+  },
+  {
+    "FIGI": "BBG011FJ6573",
+    "Name": "ОФЗ 26237"
+  },
+  {
+    "FIGI": "BBG011FJ4HS6",
+    "Name": "ОФЗ 26238"
+  },
+  {
+    "FIGI": "BBG011FHF1F7",
+    "Name": "ОФЗ 26239"
+  },
+  {
+    "FIGI": "BBG011MLGP84",
+    "Name": "ОФЗ 26240"
+  },
+  {
+    "FIGI": "BBG007Z13SN3",
+    "Name": "ОФЗ 29006"
+  },
+  {
+    "FIGI": "BBG007Z5DF79",
+    "Name": "ОФЗ 29007"
+  },
+  {
+    "FIGI": "BBG007Z5DZS2",
+    "Name": "ОФЗ 29008"
+  },
+  {
+    "FIGI": "BBG007Z5F748",
+    "Name": "ОФЗ 29009"
+  },
+  {
+    "FIGI": "BBG007Z5FFL1",
+    "Name": "ОФЗ 29010"
+  },
+  {
+    "FIGI": "BBG00FFH2Z75",
+    "Name": "ОФЗ 29012"
+  },
+  {
+    "FIGI": "BBG00T22WKV5",
+    "Name": "ОФЗ 29013"
+  },
+  {
+    "FIGI": "BBG00VY13C74",
+    "Name": "ОФЗ 29014"
+  },
+  {
+    "FIGI": "BBG00XP7VH57",
+    "Name": "ОФЗ 29016"
+  },
+  {
+    "FIGI": "BBG00XV43CN9",
+    "Name": "ОФЗ 29017"
+  },
+  {
+    "FIGI": "BBG00Y28DH67",
+    "Name": "ОФЗ 29018"
+  },
+  {
+    "FIGI": "BBG00Y04MGR7",
+    "Name": "ОФЗ 29019"
+  },
+  {
+    "FIGI": "BBG00Y4SQ1Y1",
+    "Name": "ОФЗ 29020"
+  },
+  {
+    "FIGI": "BBG0000LFC18",
+    "Name": "ОФЗ 46022"
+  },
+  {
+    "FIGI": "BBG009J6Q4B7",
+    "Name": "ОФЗ 52001"
+  },
+  {
+    "FIGI": "BBG00KFLDC92",
+    "Name": "ОФЗ 52002"
+  },
+  {
+    "FIGI": "BBG00XD2M5S2",
+    "Name": "ОФЗ 52003"
+  },
+  {
+    "FIGI": "BBG00WS5KGV5",
+    "Name": "Обувь России 001P выпуск 3"
+  },
+  {
+    "FIGI": "BBG00YZ2MHK8",
+    "Name": "Обувь России 001P выпуск 4"
+  },
+  {
+    "FIGI": "BBG00R4Y73X1",
+    "Name": "Обувь России 001P выпуск 2"
+  },
+  {
+    "FIGI": "BBG0132XRL10",
+    "Name": "Обувь России 002P выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A0ZZWJ3",
+    "Name": "ОбъединениеАгроЭлита выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A0ZZYP6",
+    "Name": "ОбъединениеАгроЭлита выпуск 2"
+  },
+  {
+    "FIGI": "BBG00PVT6KR6",
+    "Name": "ОбъединениеАгроЭлита выпуск 3"
+  },
+  {
+    "FIGI": "BBG00YC4R9B2",
+    "Name": "Омская область выпуск 4"
+  },
+  {
+    "FIGI": "BBG00Y8XPNY9",
+    "Name": "Онлайн Микрофинанс выпуск 2"
+  },
+  {
+    "FIGI": "BBG00SKZW8N0",
+    "Name": "Онлайн Микрофинанс выпуск БО-2"
+  },
+  {
+    "FIGI": "BBG00PC6W5L7",
+    "Name": "Онлайн Микрофинанс выпуск БО-1"
+  },
+  {
+    "FIGI": "BBG009LB6H99",
+    "Name": "Оренбургская область выпуск 3"
+  },
+  {
+    "FIGI": "BBG00JG7XG76",
+    "Name": "Оренбургская область выпуск 4"
+  },
+  {
+    "FIGI": "BBG00JC8FQL0",
+    "Name": "Орловская область 2017"
+  },
+  {
+    "FIGI": "BBG00YPFNJR8",
+    "Name": "Охта Групп выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1040V2",
+    "Name": "Охта Групп выпуск 2"
+  },
+  {
+    "FIGI": "BBG00DGSQ218",
+    "Name": "ПИК БО выпуск 7"
+  },
+  {
+    "FIGI": "BBG00HBPXX50",
+    "Name": "ПИК БО-П выпуск 3"
+  },
+  {
+    "FIGI": "BBG00R4C0L75",
+    "Name": "ПИК-Корпорация выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1026C1",
+    "Name": "ПИК-Корпорация выпуск 3"
+  },
+  {
+    "FIGI": "BBG011PCH913",
+    "Name": "ПИК-Корпорация выпуск 4"
+  },
+  {
+    "FIGI": "BBG0135CF8W1",
+    "Name": "ПИМ выпуск 1"
+  },
+  {
+    "FIGI": "BBG00C7PQK43",
+    "Name": "ПКТ выпуск 2"
+  },
+  {
+    "FIGI": "ISSUANCEPRLS",
+    "Name": "ПР-Лизинг 002P-01"
+  },
+  {
+    "FIGI": "BBG00PZ6T956",
+    "Name": "ПР-Лизинг выпуск 3"
+  },
+  {
+    "FIGI": "BBG00YRF7834",
+    "Name": "ПРОМОМЕД ДМ выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103G91",
+    "Name": "ПРОМОМЕД ДМ выпуск 2"
+  },
+  {
+    "FIGI": "BBG00A0ZZ8A2",
+    "Name": "ПЮДМ БО-П1"
+  },
+  {
+    "FIGI": "BBG00X0SRV34",
+    "Name": "ПЮДМ БО-П2"
+  },
+  {
+    "FIGI": "BBG012Q8FLM1",
+    "Name": "Первое коллекторское бюро 001Р выпуск 2"
+  },
+  {
+    "FIGI": "BBG0140BZS87",
+    "Name": "Первое коллекторское бюро 001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00WMMJMN2",
+    "Name": "Первое коллекторское бюро выпуск 2"
+  },
+  {
+    "FIGI": "BBG012SMKJQ3",
+    "Name": "Петроинжиниринг выпуск 1"
+  },
+  {
+    "FIGI": "BBG00NLMHM55",
+    "Name": "Пионер-Лизинг-БО-П02"
+  },
+  {
+    "FIGI": "BBG00QZ4PBD9",
+    "Name": "Пионер-Лизинг-БО-П03"
+  },
+  {
+    "FIGI": "BBG00YQ6NDD5",
+    "Name": "Пионер-Лизинг-БО-П04"
+  },
+  {
+    "FIGI": "TCS00A101YV8",
+    "Name": "Позитив Текнолоджиз выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QKHK9J0",
+    "Name": "Полюс ПБО-1"
+  },
+  {
+    "FIGI": "BBG00GSG5RB1",
+    "Name": "Почта России выпуск 2"
+  },
+  {
+    "FIGI": "BBG00GTQYBZ5",
+    "Name": "Почта России выпуск 3"
+  },
+  {
+    "FIGI": "BBG00KTDNXH9",
+    "Name": "Почта России выпуск 5"
+  },
+  {
+    "FIGI": "BBG00Z9DF8B8",
+    "Name": "Промсвязьбанк 003P выпуск 4"
+  },
+  {
+    "FIGI": "BBG012J4Q4W3",
+    "Name": "Промсвязьбанк 003P выпуск 7"
+  },
+  {
+    "FIGI": "BBG00VQPKFJ1",
+    "Name": "Промсвязьбанк 003Р выпуск 1"
+  },
+  {
+    "FIGI": "ISSUANCERESO",
+    "Name": "РЕСО-Лизинг БО-П выпуск 03"
+  },
+  {
+    "FIGI": "BBG011PC1CT3",
+    "Name": "РЕСО-Лизинг БО-П выпуск 11"
+  },
+  {
+    "FIGI": "BBG00VFJK5W4",
+    "Name": "РЕСО-Лизинг БО-П выпуск 3"
+  },
+  {
+    "FIGI": "BBG012CQ0V68",
+    "Name": "РЕСО-Лизинг БО-П выпуск 5"
+  },
+  {
+    "FIGI": "BBG00PXMNQ97",
+    "Name": "РЕСО-Лизинг БО-П выпуск 6"
+  },
+  {
+    "FIGI": "BBG00YMTR6J4",
+    "Name": "РЕСО-Лизинг БО-П выпуск 8"
+  },
+  {
+    "FIGI": "BBG00QN37PX1",
+    "Name": "РЕСО-Лизинг БО-П выпуск 7"
+  },
+  {
+    "FIGI": "TCS00A104SY8",
+    "Name": "РЖД"
+  },
+  {
+    "FIGI": "TCS00A104SX0",
+    "Name": "РЖД"
+  },
+  {
+    "FIGI": "BBG00GCRTCX7",
+    "Name": "РЖД 001Р выпуск 1"
+  },
+  {
+    "FIGI": "BBG00MRDR6Y3",
+    "Name": "РЖД 001Р выпуск 10"
+  },
+  {
+    "FIGI": "BBG00N6MD6M2",
+    "Name": "РЖД 001Р выпуск 12"
+  },
+  {
+    "FIGI": "BBG00NQKW4B0",
+    "Name": "РЖД 001Р выпуск 13"
+  },
+  {
+    "FIGI": "BBG00PV1JCS0",
+    "Name": "РЖД 001Р выпуск 16"
+  },
+  {
+    "FIGI": "BBG00GK3W839",
+    "Name": "РЖД 001Р выпуск 2"
+  },
+  {
+    "FIGI": "BBG00TGK62V9",
+    "Name": "РЖД 001Р выпуск 20"
+  },
+  {
+    "FIGI": "BBG00Z6BQMY7",
+    "Name": "РЖД 001Р выпуск 21"
+  },
+  {
+    "FIGI": "BBG00K2B2M16",
+    "Name": "РЖД 001Р выпуск 5"
+  },
+  {
+    "FIGI": "BBG00LPNW7Y7",
+    "Name": "РЖД 001Р выпуск 8"
+  },
+  {
+    "FIGI": "BBG00NTDT6H6",
+    "Name": "РЖД 001Р выпуск 14"
+  },
+  {
+    "FIGI": "BBG00QTH5DF3",
+    "Name": "РЖД ОАО БО 001Р-17R"
+  },
+  {
+    "FIGI": "BBG00005V2L5",
+    "Name": "РЖД выпуск 19"
+  },
+  {
+    "FIGI": "BBG0000K94P9",
+    "Name": "РЖД выпуск 23"
+  },
+  {
+    "FIGI": "BBG0036YHM96",
+    "Name": "РЖД выпуск 32"
+  },
+  {
+    "FIGI": "BBG00XZ37219",
+    "Name": "РН Банк БО-1P выпуск 7"
+  },
+  {
+    "FIGI": "BBG0107GHR16",
+    "Name": "РН Банк БО-1P выпуск 8"
+  },
+  {
+    "FIGI": "BBG012G2MQN5",
+    "Name": "РН Банк БО-1P выпуск 9"
+  },
+  {
+    "FIGI": "BBG00QDF85H6",
+    "Name": "РН Банк БО-1P выпуск 6"
+  },
+  {
+    "FIGI": "BBG00Q87PDL9",
+    "Name": "РОСБАНК БО-002P выпуск 6"
+  },
+  {
+    "FIGI": "BBG00YCM0MW9",
+    "Name": "РОСБАНК БО-002P выпуск 8"
+  },
+  {
+    "FIGI": "BBG005K570Y9",
+    "Name": "РСГ-Финанс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00Q214T90",
+    "Name": "РСГ-Финанс выпуск 11"
+  },
+  {
+    "FIGI": "BBG00CNJBLC4",
+    "Name": "РУСАЛ Братск выпуск 1"
+  },
+  {
+    "FIGI": "BBG00YJKHN65",
+    "Name": "Ренессанс Кредит выпуск 4"
+  },
+  {
+    "FIGI": "TCS00A102RN7",
+    "Name": "Ренессанс Кредит выпуск 6"
+  },
+  {
+    "FIGI": "BBG00PYL4HQ0",
+    "Name": "Республика Беларусь выпуск 3"
+  },
+  {
+    "FIGI": "BBG00PYL4HX2",
+    "Name": "Республика Беларусь выпуск 4"
+  },
+  {
+    "FIGI": "BBG00TQHNK64",
+    "Name": "Республика Беларусь выпуск 7"
+  },
+  {
+    "FIGI": "BBG00HZ418L3",
+    "Name": "Республика Карелия выпуск 18"
+  },
+  {
+    "FIGI": "BBG00H14LSL4",
+    "Name": "Республика Коми выпуск 14"
+  },
+  {
+    "FIGI": "BBG00HKB9SR5",
+    "Name": "Республика Марий Эл выпуск 8"
+  },
+  {
+    "FIGI": "BBG00GNH9FG1",
+    "Name": "Республика Якутия выпуск 9"
+  },
+  {
+    "FIGI": "BBG00PNW0B21",
+    "Name": "Ритейл Бел Финанс  выпуск 1"
+  },
+  {
+    "FIGI": "BBG00V92X4F6",
+    "Name": "Ритейл Бел Финанс 001P-01"
+  },
+  {
+    "FIGI": "TCS00A102TR4",
+    "Name": "Ритейл Бел Финанс 001P-02"
+  },
+  {
+    "FIGI": "BBG00QJ5M7P3",
+    "Name": "Роделен выпуск 2"
+  },
+  {
+    "FIGI": "BBG00ZHZ4Q86",
+    "Name": "Росагролизинг выпуск 2"
+  },
+  {
+    "FIGI": "BBG012NW2KW6",
+    "Name": "Росагролизинг выпуск 3"
+  },
+  {
+    "FIGI": "BBG00QPRTZJ6",
+    "Name": "Роснано БО-002P выпуск 3"
+  },
+  {
+    "FIGI": "BBG00SXFWRX7",
+    "Name": "Роснано БО-002P выпуск 4"
+  },
+  {
+    "FIGI": "BBG00YJKKTF8",
+    "Name": "Роснано БО-002P выпуск 5"
+  },
+  {
+    "FIGI": "BBG00B8SVRD7",
+    "Name": "Роснано выпуск 6"
+  },
+  {
+    "FIGI": "BBG00BRD9CY4",
+    "Name": "Роснано выпуск 7"
+  },
+  {
+    "FIGI": "BBG00NTXZ6S3",
+    "Name": "Роснано выпуск 8"
+  },
+  {
+    "FIGI": "BBG003LLR9S4",
+    "Name": "Роснефть выпуск 4"
+  },
+  {
+    "FIGI": "BBG003LQ7J76",
+    "Name": "Роснефть выпуск 5"
+  },
+  {
+    "FIGI": "BBG00H3QGMZ7",
+    "Name": "Россети 001P выпуск 1"
+  },
+  {
+    "FIGI": "BBG00NZJ4J03",
+    "Name": "Россети Московский регион выпуск 1"
+  },
+  {
+    "FIGI": "BBG00RT7J0J2",
+    "Name": "Ростелеком 002P выпуск 2"
+  },
+  {
+    "FIGI": "BBG00RRT2HP0",
+    "Name": "Ростелеком 002P выпуск 3"
+  },
+  {
+    "FIGI": "BBG00J7HHGH1",
+    "Name": "Ростелеком выпуск 3"
+  },
+  {
+    "FIGI": "BBG00440D136",
+    "Name": "РусГидро выпуск 8"
+  },
+  {
+    "FIGI": "BBG00P33Q8B6",
+    "Name": "Русал Братск БО-001P выпуск 1"
+  },
+  {
+    "FIGI": "BBG00PSQX526",
+    "Name": "Русал Братск БО-001Р выпуск 2"
+  },
+  {
+    "FIGI": "BBG00Q9BCQ70",
+    "Name": "Русал Братск БО-001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00QXGPWQ4",
+    "Name": "Русал Братск БО-001Р выпуск 4"
+  },
+  {
+    "FIGI": "TCS00A101S81",
+    "Name": "Русал Братск БО-002Р выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZLFQKZ4",
+    "Name": "Русская Аквакультура выпуск 1"
+  },
+  {
+    "FIGI": "BBG011CFWBP2",
+    "Name": "С-Инновации выпуск 2"
+  },
+  {
+    "FIGI": "BBG013BSN994",
+    "Name": "СГ-транс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZLH4MW3",
+    "Name": "СДЭК-Глобал выпуск 1"
+  },
+  {
+    "FIGI": "BBG00H2TYMQ2",
+    "Name": "СИНХ-Финанс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QFLCT66",
+    "Name": "СУЭК-Финанс выпуск 3"
+  },
+  {
+    "FIGI": "BBG00QNGNMR8",
+    "Name": "СУЭК-Финанс выпуск 4"
+  },
+  {
+    "FIGI": "BBG00XZ95JN7",
+    "Name": "СУЭК-Финанс выпуск 6"
+  },
+  {
+    "FIGI": "BBG00RLS6TT4",
+    "Name": "СУЭК-Финанс выпуск 5"
+  },
+  {
+    "FIGI": "BBG011DV0155",
+    "Name": "СФО ВТБ РКС-1 выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QYKX940",
+    "Name": "СЭЗ им. Серго Орджоникидзе выпуск 1"
+  },
+  {
+    "FIGI": "BBG00XJF7FL9",
+    "Name": "СЭЗ им. Серго Орджоникидзе выпуск 2"
+  },
+  {
+    "FIGI": "BBG00D5L3Q99",
+    "Name": "Самарская область выпуск 12"
+  },
+  {
+    "FIGI": "BBG00HZZDWP4",
+    "Name": "Самолет"
+  },
+  {
+    "FIGI": "ISSUANCESAMO",
+    "Name": "Самолет БО-П08"
+  },
+  {
+    "FIGI": "BBG015CD9YL8",
+    "Name": "Самолет БО-П11"
+  },
+  {
+    "FIGI": "BBG00JCTFXS2",
+    "Name": "Санкт-Петербург выпуск 1"
+  },
+  {
+    "FIGI": "BBG00JHB0ZL4",
+    "Name": "Санкт-Петербург выпуск 2"
+  },
+  {
+    "FIGI": "BBG00J8B8QK7",
+    "Name": "Саратовская область выпуск 1"
+  },
+  {
+    "FIGI": "BBG00YHVQ768",
+    "Name": "Сбербанк"
+  },
+  {
+    "FIGI": "BBG00HY5JWH4",
+    "Name": "Свердловская область выпуск 4"
+  },
+  {
+    "FIGI": "BBG00WMMMHJ4",
+    "Name": "Светофор Групп выпуск 2"
+  },
+  {
+    "FIGI": "BBG00NTZTZ47",
+    "Name": "Северсталь выпуск 6"
+  },
+  {
+    "FIGI": "TCS00A1041B2",
+    "Name": "Сегежа 002P выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1043G7",
+    "Name": "Сегежа 002P выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A104FG2",
+    "Name": "Сегежа 002P выпуск 3"
+  },
+  {
+    "FIGI": "BBG00RMFTSM5",
+    "Name": "Сегежа выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102SG9",
+    "Name": "Селектел выпуск 1"
+  },
+  {
+    "FIGI": "BBG014KC7YW4",
+    "Name": "Сибнефтехимтрейд  выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A1028H6",
+    "Name": "Сибнефтехимтрейд выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1035D0",
+    "Name": "Синара - Транспортные Машины выпуск 1"
+  },
+  {
+    "FIGI": "BBG011YQCC65",
+    "Name": "Синара - Транспортные Машины выпуск 2"
+  },
+  {
+    "FIGI": "BBG01338VXJ4",
+    "Name": "Славянск ЭКО выпуск 1"
+  },
+  {
+    "FIGI": "BBG012G2PXW7",
+    "Name": "Совкомбанк БО-П4"
+  },
+  {
+    "FIGI": "BBG00Q9K64Q5",
+    "Name": "Солид-Лизинг выпуск 5"
+  },
+  {
+    "FIGI": "TCS00A1029T9",
+    "Name": "СофтЛайн Трейд выпуск 4"
+  },
+  {
+    "FIGI": "BBG00TFS9DH2",
+    "Name": "СофтЛайн Трейд выпуск 3"
+  },
+  {
+    "FIGI": "BBG00QKPJVK3",
+    "Name": "СуперОкс выпуск 1"
+  },
+  {
+    "FIGI": "BBG00HXHKRV2",
+    "Name": "Сэтл Групп выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1030X9",
+    "Name": "Сэтл Групп выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A103WQ8",
+    "Name": "Сэтл Групп выпуск 4"
+  },
+  {
+    "FIGI": "BBG00PT0ZT82",
+    "Name": "Сэтл Групп выпуск 2"
+  },
+  {
+    "FIGI": "BBG000000005",
+    "Name": "Т.Г. Шевченко выпуск 1"
+  },
+  {
+    "FIGI": "BBG00V0WL952",
+    "Name": "Т.Г. Шевченко выпуск 2"
+  },
+  {
+    "FIGI": "BBG00NLMJ541",
+    "Name": "ТД Мясничий выпуск 3"
+  },
+  {
+    "FIGI": "BBG00YQ0FTY9",
+    "Name": "ТД РКС-Сочи 002Р-1"
+  },
+  {
+    "FIGI": "BBG00V316KF8",
+    "Name": "ТД РКС-Сочи выпуск 1"
+  },
+  {
+    "FIGI": "BBG00WYH0LS7",
+    "Name": "ТЕХНО Лизинг выпуск 3"
+  },
+  {
+    "FIGI": "BBG0110WZC19",
+    "Name": "ТЕХНО Лизинг выпуск 4"
+  },
+  {
+    "FIGI": "BBG012STNNH6",
+    "Name": "ТЕХНО Лизинг выпуск 5"
+  },
+  {
+    "FIGI": "BBG00Q41F4Y3",
+    "Name": "ТЕХНО Лизинг выпуск 2"
+  },
+  {
+    "FIGI": "BBG00ZDZD5C1",
+    "Name": "ТМК 001Р выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102TJ1",
+    "Name": "ТМК 001Р выпуск 3"
+  },
+  {
+    "FIGI": "BBG00GDC1GV2",
+    "Name": "ТМК выпуск 6"
+  },
+  {
+    "FIGI": "BBG00Z8KBL73",
+    "Name": "ТФН выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZNL19P2",
+    "Name": "Талан-Финанс выпуск 2"
+  },
+  {
+    "FIGI": "BBG012Y8J8C8",
+    "Name": "Татнефтехим 001P выпуск 1"
+  },
+  {
+    "FIGI": "BBG00R72VWS3",
+    "Name": "Татнефть БО-001P выпуск 1"
+  },
+  {
+    "FIGI": "BBG00YLQVM01",
+    "Name": "Теплоэнерго выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QDTJQD2",
+    "Name": "Тинькофф Банк выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A103D37",
+    "Name": "Тинькофф Ипотечный Агент выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QPHPRQ2",
+    "Name": "Тойота Банк выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A104L36",
+    "Name": "Тойота Банк выпуск 5"
+  },
+  {
+    "FIGI": "BBG00R7TNJ39",
+    "Name": "Томск выпуск 7"
+  },
+  {
+    "FIGI": "BBG00BQZW6R1",
+    "Name": "Томская область выпуск 55"
+  },
+  {
+    "FIGI": "BBG00JM15X21",
+    "Name": "Томская область выпуск 62"
+  },
+  {
+    "FIGI": "BBG00HZ0R8T5",
+    "Name": "ТрансКомплектХолдинг выпуск 1"
+  },
+  {
+    "FIGI": "BBG00QPG0TF9",
+    "Name": "ТрансКонтейнер ПБО выпуск 1"
+  },
+  {
+    "FIGI": "BBG00HYXLFQ7",
+    "Name": "ТрансФин-М 001Р выпуск 4"
+  },
+  {
+    "FIGI": "BBG012C34FX0",
+    "Name": "ТрансФин-М 001Р-07"
+  },
+  {
+    "FIGI": "BBG00R6WV4J0",
+    "Name": "Трансмашхолдинг ПБО-04"
+  },
+  {
+    "FIGI": "BBG00V3L02Q8",
+    "Name": "Трансмашхолдинг ПБО-05"
+  },
+  {
+    "FIGI": "TCS00A1038D4",
+    "Name": "Трансмашхолдинг ПБО-06"
+  },
+  {
+    "FIGI": "BBG00Y90V3M0",
+    "Name": "Ульяновская область выпуск 3"
+  },
+  {
+    "FIGI": "BBG00JFD2KG9",
+    "Name": "Ульяновская область выпуск 1"
+  },
+  {
+    "FIGI": "BBG00L4CT0Z2",
+    "Name": "Уралкалий выпуск 4"
+  },
+  {
+    "FIGI": "TCS00A101GZ6",
+    "Name": "Уралкалий выпуск 6"
+  },
+  {
+    "FIGI": "BBG00VL9P3K2",
+    "Name": "Урожай выпуск 1"
+  },
+  {
+    "FIGI": "BBG011C669D9",
+    "Name": "Урожай выпуск 2"
+  },
+  {
+    "FIGI": "BBG00GH62KJ5",
+    "Name": "ФПК выпуск 1"
+  },
+  {
+    "FIGI": "BBG00JGKV6T7",
+    "Name": "ФПК выпуск 2"
+  },
+  {
+    "FIGI": "BBG00K7DT3F5",
+    "Name": "ФПК выпуск 3"
+  },
+  {
+    "FIGI": "BBG00HY74TD7",
+    "Name": "ФСК ЕЭС БО-3"
+  },
+  {
+    "FIGI": "BBG00JDS8JM8",
+    "Name": "ФСК ЕЭС БО-4"
+  },
+  {
+    "FIGI": "BBG0107RVMG1",
+    "Name": "ФЭС-Агро выпуск 2"
+  },
+  {
+    "FIGI": "BBG00Y7KXWY9",
+    "Name": "ХК Финанс выпуск 5"
+  },
+  {
+    "FIGI": "BBG00ZSJ8ZX8",
+    "Name": "ХК Финанс выпуск 6"
+  },
+  {
+    "FIGI": "BBG00QB5VPL5",
+    "Name": "ХКФ Банк выпуск 6"
+  },
+  {
+    "FIGI": "BBG00Z84TTZ2",
+    "Name": "ХКФ Банк выпуск 7"
+  },
+  {
+    "FIGI": "TCS00A102GY7",
+    "Name": "Хэдхантер выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A103F27",
+    "Name": "Центральная ППК выпуск 3"
+  },
+  {
+    "FIGI": "BBG00PNM0N81",
+    "Name": "ЧЗПСН-Профнастил БО-П1"
+  },
+  {
+    "FIGI": "BBG00TW9WTR3",
+    "Name": "ЧЗПСН-Профнастил БО-П2"
+  },
+  {
+    "FIGI": "BBG00GB81W02",
+    "Name": "ЧТПЗ выпуск 3"
+  },
+  {
+    "FIGI": "BBG00W1P2G59",
+    "Name": "ЧТПЗ выпуск 5"
+  },
+  {
+    "FIGI": "BBG00YCZ0M41",
+    "Name": "ЧТПЗ выпуск 6"
+  },
+  {
+    "FIGI": "TCS00A102LD1",
+    "Name": "Черкизово выпуск 4"
+  },
+  {
+    "FIGI": "BBG00XH3GY82",
+    "Name": "Черкизово выпуск БО-001P-03"
+  },
+  {
+    "FIGI": "BBG00R05JT04",
+    "Name": "Черкизово выпуск 2"
+  },
+  {
+    "FIGI": "BBG00WPJ81Z1",
+    "Name": "ЭБИС выпуск 3"
+  },
+  {
+    "FIGI": "BBG01016PHF2",
+    "Name": "ЭБИС выпуск 4"
+  },
+  {
+    "FIGI": "BBG013VR70Y3",
+    "Name": "ЭБИС выпуск 5"
+  },
+  {
+    "FIGI": "BBGHUYNYA0X3",
+    "Name": "ЭБИС выпуск 1"
+  },
+  {
+    "FIGI": "BBG0135CF469",
+    "Name": "ЭР-Телеком Холдинг БО-02 выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A1029P7",
+    "Name": "ЭР-Телеком Холдинг выпуск 4"
+  },
+  {
+    "FIGI": "BBG0109ZMRP0",
+    "Name": "ЭкономЛизинг выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A103RT2",
+    "Name": "Экспобанк 001Р-01"
+  },
+  {
+    "FIGI": "BBG00QPVNQS3",
+    "Name": "Экспобанк БО выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102WL1",
+    "Name": "Экспобанк БО выпуск 3"
+  },
+  {
+    "FIGI": "BBG00Q38CTS4",
+    "Name": "Электрощит-Стройсистема выпуск 1"
+  },
+  {
+    "FIGI": "BBG00VSYBL16",
+    "Name": "Электрощит-Стройсистема выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A102VW0",
+    "Name": "Элемент Лизинг 001P выпуск 3"
+  },
+  {
+    "FIGI": "TCS00A103M85",
+    "Name": "Элит Строй выпуск 1"
+  },
+  {
+    "FIGI": "BBG00VP0CN81",
+    "Name": "ЭнергоТехСервис выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A103828",
+    "Name": "ЭнергоТехСервис выпуск 4"
+  },
+  {
+    "FIGI": "BBG000000008",
+    "Name": "ЭнергоТехСервис выпуск 1"
+  },
+  {
+    "FIGI": "BBG00HNGJ8K1",
+    "Name": "Эталон выпуск 2"
+  },
+  {
+    "FIGI": "BBG00K1Y24S8",
+    "Name": "Эталон-Финанс выпуск 2"
+  },
+  {
+    "FIGI": "TCS00A103QH9",
+    "Name": "Эталон-Финанс выпуск 3"
+  },
+  {
+    "FIGI": "BBG00N58ZYV9",
+    "Name": "ЮАИЗ выпуск 1"
+  },
+  {
+    "FIGI": "TCS00A102B48",
+    "Name": "ЯТЭК выпуск 1"
+  },
+  {
+    "FIGI": "BBG00ZZNPB92",
+    "Name": "ЯТЭК выпуск 2"
+  },
+  {
+    "FIGI": "BBG00FGC1ZM9",
+    "Name": "Ямало-Ненецкий АО выпуск 2"
+  },
+  {
+    "FIGI": "BBG00LLCGZL5",
+    "Name": "Ярославская область выпуск 16"
+  },
+  {
+    "FIGI": "BBG00CXHTFY7",
+    "Name": "Ярославская область выпуск 14"
+  }
+]

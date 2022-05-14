@@ -11,6 +11,9 @@ linters-settings:
       - default
       - prefix(github.com/Antonboom/tinkoff-invest-robot-contest-2022)
 
+  lll:
+    line-length: 130
+
 linters:
   disable-all: true
   enable:
@@ -34,7 +37,6 @@ linters:
     - gocritic
     - gocyclo
     - godot
-    - godox
     - gofmt
     - gofumpt
     - goheader

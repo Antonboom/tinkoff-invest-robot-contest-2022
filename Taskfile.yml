@@ -34,7 +34,7 @@ tasks:
 
   lint:
     cmds:
-      - echo "Lint"
+      - echo "- Lint"
       - golangci-lint run --fix ./...
 
   dev-tools:install:
@@ -59,3 +59,8 @@ tasks:
           --go-grpc_out={{.OUT}} \
           --go_out={{.OUT}} \
           {{.IN}}
+
+  dump-instruments:
+    cmds:
+      - echo "- Dump instruments"
+      - go run ./cmd/dump-instruments > testdata/instruments.json

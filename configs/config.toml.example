@@ -1,0 +1,15 @@
+[log]
+level = "info"
+
+[clients]
+[clients.tinkfoff_invest]
+address = "invest-public-api.tinkoff.ru:443"
+app_name = "Antonboom.tinkoff-invest-robot-contest-2022"
+token="xxx"
+
+[strategies]
+[strategies.order_book_monitoring]
+enabled = false
+
+[strategies.spread]
+enabled = false

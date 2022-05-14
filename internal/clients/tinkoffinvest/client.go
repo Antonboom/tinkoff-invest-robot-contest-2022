@@ -1,17 +1,44 @@
 package tinkoffinvest
 
 import (
+	"context"
+	"errors"
+
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
 
 type Client struct {
-	instruments investpb.InstrumentsServiceClient
+	token   string
+	appName string
+
+	instruments      investpb.InstrumentsServiceClient
+	marketDataStream investpb.MarketDataStreamServiceClient
 }
 
-func NewClient(cc grpc.ClientConnInterface) *Client {
-	return &Client{
-		instruments: investpb.NewInstrumentsServiceClient(cc),
+func NewClient(cc grpc.ClientConnInterface, token string, appName string) (*Client, error) {
+	if cc == nil {
+		return nil, errors.New("uninitialized grpc connection")
 	}
+	if token == "" {
+		return nil, errors.New("api token must be defined")
+	}
+	if appName == "" {
+		return nil, errors.New("application name must be defined")
+	}
+
+	return &Client{
+		token:            token,
+		appName:          appName,
+		instruments:      investpb.NewInstrumentsServiceClient(cc),
+		marketDataStream: investpb.NewMarketDataStreamServiceClient(cc),
+	}, nil
+}
+
+func (c *Client) auth(ctx context.Context) context.Context {
+	return metadata.AppendToOutgoingContext(ctx,
+		"authorization", "Bearer "+c.token,
+		"x-app-name", c.appName)
 }
