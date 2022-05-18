@@ -40,7 +40,12 @@ func main() {
 	)
 	mustNil(err)
 
-	tInvest, err := tinkoffinvest.NewClient(conn, cfg.Clients.TinkoffInvest.Token, cfg.Clients.TinkoffInvest.AppName)
+	tInvest, err := tinkoffinvest.NewClient(
+		conn,
+		cfg.Clients.TinkoffInvest.Token,
+		cfg.Clients.TinkoffInvest.AppName,
+		true,
+	)
 	mustNil(err)
 
 	instruments, err := tInvest.GetInstruments(ctx)

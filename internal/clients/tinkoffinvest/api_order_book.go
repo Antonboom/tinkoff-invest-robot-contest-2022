@@ -11,12 +11,12 @@ import (
 )
 
 type OrderBookRequest struct {
-	Instrument string // FIGI
-	Depth      int
+	FIGI  string
+	Depth int
 }
 
 type OrderBookChange struct {
-	Instrument   string // FIGI
+	FIGI         string
 	IsConsistent bool
 	Bids         []Order
 	Acks         []Order
@@ -46,7 +46,7 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 	instruments := make([]*investpb.OrderBookInstrument, len(reqs))
 	for i, req := range reqs {
 		instruments[i] = &investpb.OrderBookInstrument{
-			Figi:  req.Instrument,
+			Figi:  req.FIGI,
 			Depth: int32(req.Depth), // Overflow impossible.
 		}
 	}
@@ -120,6 +120,8 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 				case <-ctx.Done():
 					return
 				case changes <- adaptPbOrderbook(v.Orderbook):
+				default:
+					// Clients may not have time to process the queue.
 				}
 			}
 		}
@@ -129,7 +131,7 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 
 func adaptPbOrderbook(ob *investpb.OrderBook) OrderBookChange {
 	return OrderBookChange{
-		Instrument:   ob.Figi,
+		FIGI:         ob.Figi,
 		IsConsistent: ob.IsConsistent,
 		Bids:         adaptPbOrders(ob.Bids),
 		Acks:         adaptPbOrders(ob.Asks),

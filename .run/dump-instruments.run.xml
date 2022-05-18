@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="dump-instruments" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="tinkoff-invest-robot-contest-2022" />
+    <working_directory value="$PROJECT_DIR$" />
+    <kind value="PACKAGE" />
+    <package value="github.com/Antonboom/tinkoff-invest-robot-contest-2022/cmd/dump-instruments" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/dump-instruments/main.go" />
+    <method v="2" />
+  </configuration>
+</component>

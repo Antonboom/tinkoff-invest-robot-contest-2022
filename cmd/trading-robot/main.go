@@ -45,21 +45,29 @@ func main() {
 	)
 	mustNil(err)
 
-	tInvest, err := tinkoffinvest.NewClient(conn, cfg.Clients.TinkoffInvest.Token, cfg.Clients.TinkoffInvest.AppName)
+	tInvest, err := tinkoffinvest.NewClient(
+		conn,
+		cfg.Clients.TinkoffInvest.Token,
+		cfg.Clients.TinkoffInvest.AppName,
+		cfg.Clients.TinkoffInvest.UseSandbox,
+	)
 	mustNil(err)
 
-	books, err := tInvest.SubscribeForOrderBookChanges(ctx, []tinkoffinvest.OrderBookRequest{
-		{
-			Instrument: "BBG00YHVQ768",
-			Depth:      10,
-		},
-	})
-	mustNil(err)
+	switch {
+	case cfg.Strategies.BullsAndBearsMonitoring.Enabled:
+		strategyCfg := cfg.Strategies.BullsAndBearsMonitoring
+		if err := runBullsAndBearsMonitoring(ctx, cfg.Account.Number, strategyCfg, tInvest); err != nil {
+			log.Err(err).Msg("cannot run bulls and bears monitoring")
+		}
 
-	log.Info().Msg("listen Sberbank order book")
-	for b := range books {
-		log.Info().Msgf("%v", b)
+	case cfg.Strategies.SpreadMonitoring.Enabled:
+
+	default:
+		log.Warn().Msg("no strategies enabled: exit")
+		cancel()
 	}
+
+	<-ctx.Done()
 }
 
 func mustNil(err error) {

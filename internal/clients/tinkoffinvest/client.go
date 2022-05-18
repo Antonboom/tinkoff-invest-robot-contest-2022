@@ -11,14 +11,18 @@ import (
 )
 
 type Client struct {
-	token   string
-	appName string
+	token      string
+	appName    string
+	useSandbox bool
 
 	instruments      investpb.InstrumentsServiceClient
 	marketDataStream investpb.MarketDataStreamServiceClient
+	orders           investpb.OrdersServiceClient
+
+	sandbox investpb.SandboxServiceClient
 }
 
-func NewClient(cc grpc.ClientConnInterface, token string, appName string) (*Client, error) {
+func NewClient(cc grpc.ClientConnInterface, token string, appName string, useSandbox bool) (*Client, error) {
 	if cc == nil {
 		return nil, errors.New("uninitialized grpc connection")
 	}
@@ -32,8 +36,11 @@ func NewClient(cc grpc.ClientConnInterface, token string, appName string) (*Clie
 	return &Client{
 		token:            token,
 		appName:          appName,
+		useSandbox:       useSandbox,
 		instruments:      investpb.NewInstrumentsServiceClient(cc),
 		marketDataStream: investpb.NewMarketDataStreamServiceClient(cc),
+		orders:           investpb.NewOrdersServiceClient(cc),
+		sandbox:          investpb.NewSandboxServiceClient(cc),
 	}, nil
 }
 

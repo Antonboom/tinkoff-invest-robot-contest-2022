@@ -3,13 +3,20 @@ level = "info"
 
 [clients]
 [clients.tinkfoff_invest]
+use_sandbox = true
 address = "invest-public-api.tinkoff.ru:443"
 app_name = "Antonboom.tinkoff-invest-robot-contest-2022"
-token="xxx"
+token = ""
 
 [strategies]
-[strategies.order_book_monitoring]
-enabled = false
+[strategies.bulls_and_bears_monitoring]
+enabled = true
+ignore_inconsistent = false
+[[strategies.bulls_and_bears_monitoring.instruments]]
+figi = "TCS00A103943"
+depth = 20
+dominance_ratio = 2.5
 
-[strategies.spread]
+[strategies.spread_monitoring]
 enabled = false
+ignore_inconsistent = false

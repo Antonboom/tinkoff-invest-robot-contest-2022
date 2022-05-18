@@ -21,6 +21,7 @@ tasks:
       - task: tidy
       - task: fmt
       - task: lint
+      - task: build
 
   tidy:
     - echo "- Tidy & vendor"
@@ -36,6 +37,11 @@ tasks:
     cmds:
       - echo "- Lint"
       - golangci-lint run --fix ./...
+
+  build:
+    cmds:
+      - echo "- Build"
+      - go build ./cmd/trading-robot/...
 
   dev-tools:install:
     dir: tools

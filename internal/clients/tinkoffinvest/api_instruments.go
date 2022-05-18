@@ -9,6 +9,7 @@ import (
 
 type Instrument struct {
 	FIGI string
+	ISIN string
 	Name string
 }
 
@@ -24,6 +25,7 @@ func (c *Client) GetInstruments(ctx context.Context) ([]Instrument, error) {
 	for i, instr := range resp.Instruments {
 		result[i] = Instrument{
 			FIGI: instr.Figi,
+			ISIN: instr.Isin,
 			Name: instr.Name,
 		}
 	}
