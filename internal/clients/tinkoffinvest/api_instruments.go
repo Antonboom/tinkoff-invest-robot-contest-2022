@@ -11,6 +11,7 @@ type Instrument struct {
 	FIGI string
 	ISIN string
 	Name string
+	Lot  int
 }
 
 func (c *Client) GetInstruments(ctx context.Context) ([]Instrument, error) {
@@ -27,6 +28,7 @@ func (c *Client) GetInstruments(ctx context.Context) ([]Instrument, error) {
 			FIGI: instr.Figi,
 			ISIN: instr.Isin,
 			Name: instr.Name,
+			Lot:  int(instr.Lot),
 		}
 	}
 	return result, nil

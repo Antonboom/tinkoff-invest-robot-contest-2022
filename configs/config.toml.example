@@ -1,6 +1,9 @@
 [log]
 level = "info"
 
+[account]
+number = ""
+
 [clients]
 [clients.tinkfoff_invest]
 use_sandbox = true
@@ -13,9 +16,10 @@ token = ""
 enabled = true
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
-figi = "TCS00A103943"
-depth = 20
-dominance_ratio = 2.5
+figi = "BBG00YHVQ768" # SBER
+depth = 10
+dominance_ratio = 5.5
+profit_percentage = 0.01
 
 [strategies.spread_monitoring]
 enabled = false

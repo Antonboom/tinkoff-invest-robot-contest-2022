@@ -30,11 +30,6 @@ type Order struct {
 	Lots  int
 }
 
-type Quotation struct {
-	Units int
-	Nano  int
-}
-
 func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderBookRequest) (<-chan OrderBookChange, error) {
 	stream, err := c.marketDataStream.MarketDataStream(c.auth(ctx))
 	if err != nil {

@@ -12,6 +12,8 @@ import (
 	bullsbearsmon "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/bulls-and-bears-mon"
 )
 
+const strategyApplyingTimeout = 10 * time.Second
+
 func runBullsAndBearsMonitoring(
 	ctx context.Context,
 	account string,
@@ -26,8 +28,9 @@ func runBullsAndBearsMonitoring(
 			Depth: ins.Depth,
 		}
 		toolConfs[i] = bullsbearsmon.ToolConfig{
-			FIGI:           ins.FIGI,
-			DominanceRatio: ins.DominanceRatio,
+			FIGI:             ins.FIGI,
+			DominanceRatio:   ins.DominanceRatio,
+			ProfitPercentage: ins.ProfitPercentage,
 		}
 	}
 
@@ -55,7 +58,7 @@ func runBullsAndBearsMonitoring(
 				}
 
 				func() {
-					ctx, cancel := context.WithTimeout(ctx, time.Second)
+					ctx, cancel := context.WithTimeout(ctx, strategyApplyingTimeout)
 					defer cancel()
 
 					if err := strategy.Apply(ctx, change); err != nil {

@@ -21,6 +21,7 @@ tasks:
       - task: tidy
       - task: fmt
       - task: lint
+      - task: tests
       - task: build
 
   tidy:
@@ -37,6 +38,11 @@ tasks:
     cmds:
       - echo "- Lint"
       - golangci-lint run --fix ./...
+
+  tests:
+    cmds:
+      - echo "- Tests"
+      - go test ./...
 
   build:
     cmds:

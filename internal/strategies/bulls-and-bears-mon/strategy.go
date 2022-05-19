@@ -3,17 +3,24 @@ package bullsbearsmon
 import (
 	"context"
 	"fmt"
-	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"os"
+
+	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 )
 
 type OrderPlacer interface {
-	PlaceMarketSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (*tinkoffinvest.PlaceOrderResponse, error)
-	PlaceMarketBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (*tinkoffinvest.PlaceOrderResponse, error)
-	PlaceLimitSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (*tinkoffinvest.PlaceOrderResponse, error)
-	PlaceLimitBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (*tinkoffinvest.PlaceOrderResponse, error)
+	WaitForOrderExecution(
+		ctx context.Context,
+		accountID tinkoffinvest.AccountID,
+		orderID tinkoffinvest.OrderID,
+	) (*tinkoffinvest.Quotation, error)
+
+	PlaceMarketSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
+	PlaceMarketBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
+	PlaceLimitSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
+	PlaceLimitBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
 }
 
 // Strategy realize the next strategy:
@@ -21,16 +28,16 @@ type OrderPlacer interface {
 // then the robot buys the instrument at the market price, otherwise it sells,
 // immediately placing an order in the opposite direction, but with a certain percentage of profit.
 type Strategy struct {
-	account            string
+	account            tinkoffinvest.AccountID
 	ignoreInconsistent bool
 	toolConfigs        map[string]ToolConfig // by FIGI.
 	orderPlacer        OrderPlacer
-	logger             zerolog.Logger
 }
 
 type ToolConfig struct {
-	FIGI           string
-	DominanceRatio float64
+	FIGI             string
+	DominanceRatio   float64
+	ProfitPercentage float64
 }
 
 func New(account string, ignoreInconsistent bool, tools []ToolConfig, orderPlacer OrderPlacer) (*Strategy, error) {
@@ -42,15 +49,12 @@ func New(account string, ignoreInconsistent bool, tools []ToolConfig, orderPlace
 		confs[t.FIGI] = t
 	}
 
-	s := &Strategy{
-		account:            account,
+	return &Strategy{
+		account:            tinkoffinvest.AccountID(account),
 		ignoreInconsistent: ignoreInconsistent,
 		toolConfigs:        confs,
 		orderPlacer:        orderPlacer,
-	}
-	s.logger = log.With().Str("strategy", s.Name()).Logger()
-
-	return s, nil
+	}, nil
 }
 
 func (s *Strategy) Name() string {
@@ -67,14 +71,17 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 		return fmt.Errorf("not found config for tool %q", change.FIGI)
 	}
 
-	buys := countLots(change.Bids)  // Bulls.
-	sells := countLots(change.Acks) // Bears.
+	buys := tinkoffinvest.CountLots(change.Bids)  // Bulls.
+	sells := tinkoffinvest.CountLots(change.Acks) // Bears.
 
 	buysToSells := float64(buys) / float64(sells)
-	sellsToBuys := float64(sells) / float64(buys)
+	sellsToBuys := 1. / buysToSells
 
-	s.logger.Info().
-		Str("figi", change.FIGI).
+	logger := log.With().
+		Str("strategy", s.Name()).
+		Str("figi", change.FIGI).Logger()
+
+	logger.Info().
 		Int("buys", buys).
 		Int("sells", sells).
 		Float64("buys_to_sells", buysToSells).
@@ -82,34 +89,96 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 		Msg("order book change")
 
 	if buysToSells >= conf.DominanceRatio {
-		_, err := s.orderPlacer.PlaceMarketBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
-			AccountID: s.account,
-			FIGI:      change.FIGI,
-			Lots:      1.,
-		})
-		if err != nil {
-			return fmt.Errorf("place market buy order: %v", err)
-		}
-		os.Exit(0)
-
-	} else if sellsToBuys >= conf.DominanceRatio {
-		_, err := s.orderPlacer.PlaceMarketSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
-			AccountID: s.account,
-			FIGI:      change.FIGI,
-			Lots:      1.,
-		})
-		if err != nil {
-			return fmt.Errorf("place market sell order: %v", err)
-		}
-		os.Exit(0)
+		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.ProfitPercentage)
 	}
+
+	if sellsToBuys >= conf.DominanceRatio {
+		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.ProfitPercentage)
+	}
+
 	return nil
 }
 
-func countLots(orders []tinkoffinvest.Order) int {
-	var result int
-	for _, o := range orders {
-		result += o.Lots
+func (s *Strategy) placeBuySellPair( //nolint:dupl
+	ctx context.Context,
+	logger zerolog.Logger,
+	figi string,
+	profit float64,
+) error {
+	orderID, err := s.orderPlacer.PlaceMarketBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      figi,
+		Lots:      1.,
+	})
+	if err != nil {
+		return fmt.Errorf("place market buy order: %v", err)
 	}
-	return result
+	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
+	if err != nil {
+		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
+	}
+
+	logger.Info().
+		Str("price", price.String()).
+		Str("order_id", string(orderID)).
+		Msg("buy tool by market")
+
+	p := price.Mul(1. + profit)
+	orderID, err = s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      figi,
+		Lots:      1,
+		Price:     &p,
+	})
+	if err != nil {
+		return fmt.Errorf("place limit sell order: %v", err)
+	}
+	logger.Info().
+		Str("price", p.String()).
+		Str("order_id", string(orderID)).
+		Msg("place limit sell order")
+
+	return nil
+}
+
+func (s *Strategy) placeSellBuyPair( //nolint:dupl
+	ctx context.Context,
+	logger zerolog.Logger,
+	figi string,
+	profit float64,
+) error {
+	orderID, err := s.orderPlacer.PlaceMarketSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      figi,
+		Lots:      1.,
+	})
+	if err != nil {
+		return fmt.Errorf("place market sell order: %v", err)
+	}
+	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
+	if err != nil {
+		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
+	}
+
+	logger.Info().
+		Str("price", price.String()).
+		Str("order_id", string(orderID)).
+		Msg("se;; tool by market")
+
+	p := price.Mul(1. - profit)
+	orderID, err = s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      figi,
+		Lots:      1,
+		Price:     &p,
+	})
+	if err != nil {
+		return fmt.Errorf("place limit buy order: %v", err)
+	}
+	logger.Info().
+		Str("price", p.String()).
+		Str("order_id", string(orderID)).
+		Msg("place limit buy order")
+
+	return nil
 }

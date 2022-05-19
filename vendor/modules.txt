@@ -2,6 +2,9 @@
 ## explicit; go 1.16
 github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
 # github.com/go-playground/locales v0.14.0
 ## explicit; go 1.13
 github.com/go-playground/locales
@@ -26,12 +29,18 @@ github.com/google/uuid
 # github.com/leodido/go-urn v1.2.1
 ## explicit; go 1.13
 github.com/leodido/go-urn
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
 # github.com/rs/zerolog v1.26.1
 ## explicit; go 1.15
 github.com/rs/zerolog
 github.com/rs/zerolog/internal/cbor
 github.com/rs/zerolog/internal/json
 github.com/rs/zerolog/log
+# github.com/stretchr/testify v1.7.1
+## explicit; go 1.13
+github.com/stretchr/testify/assert
 # golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e
 ## explicit; go 1.17
 golang.org/x/crypto/sha3
@@ -145,3 +154,6 @@ google.golang.org/protobuf/types/descriptorpb
 google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/timestamppb
+# gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+## explicit
+gopkg.in/yaml.v3
