@@ -3,6 +3,7 @@ package bullsbearsmon
 import (
 	"context"
 	"fmt"
+	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -46,7 +47,9 @@ func New(account string, ignoreInconsistent bool, tools []ToolConfig, orderPlace
 		if _, ok := confs[t.FIGI]; ok {
 			return nil, fmt.Errorf("duplicated tool: %s", t.FIGI)
 		}
+
 		confs[t.FIGI] = t
+		configuredDominanceRatio.With(prometheus.Labels{"figi": t.FIGI}).Set(t.DominanceRatio)
 	}
 
 	return &Strategy{
@@ -76,6 +79,9 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 
 	buysToSells := float64(buys) / float64(sells)
 	sellsToBuys := 1. / buysToSells
+
+	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeBuyToSells, "figi": change.FIGI}).Set(buysToSells)
+	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeSellsToBuys, "figi": change.FIGI}).Set(sellsToBuys)
 
 	logger := log.With().
 		Str("strategy", s.Name()).

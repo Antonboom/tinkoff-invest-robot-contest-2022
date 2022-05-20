@@ -1,0 +1,6 @@
+scrape_configs:
+  - job_name: trading-robot
+    scrape_interval: 1s
+    static_configs:
+      - targets:
+          - trading-robot:2112

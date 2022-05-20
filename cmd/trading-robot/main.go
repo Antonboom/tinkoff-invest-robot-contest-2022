@@ -54,12 +54,18 @@ func main() {
 	)
 	mustNil(err)
 
-	_, err = tInvest.GetUserInfo(ctx)
-	if errors.Is(err, tinkoffinvest.ErrInvalidToken) {
-		stdlog.Panic("unauthenticated: invalid clients.tinkfoff_invest.token")
-		return
+	if !cfg.Clients.TinkoffInvest.UseSandbox {
+		_, err = tInvest.GetUserInfo(ctx)
+		if errors.Is(err, tinkoffinvest.ErrInvalidToken) {
+			stdlog.Panic("unauthenticated: invalid clients.tinkfoff_invest.token")
+			return
+		}
+		mustNil(err)
 	}
-	mustNil(err)
+
+	if cfg.Metrics.Enabled {
+		runMetrics(cfg.Metrics.Addr)
+	}
 
 	switch {
 	case cfg.Strategies.BullsAndBearsMonitoring.Enabled:

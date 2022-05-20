@@ -1,6 +1,8 @@
 package tinkoffinvest
 
-import "sort"
+import (
+	"sort"
+)
 
 func CountLots(orders []Order) int {
 	var result int

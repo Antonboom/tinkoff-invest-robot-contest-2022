@@ -2,6 +2,7 @@ package config
 
 type Config struct {
 	Log        LogConfig        `toml:"log"`
+	Metrics    MetricsConfig    `toml:"metrics"`
 	Account    AccountConfig    `toml:"account"`
 	Clients    ClientsConfig    `toml:"clients"`
 	Strategies StrategiesConfig `toml:"strategies"`
@@ -9,6 +10,11 @@ type Config struct {
 
 type LogConfig struct {
 	Level string `validate:"required"`
+}
+
+type MetricsConfig struct {
+	Enabled bool   `toml:"enabled"`
+	Addr    string `toml:"addr" validate:"hostname_port"`
 }
 
 type AccountConfig struct {

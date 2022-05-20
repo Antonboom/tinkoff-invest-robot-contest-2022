@@ -1,6 +1,10 @@
 [log]
 level = "info"
 
+[metrics]
+enabled = false
+addr = ":2112"
+
 [account]
 number = ""
 
@@ -17,13 +21,13 @@ enabled = true
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
 figi = "BBG00YHVQ768" # SBER
-depth = 10
+depth = 20
 dominance_ratio = 5.5
 profit_percentage = 0.01
 
 [strategies.spread_monitoring]
-enabled = true
+enabled = false
 ignore_inconsistent = false
-depth = 10
-min_spread_percentage = 0.1
+depth = 20
+min_spread_percentage = 0.01 # 1%
 max_tools = 10
