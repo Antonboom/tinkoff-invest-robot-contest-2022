@@ -16,8 +16,10 @@ type Client struct {
 	useSandbox bool
 
 	instruments      investpb.InstrumentsServiceClient
+	marketData       investpb.MarketDataServiceClient
 	marketDataStream investpb.MarketDataStreamServiceClient
 	orders           investpb.OrdersServiceClient
+	users            investpb.UsersServiceClient
 
 	sandbox investpb.SandboxServiceClient
 }
@@ -38,8 +40,10 @@ func NewClient(cc grpc.ClientConnInterface, token string, appName string, useSan
 		appName:          appName,
 		useSandbox:       useSandbox,
 		instruments:      investpb.NewInstrumentsServiceClient(cc),
+		marketData:       investpb.NewMarketDataServiceClient(cc),
 		marketDataStream: investpb.NewMarketDataStreamServiceClient(cc),
 		orders:           investpb.NewOrdersServiceClient(cc),
+		users:            investpb.NewUsersServiceClient(cc),
 		sandbox:          investpb.NewSandboxServiceClient(cc),
 	}, nil
 }

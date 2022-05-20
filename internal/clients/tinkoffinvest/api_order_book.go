@@ -15,14 +15,46 @@ type OrderBookRequest struct {
 	Depth int
 }
 
+type OrderBook struct {
+	FIGI      string
+	Bids      []Order
+	Acks      []Order
+	LastPrice Quotation
+	// LimitUp limits buy orders.
+	LimitUp Quotation
+	// LimitDown limits sell orders.
+	LimitDown Quotation
+}
+
+func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*OrderBook, error) {
+	resp, err := c.marketData.GetOrderBook(c.auth(ctx), &investpb.GetOrderBookRequest{
+		Figi:  req.FIGI,
+		Depth: int32(req.Depth),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("grpc get order book call: %v", err)
+	}
+
+	return &OrderBook{
+		FIGI:      resp.Figi,
+		Bids:      adaptPbOrders(resp.Bids),
+		Acks:      adaptPbOrders(resp.Asks),
+		LastPrice: adaptPbQuotation(resp.LastPrice),
+		LimitUp:   adaptPbQuotation(resp.LimitUp),
+		LimitDown: adaptPbQuotation(resp.LimitDown),
+	}, nil
+}
+
 type OrderBookChange struct {
 	FIGI         string
 	IsConsistent bool
 	Bids         []Order
 	Acks         []Order
-	LimitUp      Quotation
-	LimitDown    Quotation
 	FormedAt     time.Time
+	// LimitUp limits buy orders.
+	LimitUp Quotation
+	// LimitDown limits sell orders.
+	LimitDown Quotation
 }
 
 type Order struct {
@@ -152,6 +184,10 @@ func adaptPbOrder(o *investpb.Order) Order {
 }
 
 func adaptPbQuotation(q *investpb.Quotation) Quotation {
+	if q == nil {
+		return Quotation{}
+	}
+
 	// Overflows impossible.
 	return Quotation{
 		Units: int(q.Units),

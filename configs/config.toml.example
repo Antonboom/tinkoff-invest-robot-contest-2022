@@ -22,5 +22,8 @@ dominance_ratio = 5.5
 profit_percentage = 0.01
 
 [strategies.spread_monitoring]
-enabled = false
+enabled = true
 ignore_inconsistent = false
+depth = 10
+min_spread_percentage = 0.1
+max_tools = 10

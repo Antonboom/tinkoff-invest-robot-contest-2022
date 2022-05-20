@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"flag"
 	stdlog "log"
 	"os/signal"
@@ -53,14 +54,25 @@ func main() {
 	)
 	mustNil(err)
 
+	_, err = tInvest.GetUserInfo(ctx)
+	if errors.Is(err, tinkoffinvest.ErrInvalidToken) {
+		stdlog.Panic("unauthenticated: invalid clients.tinkfoff_invest.token")
+		return
+	}
+	mustNil(err)
+
 	switch {
 	case cfg.Strategies.BullsAndBearsMonitoring.Enabled:
 		strategyCfg := cfg.Strategies.BullsAndBearsMonitoring
 		if err := runBullsAndBearsMonitoring(ctx, cfg.Account.Number, strategyCfg, tInvest); err != nil {
-			log.Err(err).Msg("cannot run bulls and bears monitoring")
+			log.Err(err).Msg("cannot run bulls and bears monitoring strategy")
 		}
 
 	case cfg.Strategies.SpreadMonitoring.Enabled:
+		strategyCfg := cfg.Strategies.SpreadMonitoring
+		if err := runSpreadMonitoring(ctx, cfg.Account.Number, strategyCfg, tInvest); err != nil {
+			log.Err(err).Msg("cannot run spread monitoring strategy")
+		}
 
 	default:
 		log.Warn().Msg("no strategies enabled: exit")

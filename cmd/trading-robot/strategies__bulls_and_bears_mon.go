@@ -12,7 +12,7 @@ import (
 	bullsbearsmon "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/bulls-and-bears-mon"
 )
 
-const strategyApplyingTimeout = 10 * time.Second
+const strategyApplyingTimeout = time.Second
 
 func runBullsAndBearsMonitoring(
 	ctx context.Context,

@@ -8,13 +8,14 @@ import (
 )
 
 type Instrument struct {
-	FIGI string
-	ISIN string
-	Name string
-	Lot  int
+	FIGI              string
+	ISIN              string
+	Name              string
+	Lot               int
+	MinPriceIncrement string
 }
 
-func (c *Client) GetInstruments(ctx context.Context) ([]Instrument, error) {
+func (c *Client) GetFullAvailableInstruments(ctx context.Context) ([]Instrument, error) {
 	resp, err := c.instruments.Bonds(c.auth(ctx), &investpb.InstrumentsRequest{
 		InstrumentStatus: investpb.InstrumentStatus_INSTRUMENT_STATUS_BASE,
 	})
@@ -22,14 +23,20 @@ func (c *Client) GetInstruments(ctx context.Context) ([]Instrument, error) {
 		return nil, fmt.Errorf("grpc call: %v", err)
 	}
 
-	result := make([]Instrument, len(resp.Instruments))
-	for i, instr := range resp.Instruments {
-		result[i] = Instrument{
-			FIGI: instr.Figi,
-			ISIN: instr.Isin,
-			Name: instr.Name,
-			Lot:  int(instr.Lot),
+	result := make([]Instrument, 0, len(resp.Instruments))
+	for _, bond := range resp.Instruments {
+		av := bond.ApiTradeAvailableFlag && bond.BuyAvailableFlag && bond.SellAvailableFlag
+		if !av {
+			continue
 		}
+
+		result = append(result, Instrument{
+			FIGI:              bond.Figi,
+			ISIN:              bond.Isin,
+			Name:              bond.Name,
+			Lot:               int(bond.Lot),
+			MinPriceIncrement: adaptPbQuotation(bond.MinPriceIncrement).String(),
+		})
 	}
 	return result, nil
 }

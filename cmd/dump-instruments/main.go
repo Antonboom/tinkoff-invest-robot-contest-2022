@@ -48,7 +48,7 @@ func main() {
 	)
 	mustNil(err)
 
-	instruments, err := tInvest.GetInstruments(ctx)
+	instruments, err := tInvest.GetFullAvailableInstruments(ctx)
 	mustNil(err)
 
 	sort.Slice(instruments, func(i, j int) bool {

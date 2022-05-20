@@ -79,6 +79,6 @@ func TestQuotation_Compares(t *testing.T) {
 func newQuotation(u, n int) tinkoffinvest.Quotation {
 	return tinkoffinvest.Quotation{
 		Units: u,
-		Nano:  n,
+		Nano:  n * 1_000_000_000,
 	}
 }

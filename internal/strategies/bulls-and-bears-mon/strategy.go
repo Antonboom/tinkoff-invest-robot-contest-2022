@@ -89,11 +89,11 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 		Msg("order book change")
 
 	if buysToSells >= conf.DominanceRatio {
-		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.ProfitPercentage)
+		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.ProfitPercentage, change.LimitUp)
 	}
 
 	if sellsToBuys >= conf.DominanceRatio {
-		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.ProfitPercentage)
+		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.ProfitPercentage, change.LimitDown)
 	}
 
 	return nil
@@ -104,6 +104,7 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	logger zerolog.Logger,
 	figi string,
 	profit float64,
+	limitUp tinkoffinvest.Quotation,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
@@ -113,6 +114,7 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("place market buy order: %v", err)
 	}
+
 	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
@@ -124,6 +126,10 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 		Msg("buy tool by market")
 
 	p := price.Mul(1. + profit)
+	if p.Greater(limitUp) {
+		return nil
+	}
+
 	orderID, err = s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
 		FIGI:      figi,
@@ -133,6 +139,7 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("place limit sell order: %v", err)
 	}
+
 	logger.Info().
 		Str("price", p.String()).
 		Str("order_id", string(orderID)).
@@ -146,6 +153,7 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	logger zerolog.Logger,
 	figi string,
 	profit float64,
+	limitDown tinkoffinvest.Quotation,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
@@ -155,6 +163,7 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("place market sell order: %v", err)
 	}
+
 	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
@@ -163,9 +172,13 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	logger.Info().
 		Str("price", price.String()).
 		Str("order_id", string(orderID)).
-		Msg("se;; tool by market")
+		Msg("sell tool by market")
 
 	p := price.Mul(1. - profit)
+	if p.Less(limitDown) {
+		return nil
+	}
+
 	orderID, err = s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
 		FIGI:      figi,
@@ -175,6 +188,7 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("place limit buy order: %v", err)
 	}
+
 	logger.Info().
 		Str("price", p.String()).
 		Str("order_id", string(orderID)).
