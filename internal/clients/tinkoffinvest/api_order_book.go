@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
+	"github.com/shopspring/decimal"
 
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
@@ -19,11 +20,11 @@ type OrderBook struct {
 	FIGI      string
 	Bids      []Order
 	Acks      []Order
-	LastPrice Quotation
+	LastPrice decimal.Decimal
 	// LimitUp limits buy orders.
-	LimitUp Quotation
+	LimitUp decimal.Decimal
 	// LimitDown limits sell orders.
-	LimitDown Quotation
+	LimitDown decimal.Decimal
 }
 
 func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*OrderBook, error) {
@@ -39,9 +40,9 @@ func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*Order
 		FIGI:      resp.Figi,
 		Bids:      adaptPbOrders(resp.Bids),
 		Acks:      adaptPbOrders(resp.Asks),
-		LastPrice: adaptPbQuotation(resp.LastPrice),
-		LimitUp:   adaptPbQuotation(resp.LimitUp),
-		LimitDown: adaptPbQuotation(resp.LimitDown),
+		LastPrice: adaptPbQuotationToDecimal(resp.LastPrice),
+		LimitUp:   adaptPbQuotationToDecimal(resp.LimitUp),
+		LimitDown: adaptPbQuotationToDecimal(resp.LimitDown),
 	}, nil
 }
 
@@ -52,13 +53,13 @@ type OrderBookChange struct {
 	Acks         []Order
 	FormedAt     time.Time
 	// LimitUp limits buy orders.
-	LimitUp Quotation
+	LimitUp decimal.Decimal
 	// LimitDown limits sell orders.
-	LimitDown Quotation
+	LimitDown decimal.Decimal
 }
 
 type Order struct {
-	Price Quotation
+	Price decimal.Decimal
 	Lots  int
 }
 
@@ -154,43 +155,4 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 		}
 	}()
 	return changes, nil
-}
-
-func adaptPbOrderbook(ob *investpb.OrderBook) OrderBookChange {
-	return OrderBookChange{
-		FIGI:         ob.Figi,
-		IsConsistent: ob.IsConsistent,
-		Bids:         adaptPbOrders(ob.Bids),
-		Acks:         adaptPbOrders(ob.Asks),
-		LimitUp:      adaptPbQuotation(ob.LimitUp),
-		LimitDown:    adaptPbQuotation(ob.LimitDown),
-		FormedAt:     ob.Time.AsTime(),
-	}
-}
-
-func adaptPbOrders(orders []*investpb.Order) []Order {
-	result := make([]Order, 0, len(orders))
-	for _, o := range orders {
-		result = append(result, adaptPbOrder(o))
-	}
-	return result
-}
-
-func adaptPbOrder(o *investpb.Order) Order {
-	return Order{
-		Price: adaptPbQuotation(o.Price),
-		Lots:  int(o.Quantity), // Overflow impossible.
-	}
-}
-
-func adaptPbQuotation(q *investpb.Quotation) Quotation {
-	if q == nil {
-		return Quotation{}
-	}
-
-	// Overflows impossible.
-	return Quotation{
-		Units: int(q.Units),
-		Nano:  int(q.Nano),
-	}
 }

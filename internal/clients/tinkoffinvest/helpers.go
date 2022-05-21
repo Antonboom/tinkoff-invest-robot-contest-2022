@@ -20,12 +20,12 @@ func Spread(ob OrderBook) float64 {
 	}
 
 	sort.Slice(ob.Bids, func(i, j int) bool {
-		return ob.Bids[i].Price.Greater(ob.Bids[j].Price) // Asc by price.
+		return ob.Bids[i].Price.GreaterThan(ob.Bids[j].Price) // Asc by price.
 	})
 	sort.Slice(ob.Acks, func(i, j int) bool {
-		return ob.Acks[i].Price.Less(ob.Acks[j].Price) // Desc by price.
+		return ob.Acks[i].Price.LessThan(ob.Acks[j].Price) // Desc by price.
 	})
 
 	bestPriceForBuy, bestPriceForSell := ob.Acks[0].Price, ob.Bids[0].Price
-	return bestPriceForBuy.Sub(bestPriceForSell).Div(bestPriceForBuy)
+	return bestPriceForBuy.Sub(bestPriceForSell).Div(bestPriceForBuy).InexactFloat64()
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
 
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
@@ -13,7 +14,7 @@ type PlaceOrderRequest struct {
 	AccountID AccountID
 	FIGI      string
 	Lots      int
-	Price     *Quotation // For limit orders only.
+	Price     decimal.Decimal // For limit orders only.
 }
 
 func (c *Client) PlaceMarketSellOrder(ctx context.Context, request PlaceOrderRequest) (OrderID, error) {
@@ -53,14 +54,14 @@ func (c *Client) PlaceMarketBuyOrder(ctx context.Context, request PlaceOrderRequ
 }
 
 func (c *Client) PlaceLimitSellOrder(ctx context.Context, request PlaceOrderRequest) (OrderID, error) {
-	if request.Price == nil {
+	if request.Price.IsZero() {
 		panic("price must be defined for limit order")
 	}
 
 	req := &investpb.PostOrderRequest{
 		Figi:      request.FIGI,
 		Quantity:  int64(request.Lots),
-		Price:     adaptQuotationToPb(*request.Price),
+		Price:     adaptDecimalToPbQuotation(request.Price),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_SELL,
 		AccountId: string(request.AccountID),
 		OrderType: investpb.OrderType_ORDER_TYPE_LIMIT,
@@ -75,14 +76,14 @@ func (c *Client) PlaceLimitSellOrder(ctx context.Context, request PlaceOrderRequ
 }
 
 func (c *Client) PlaceLimitBuyOrder(ctx context.Context, request PlaceOrderRequest) (OrderID, error) {
-	if request.Price == nil {
+	if request.Price.IsZero() {
 		panic("price must be defined for limit order")
 	}
 
 	req := &investpb.PostOrderRequest{
 		Figi:      request.FIGI,
 		Quantity:  int64(request.Lots),
-		Price:     adaptQuotationToPb(*request.Price),
+		Price:     adaptDecimalToPbQuotation(request.Price),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_BUY,
 		AccountId: string(request.AccountID),
 		OrderType: investpb.OrderType_ORDER_TYPE_LIMIT,
@@ -104,11 +105,4 @@ func (c *Client) postPbOrder(ctx context.Context, req *investpb.PostOrderRequest
 		return c.sandbox.PostSandboxOrder(ctx, req)
 	}
 	return c.orders.PostOrder(ctx, req)
-}
-
-func adaptQuotationToPb(q Quotation) *investpb.Quotation {
-	return &investpb.Quotation{
-		Units: int64(q.Units),
-		Nano:  int32(q.Nano),
-	}
 }

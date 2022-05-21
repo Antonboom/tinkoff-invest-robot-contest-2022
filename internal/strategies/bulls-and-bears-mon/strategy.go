@@ -3,10 +3,11 @@ package bullsbearsmon
 import (
 	"context"
 	"fmt"
-	"github.com/prometheus/client_golang/prometheus"
 
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/shopspring/decimal"
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 )
@@ -16,7 +17,7 @@ type OrderPlacer interface {
 		ctx context.Context,
 		accountID tinkoffinvest.AccountID,
 		orderID tinkoffinvest.OrderID,
-	) (*tinkoffinvest.Quotation, error)
+	) (decimal.Decimal, error)
 
 	PlaceMarketSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
 	PlaceMarketBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
@@ -37,6 +38,7 @@ type Strategy struct {
 
 type ToolConfig struct {
 	FIGI             string
+	StocksPerLot     int
 	DominanceRatio   float64
 	ProfitPercentage float64
 }
@@ -95,11 +97,11 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 		Msg("order book change")
 
 	if buysToSells >= conf.DominanceRatio {
-		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.ProfitPercentage, change.LimitUp)
+		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.StocksPerLot, conf.ProfitPercentage, change.LimitUp)
 	}
 
 	if sellsToBuys >= conf.DominanceRatio {
-		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.ProfitPercentage, change.LimitDown)
+		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.StocksPerLot, conf.ProfitPercentage, change.LimitDown)
 	}
 
 	return nil
@@ -109,30 +111,32 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	ctx context.Context,
 	logger zerolog.Logger,
 	figi string,
+	stocksPerLot int,
 	profit float64,
-	limitUp tinkoffinvest.Quotation,
+	limitUp decimal.Decimal,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
 		FIGI:      figi,
-		Lots:      1.,
+		Lots:      1,
 	})
 	if err != nil {
 		return fmt.Errorf("place market buy order: %v", err)
 	}
 
-	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
+	executedPrice, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
 	}
+	p := executedPrice.Div(decimal.NewFromInt(int64(stocksPerLot)))
 
 	logger.Info().
-		Str("price", price.String()).
+		Str("share_price", p.String()).
 		Str("order_id", string(orderID)).
-		Msg("buy tool by market")
+		Msg("buy lot by market")
 
-	p := price.Mul(1. + profit)
-	if p.Greater(limitUp) {
+	p = p.Mul(decimal.NewFromFloat(1. + profit))
+	if p.GreaterThan(limitUp) {
 		return nil
 	}
 
@@ -140,7 +144,7 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 		AccountID: s.account,
 		FIGI:      figi,
 		Lots:      1,
-		Price:     &p,
+		Price:     p,
 	})
 	if err != nil {
 		return fmt.Errorf("place limit sell order: %v", err)
@@ -158,30 +162,32 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	ctx context.Context,
 	logger zerolog.Logger,
 	figi string,
+	stocksPerLot int,
 	profit float64,
-	limitDown tinkoffinvest.Quotation,
+	limitDown decimal.Decimal,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
 		FIGI:      figi,
-		Lots:      1.,
+		Lots:      1,
 	})
 	if err != nil {
 		return fmt.Errorf("place market sell order: %v", err)
 	}
 
-	price, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
+	executedPrice, err := s.orderPlacer.WaitForOrderExecution(ctx, s.account, orderID)
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
 	}
+	p := executedPrice.Div(decimal.NewFromInt(int64(stocksPerLot)))
 
 	logger.Info().
-		Str("price", price.String()).
+		Str("share_price", p.String()).
 		Str("order_id", string(orderID)).
-		Msg("sell tool by market")
+		Msg("sell lot by market")
 
-	p := price.Mul(1. - profit)
-	if p.Less(limitDown) {
+	p = p.Mul(decimal.NewFromFloat(1. - profit))
+	if p.LessThan(limitDown) {
 		return nil
 	}
 
@@ -189,7 +195,7 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 		AccountID: s.account,
 		FIGI:      figi,
 		Lots:      1,
-		Price:     &p,
+		Price:     p,
 	})
 	if err != nil {
 		return fmt.Errorf("place limit buy order: %v", err)

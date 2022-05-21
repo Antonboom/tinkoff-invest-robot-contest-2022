@@ -15,8 +15,8 @@ type Instrument struct {
 	MinPriceIncrement string
 }
 
-func (c *Client) GetFullAvailableInstruments(ctx context.Context) ([]Instrument, error) {
-	resp, err := c.instruments.Bonds(c.auth(ctx), &investpb.InstrumentsRequest{
+func (c *Client) GetTradeAvailableShares(ctx context.Context) ([]Instrument, error) {
+	resp, err := c.instruments.Shares(c.auth(ctx), &investpb.InstrumentsRequest{
 		InstrumentStatus: investpb.InstrumentStatus_INSTRUMENT_STATUS_BASE,
 	})
 	if err != nil {
@@ -35,7 +35,7 @@ func (c *Client) GetFullAvailableInstruments(ctx context.Context) ([]Instrument,
 			ISIN:              bond.Isin,
 			Name:              bond.Name,
 			Lot:               int(bond.Lot),
-			MinPriceIncrement: adaptPbQuotation(bond.MinPriceIncrement).String(),
+			MinPriceIncrement: adaptPbQuotationToDecimal(bond.MinPriceIncrement).String(),
 		})
 	}
 	return result, nil

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/shopspring/decimal"
+
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
 
@@ -17,11 +19,11 @@ var (
 	ErrOrderCancelled     = errors.New("order cancelled by user")
 )
 
-func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID, orderID OrderID) (*Quotation, error) {
+func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID, orderID OrderID) (decimal.Decimal, error) {
 	for {
 		select {
 		case <-ctx.Done():
-			return nil, ctx.Err()
+			return decimal.Zero, ctx.Err()
 
 		case <-time.After(pollOrderStateInterval):
 			price, err := c.GetOrderState(ctx, accountID, orderID)
@@ -29,7 +31,7 @@ func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID,
 				if errors.Is(err, ErrOrderWaitExecution) {
 					continue
 				}
-				return nil, err
+				return decimal.Zero, err
 			}
 			return price, nil
 		}
@@ -37,7 +39,7 @@ func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID,
 }
 
 // GetOrderState returns executed price if the order was executed and an error otherwise..
-func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID OrderID) (*Quotation, error) {
+func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID OrderID) (decimal.Decimal, error) {
 	ctx = c.auth(ctx)
 
 	req := &investpb.GetOrderStateRequest{
@@ -55,26 +57,26 @@ func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID
 		resp, err = c.orders.GetOrderState(ctx, req)
 	}
 	if err != nil {
-		return nil, fmt.Errorf("grpc get order state call: %v", err)
+		return decimal.Zero, fmt.Errorf("grpc get order state call: %v", err)
 	}
 
 	switch s := resp.ExecutionReportStatus; s {
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_FILL:
-		return &Quotation{
-			Units: int(resp.ExecutedOrderPrice.Units),
-			Nano:  int(resp.ExecutedOrderPrice.Nano),
-		}, nil
+		return newDecimal(
+			resp.ExecutedOrderPrice.Units,
+			int64(resp.ExecutedOrderPrice.Nano),
+		), nil
 
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_NEW:
-		return nil, ErrOrderWaitExecution
+		return decimal.Zero, ErrOrderWaitExecution
 
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_REJECTED:
-		return nil, ErrOrderRejected
+		return decimal.Zero, ErrOrderRejected
 
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_CANCELLED:
-		return nil, ErrOrderCancelled
+		return decimal.Zero, ErrOrderCancelled
 
 	default:
-		return nil, fmt.Errorf("unexpected order status: %d", s)
+		return decimal.Zero, fmt.Errorf("unexpected order status: %d", s)
 	}
 }

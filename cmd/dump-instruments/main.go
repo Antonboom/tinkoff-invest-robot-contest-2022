@@ -48,7 +48,7 @@ func main() {
 	)
 	mustNil(err)
 
-	instruments, err := tInvest.GetFullAvailableInstruments(ctx)
+	instruments, err := tInvest.GetTradeAvailableShares(ctx)
 	mustNil(err)
 
 	sort.Slice(instruments, func(i, j int) bool {

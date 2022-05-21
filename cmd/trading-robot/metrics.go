@@ -4,8 +4,9 @@ import (
 	"errors"
 	stdlog "log"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
-import "github.com/prometheus/client_golang/prometheus/promhttp"
 
 func runMetrics(addr string) {
 	http.Handle("/metrics", promhttp.Handler())

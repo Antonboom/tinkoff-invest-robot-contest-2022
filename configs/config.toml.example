@@ -21,6 +21,7 @@ enabled = true
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
 figi = "BBG00YHVQ768" # SBER
+stocks_per_lot = 10
 depth = 20
 dominance_ratio = 5.5
 profit_percentage = 0.01

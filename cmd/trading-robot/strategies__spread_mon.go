@@ -19,7 +19,7 @@ func runSpreadMonitoring(
 	cfg config.SpreadMonitoringConfig,
 	client *tinkoffinvest.Client,
 ) error {
-	tools, err := client.GetFullAvailableInstruments(ctx)
+	tools, err := client.GetTradeAvailableShares(ctx)
 	if err != nil {
 		return fmt.Errorf("get available instruments: %v", err)
 	}
@@ -41,8 +41,6 @@ func runSpreadMonitoring(
 
 		logger.Debug().
 			Str("name", t.Name).
-			Str("limit_up", orderBook.LimitUp.String()).
-			Str("limit_down", orderBook.LimitDown.String()).
 			Float64("spread", spread).
 			Msg("spread")
 
@@ -57,7 +55,7 @@ func runSpreadMonitoring(
 		}
 	}
 
-	json.NewEncoder(os.Stdout).Encode(filteredTools)
+	_ = json.NewEncoder(os.Stdout).Encode(filteredTools)
 
 	return nil
 }
