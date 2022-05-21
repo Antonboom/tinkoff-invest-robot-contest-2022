@@ -38,9 +38,10 @@ type Strategy struct {
 	account            tinkoffinvest.AccountID
 	ignoreInconsistent bool
 	toolConfigs        map[tinkoffinvest.FIGI]ToolConfig
-	orderPlacer        OrderPlacer
-	toolsCache         ToolsCache
-	logger             zerolog.Logger
+
+	orderPlacer OrderPlacer
+	toolsCache  ToolsCache
+	logger      zerolog.Logger
 }
 
 type ToolConfig struct {
@@ -56,7 +57,7 @@ type ToolConfig struct {
 }
 
 func New(
-	account string,
+	account tinkoffinvest.AccountID,
 	ignoreInconsistent bool,
 	tools []ToolConfig,
 	orderPlacer OrderPlacer,
@@ -73,7 +74,7 @@ func New(
 	}
 
 	s := &Strategy{
-		account:            tinkoffinvest.AccountID(account),
+		account:            account,
 		ignoreInconsistent: ignoreInconsistent,
 		toolConfigs:        confs,
 		orderPlacer:        orderPlacer,
@@ -148,6 +149,7 @@ func (s *Strategy) fetchToolConfigs(ctx context.Context) error {
 // Apply applies Strategy to the next order book change.
 func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChange) error {
 	if s.ignoreInconsistent && change.IsConsistent {
+		s.logger.Debug().Msg("ignore inconsistent order book change")
 		return nil
 	}
 

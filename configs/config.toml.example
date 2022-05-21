@@ -17,18 +17,17 @@ token = ""
 
 [strategies]
 [strategies.bulls_and_bears_monitoring]
-enabled = true
+enabled = false
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
-figi = "BBG00YHVQ768" # SBER
-stocks_per_lot = 10
+figi = "BBG004730N88" # SBER
 depth = 20
 dominance_ratio = 5.5
-profit_percentage = 0.01
+profit_percentage = 0.01 # 1%
 
 [strategies.spread_parasite]
 enabled = false
 ignore_inconsistent = false
 depth = 20
-min_spread_percentage = 0.01 # 1%
+min_spread_percentage = 0.02 # 2%
 max_tools = 10

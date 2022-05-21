@@ -94,7 +94,7 @@ func main() {
 		}
 
 		strategy, err := bullsbearsmon.New(
-			cfg.Account.Number,
+			tinkoffinvest.AccountID(cfg.Account.Number),
 			bbMonCfg.IgnoreInconsistent,
 			toolConfs,
 			tInvestClient,
@@ -106,7 +106,15 @@ func main() {
 	}
 
 	if spCfg := cfg.Strategies.SpreadParasite; spCfg.Enabled {
-		strategy, err := spreadparasite.New()
+		strategy, err := spreadparasite.New(
+			tinkoffinvest.AccountID(cfg.Account.Number),
+			spCfg.IgnoreInconsistent,
+			spCfg.Depth,
+			spCfg.MinSpreadPercentage,
+			spCfg.MaxTools,
+			tInvestClient,
+			toolsCache,
+		)
 		mustNil(err)
 
 		strategies = append(strategies, strategy)
