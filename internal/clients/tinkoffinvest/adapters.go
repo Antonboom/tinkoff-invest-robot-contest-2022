@@ -33,12 +33,14 @@ func adaptDecimalToPbQuotation(d decimal.Decimal) *investpb.Quotation {
 
 func adaptPbOrderbook(ob *investpb.OrderBook) OrderBookChange {
 	return OrderBookChange{
-		FIGI:         ob.Figi,
+		OrderBook: OrderBook{
+			FIGI:      FIGI(ob.Figi),
+			Bids:      adaptPbOrders(ob.Bids),
+			Acks:      adaptPbOrders(ob.Asks),
+			LimitUp:   adaptPbQuotationToDecimal(ob.LimitUp),
+			LimitDown: adaptPbQuotationToDecimal(ob.LimitDown),
+		},
 		IsConsistent: ob.IsConsistent,
-		Bids:         adaptPbOrders(ob.Bids),
-		Acks:         adaptPbOrders(ob.Asks),
-		LimitUp:      adaptPbQuotationToDecimal(ob.LimitUp),
-		LimitDown:    adaptPbQuotationToDecimal(ob.LimitDown),
 		FormedAt:     ob.Time.AsTime(),
 	}
 }
@@ -55,5 +57,15 @@ func adaptPbOrder(o *investpb.Order) Order {
 	return Order{
 		Price: adaptPbQuotationToDecimal(o.Price),
 		Lots:  int(o.Quantity), // Possible overflow.
+	}
+}
+
+func adaptPbShareToInstrument(share *investpb.Share) Instrument {
+	return Instrument{
+		FIGI:              FIGI(share.Figi),
+		ISIN:              share.Isin,
+		Name:              share.Name,
+		Lot:               int(share.Lot),
+		MinPriceIncrement: adaptPbQuotationToDecimal(share.MinPriceIncrement).String(),
 	}
 }

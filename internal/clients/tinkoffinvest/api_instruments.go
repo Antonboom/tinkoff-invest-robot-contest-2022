@@ -8,7 +8,7 @@ import (
 )
 
 type Instrument struct {
-	FIGI              string
+	FIGI              FIGI
 	ISIN              string
 	Name              string
 	Lot               int
@@ -24,19 +24,25 @@ func (c *Client) GetTradeAvailableShares(ctx context.Context) ([]Instrument, err
 	}
 
 	result := make([]Instrument, 0, len(resp.Instruments))
-	for _, bond := range resp.Instruments {
-		av := bond.ApiTradeAvailableFlag && bond.BuyAvailableFlag && bond.SellAvailableFlag
+	for _, share := range resp.Instruments {
+		av := share.ApiTradeAvailableFlag && share.BuyAvailableFlag && share.SellAvailableFlag
 		if !av {
 			continue
 		}
-
-		result = append(result, Instrument{
-			FIGI:              bond.Figi,
-			ISIN:              bond.Isin,
-			Name:              bond.Name,
-			Lot:               int(bond.Lot),
-			MinPriceIncrement: adaptPbQuotationToDecimal(bond.MinPriceIncrement).String(),
-		})
+		result = append(result, adaptPbShareToInstrument(share))
 	}
 	return result, nil
+}
+
+func (c *Client) GetShareByFIGI(ctx context.Context, figi FIGI) (*Instrument, error) {
+	resp, err := c.instruments.ShareBy(c.auth(ctx), &investpb.InstrumentRequest{
+		IdType: investpb.InstrumentIdType_INSTRUMENT_ID_TYPE_FIGI,
+		Id:     figi.S(),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("grcp share by call: %v", err)
+	}
+
+	i := adaptPbShareToInstrument(resp.Instrument)
+	return &i, nil
 }

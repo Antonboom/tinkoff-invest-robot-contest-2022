@@ -72,6 +72,11 @@ tasks:
           --go_out={{.OUT}} \
           {{.IN}}
 
+  run:
+    cmds:
+      - echo "- Run"
+      - go run ./cmd/trading-robot
+
   dump-instruments:
     cmds:
       - echo "- Dump instruments"

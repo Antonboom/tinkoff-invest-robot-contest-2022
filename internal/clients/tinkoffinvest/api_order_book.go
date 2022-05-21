@@ -12,50 +12,52 @@ import (
 )
 
 type OrderBookRequest struct {
-	FIGI  string
+	FIGI  FIGI
 	Depth int
 }
 
-type OrderBook struct {
-	FIGI      string
-	Bids      []Order
-	Acks      []Order
+type OrderBookResponse struct {
+	OrderBook
 	LastPrice decimal.Decimal
+}
+
+type OrderBook struct {
+	FIGI FIGI
+	// Bids are orders to buy.
+	Bids []Order
+	// Acks are orders to sell.
+	Acks []Order
 	// LimitUp limits buy orders.
 	LimitUp decimal.Decimal
 	// LimitDown limits sell orders.
 	LimitDown decimal.Decimal
 }
 
-func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*OrderBook, error) {
+func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*OrderBookResponse, error) {
 	resp, err := c.marketData.GetOrderBook(c.auth(ctx), &investpb.GetOrderBookRequest{
-		Figi:  req.FIGI,
+		Figi:  req.FIGI.S(),
 		Depth: int32(req.Depth),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("grpc get order book call: %v", err)
 	}
 
-	return &OrderBook{
-		FIGI:      resp.Figi,
-		Bids:      adaptPbOrders(resp.Bids),
-		Acks:      adaptPbOrders(resp.Asks),
+	return &OrderBookResponse{
+		OrderBook: OrderBook{
+			FIGI:      FIGI(resp.Figi),
+			Bids:      adaptPbOrders(resp.Bids),
+			Acks:      adaptPbOrders(resp.Asks),
+			LimitUp:   adaptPbQuotationToDecimal(resp.LimitUp),
+			LimitDown: adaptPbQuotationToDecimal(resp.LimitDown),
+		},
 		LastPrice: adaptPbQuotationToDecimal(resp.LastPrice),
-		LimitUp:   adaptPbQuotationToDecimal(resp.LimitUp),
-		LimitDown: adaptPbQuotationToDecimal(resp.LimitDown),
 	}, nil
 }
 
 type OrderBookChange struct {
-	FIGI         string
+	OrderBook
 	IsConsistent bool
-	Bids         []Order
-	Acks         []Order
 	FormedAt     time.Time
-	// LimitUp limits buy orders.
-	LimitUp decimal.Decimal
-	// LimitDown limits sell orders.
-	LimitDown decimal.Decimal
 }
 
 type Order struct {
@@ -74,7 +76,7 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 	instruments := make([]*investpb.OrderBookInstrument, len(reqs))
 	for i, req := range reqs {
 		instruments[i] = &investpb.OrderBookInstrument{
-			Figi:  req.FIGI,
+			Figi:  req.FIGI.S(),
 			Depth: int32(req.Depth), // Overflow impossible.
 		}
 	}

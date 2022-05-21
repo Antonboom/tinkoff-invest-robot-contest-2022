@@ -38,13 +38,16 @@ func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID,
 	}
 }
 
-// GetOrderState returns executed price if the order was executed and an error otherwise..
+// GetOrderState returns executed price if the order was executed and one of errors otherwise:
+// - ErrOrderWaitExecution
+// - ErrOrderRejected
+// - ErrOrderCancelled.
 func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID OrderID) (decimal.Decimal, error) {
 	ctx = c.auth(ctx)
 
 	req := &investpb.GetOrderStateRequest{
-		AccountId: string(accountID),
-		OrderId:   string(orderID),
+		AccountId: accountID.S(),
+		OrderId:   orderID.S(),
 	}
 
 	var (
@@ -67,7 +70,8 @@ func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID
 			int64(resp.ExecutedOrderPrice.Nano),
 		), nil
 
-	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_NEW:
+	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_NEW,
+		investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_PARTIALLYFILL:
 		return decimal.Zero, ErrOrderWaitExecution
 
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_REJECTED:

@@ -18,12 +18,20 @@ import (
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/config"
+	toolscache "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/tools-cache"
+	bullsbearsmon "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/bulls-and-bears-mon"
+	spreadparasite "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/spread-parasite"
 )
 
 var configPath = flag.String("config", "configs/config.toml", "Path to config file")
 
 func init() {
 	flag.Parse()
+}
+
+type Strategy interface {
+	Name() string
+	Run(ctx context.Context) error
 }
 
 func main() {
@@ -46,7 +54,7 @@ func main() {
 	)
 	mustNil(err)
 
-	tInvest, err := tinkoffinvest.NewClient(
+	tInvestClient, err := tinkoffinvest.NewClient(
 		conn,
 		cfg.Clients.TinkoffInvest.Token,
 		cfg.Clients.TinkoffInvest.AppName,
@@ -54,8 +62,10 @@ func main() {
 	)
 	mustNil(err)
 
+	toolsCache := toolscache.New(tInvestClient)
+
 	if !cfg.Clients.TinkoffInvest.UseSandbox {
-		_, err = tInvest.GetUserInfo(ctx)
+		_, err = tInvestClient.GetUserInfo(ctx)
 		if errors.Is(err, tinkoffinvest.ErrInvalidToken) {
 			stdlog.Panic("unauthenticated: invalid clients.tinkfoff_invest.token")
 			return
@@ -63,29 +73,65 @@ func main() {
 		mustNil(err)
 	}
 
+	var wg Waiter
+	errCh := make(chan error, 3)
+
 	if cfg.Metrics.Enabled {
-		runMetrics(cfg.Metrics.Addr)
+		wg.Go(func() { errCh <- runMetrics(ctx, cfg.Metrics.Addr) })
 	}
 
-	switch {
-	case cfg.Strategies.BullsAndBearsMonitoring.Enabled:
-		strategyCfg := cfg.Strategies.BullsAndBearsMonitoring
-		if err := runBullsAndBearsMonitoring(ctx, cfg.Account.Number, strategyCfg, tInvest); err != nil {
-			log.Err(err).Msg("cannot run bulls and bears monitoring strategy")
+	var strategies []Strategy
+
+	if bbMonCfg := cfg.Strategies.BullsAndBearsMonitoring; bbMonCfg.Enabled {
+		toolConfs := make([]bullsbearsmon.ToolConfig, len(bbMonCfg.Instruments))
+		for i, ins := range bbMonCfg.Instruments {
+			toolConfs[i] = bullsbearsmon.ToolConfig{
+				FIGI:             tinkoffinvest.FIGI(ins.FIGI),
+				Depth:            ins.Depth,
+				DominanceRatio:   ins.DominanceRatio,
+				ProfitPercentage: ins.ProfitPercentage,
+			}
 		}
 
-	case cfg.Strategies.SpreadMonitoring.Enabled:
-		strategyCfg := cfg.Strategies.SpreadMonitoring
-		if err := runSpreadMonitoring(ctx, cfg.Account.Number, strategyCfg, tInvest); err != nil {
-			log.Err(err).Msg("cannot run spread monitoring strategy")
-		}
+		strategy, err := bullsbearsmon.New(
+			cfg.Account.Number,
+			bbMonCfg.IgnoreInconsistent,
+			toolConfs,
+			tInvestClient,
+			toolsCache,
+		)
+		mustNil(err)
 
-	default:
-		log.Warn().Msg("no strategies enabled: exit")
+		strategies = append(strategies, strategy)
+	}
+
+	if spCfg := cfg.Strategies.SpreadParasite; spCfg.Enabled {
+		strategy, err := spreadparasite.New()
+		mustNil(err)
+
+		strategies = append(strategies, strategy)
+	}
+
+	if len(strategies) == 0 {
+		log.Warn().Msg("no strategies enabled")
 		cancel()
 	}
+	for _, s := range strategies {
+		s := s
+		wg.Go(func() { errCh <- s.Run(ctx) })
+	}
 
-	<-ctx.Done()
+	select {
+	case <-ctx.Done():
+	case err := <-errCh:
+		if err != nil {
+			log.Err(err).Msg("error on startup")
+			cancel()
+		}
+	}
+
+	log.Info().Msg("shutdown")
+	wg.Wait()
 }
 
 func mustNil(err error) {

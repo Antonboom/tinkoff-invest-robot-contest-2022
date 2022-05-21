@@ -12,17 +12,17 @@ import (
 
 type PlaceOrderRequest struct {
 	AccountID AccountID
-	FIGI      string
+	FIGI      FIGI
 	Lots      int
 	Price     decimal.Decimal // For limit orders only.
 }
 
 func (c *Client) PlaceMarketSellOrder(ctx context.Context, request PlaceOrderRequest) (OrderID, error) {
 	req := &investpb.PostOrderRequest{
-		Figi:      request.FIGI,
+		Figi:      request.FIGI.S(),
 		Quantity:  int64(request.Lots),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_SELL,
-		AccountId: string(request.AccountID),
+		AccountId: request.AccountID.S(),
 		OrderType: investpb.OrderType_ORDER_TYPE_MARKET,
 		OrderId:   uuid.New().String(),
 	}
@@ -37,10 +37,10 @@ func (c *Client) PlaceMarketSellOrder(ctx context.Context, request PlaceOrderReq
 
 func (c *Client) PlaceMarketBuyOrder(ctx context.Context, request PlaceOrderRequest) (OrderID, error) {
 	req := &investpb.PostOrderRequest{
-		Figi:      request.FIGI,
+		Figi:      request.FIGI.S(),
 		Quantity:  int64(request.Lots),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_BUY,
-		AccountId: string(request.AccountID),
+		AccountId: request.AccountID.S(),
 		OrderType: investpb.OrderType_ORDER_TYPE_MARKET,
 		OrderId:   uuid.New().String(),
 	}
@@ -59,11 +59,11 @@ func (c *Client) PlaceLimitSellOrder(ctx context.Context, request PlaceOrderRequ
 	}
 
 	req := &investpb.PostOrderRequest{
-		Figi:      request.FIGI,
+		Figi:      request.FIGI.S(),
 		Quantity:  int64(request.Lots),
 		Price:     adaptDecimalToPbQuotation(request.Price),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_SELL,
-		AccountId: string(request.AccountID),
+		AccountId: request.AccountID.S(),
 		OrderType: investpb.OrderType_ORDER_TYPE_LIMIT,
 		OrderId:   uuid.New().String(),
 	}
@@ -81,11 +81,11 @@ func (c *Client) PlaceLimitBuyOrder(ctx context.Context, request PlaceOrderReque
 	}
 
 	req := &investpb.PostOrderRequest{
-		Figi:      request.FIGI,
+		Figi:      request.FIGI.S(),
 		Quantity:  int64(request.Lots),
 		Price:     adaptDecimalToPbQuotation(request.Price),
 		Direction: investpb.OrderDirection_ORDER_DIRECTION_BUY,
-		AccountId: string(request.AccountID),
+		AccountId: request.AccountID.S(),
 		OrderType: investpb.OrderType_ORDER_TYPE_LIMIT,
 		OrderId:   uuid.New().String(),
 	}
