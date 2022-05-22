@@ -15,7 +15,7 @@ import (
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/common"
 )
 
-//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package bullsbearsmonmocks OrderPlacer
+//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package bullsbearsmonmocks OrderPlacer,ToolsCache
 
 const (
 	applyingTimeout = 3 * time.Second
@@ -157,8 +157,10 @@ func (s *Strategy) fetchToolConfigs(ctx context.Context) error {
 
 // Apply applies Strategy to the next order book change.
 func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChange) error {
+	logger := s.logger.With().Str("figi", change.FIGI.S()).Logger()
+
 	if s.ignoreInconsistent && change.IsConsistent {
-		s.logger.Debug().Msg("ignore inconsistent order book change")
+		logger.Debug().Msg("ignore inconsistent order book change")
 		return nil
 	}
 
@@ -175,10 +177,6 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 
 	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeBuyToSells, "figi": change.FIGI.S()}).Set(buysToSells)
 	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeSellsToBuys, "figi": change.FIGI.S()}).Set(sellsToBuys)
-
-	logger := log.With().
-		Str("strategy", s.Name()).
-		Str("figi", change.FIGI.S()).Logger()
 
 	logger.Info().
 		Int("buys", buys).
@@ -198,7 +196,7 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 	return nil
 }
 
-func (s *Strategy) placeBuySellPair( //nolint:dupl
+func (s *Strategy) placeBuySellPair(
 	ctx context.Context,
 	logger zerolog.Logger,
 	conf ToolConfig,
@@ -250,7 +248,7 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	return nil
 }
 
-func (s *Strategy) placeSellBuyPair( //nolint:dupl
+func (s *Strategy) placeSellBuyPair(
 	ctx context.Context,
 	logger zerolog.Logger,
 	conf ToolConfig,

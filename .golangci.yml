@@ -29,7 +29,6 @@ linters:
     - bodyclose
     - deadcode
     - depguard
-    - dupl
     - durationcheck
     - errcheck
     - errchkjson

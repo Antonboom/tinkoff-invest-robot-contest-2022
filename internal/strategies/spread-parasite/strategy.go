@@ -2,6 +2,7 @@ package spreadparasite
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -18,7 +19,10 @@ const (
 
 	orderBookDepth = 1 // We are interested in border orders only.
 	maxTools       = 10
+	lotsInTrade    = 1
 )
+
+//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package spreadparasitemocks OrderPlacer,ToolsCache
 
 type OrderPlacer interface {
 	SubscribeForOrderBookChanges(ctx context.Context, reqs []tinkoffinvest.OrderBookRequest) (<-chan tinkoffinvest.OrderBookChange, error) //nolint:lll
@@ -118,28 +122,29 @@ func (s *Strategy) Run(ctx context.Context) error {
 		return fmt.Errorf("subscribe for order book changes: %v", err)
 	}
 
-	select {
-	case <-ctx.Done():
-		return nil
-
-	case <-time.After(5 * time.Second):
-		s.logger.Debug().Msg("no order book changes due to period")
-
-	case change, ok := <-changes:
-		if !ok {
+	for {
+		select {
+		case <-ctx.Done():
 			return nil
-		}
 
-		func() {
-			ctx, cancel := context.WithTimeout(ctx, applyingTimeout)
-			defer cancel()
+		case <-time.After(5 * time.Second):
+			s.logger.Debug().Msg("no order book changes due to period")
 
-			if err := s.Apply(ctx, change); err != nil {
-				s.logger.Err(err).Msg("cannot apply order book change")
+		case change, ok := <-changes:
+			if !ok {
+				return nil
 			}
-		}()
+
+			func() {
+				ctx, cancel := context.WithTimeout(ctx, applyingTimeout)
+				defer cancel()
+
+				if err := s.Apply(ctx, change); err != nil {
+					s.logger.Err(err).Msg("cannot apply order book change")
+				}
+			}()
+		}
 	}
-	return nil
 }
 
 func (s *Strategy) grepFigisWithEnoughSpread(ctx context.Context) ([]tinkoffinvest.FIGI, error) {
@@ -200,8 +205,10 @@ func (s *Strategy) fetchToolConfigs(ctx context.Context, figis []tinkoffinvest.F
 }
 
 func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChange) error {
+	logger := s.logger.With().Str("figi", change.FIGI.S()).Logger()
+
 	if s.ignoreInconsistent && change.IsConsistent {
-		s.logger.Debug().Msg("ignore inconsistent order book change")
+		logger.Debug().Msg("ignore inconsistent order book change")
 		return nil
 	}
 
@@ -215,6 +222,13 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 	{
 		bestPrice := tinkoffinvest.BestPriceForBuy(change.OrderBook)
 
+		if orderID := pair.toSell.id; orderID != "" {
+			_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
+			if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
+				pair.toSell = order{}
+			}
+		}
+
 		if currentPrice := pair.toSell.price; currentPrice.IsZero() || currentPrice.GreaterThan(bestPrice) {
 			bestPrice = bestPrice.Sub(conf.minPriceInc)
 
@@ -227,12 +241,17 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 			orderID, err := s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 				AccountID: s.account,
 				FIGI:      change.FIGI,
-				Lots:      1,
+				Lots:      lotsInTrade,
 				Price:     bestPrice,
 			})
 			if err != nil {
 				return fmt.Errorf("place limit sell order: %v", err)
 			}
+
+			logger.Info().
+				Str("price", bestPrice.String()).
+				Str("order_id", orderID.S()).
+				Msg("place limit sell order")
 
 			pair.toSell = order{id: orderID, price: bestPrice}
 		}
@@ -240,6 +259,13 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 
 	{
 		bestPrice := tinkoffinvest.BestPriceForSell(change.OrderBook)
+
+		if orderID := pair.toBuy.id; orderID != "" {
+			_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
+			if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
+				pair.toBuy = order{}
+			}
+		}
 
 		if currentPrice := pair.toBuy.price; currentPrice.IsZero() || currentPrice.LessThan(bestPrice) {
 			bestPrice = bestPrice.Add(conf.minPriceInc)
@@ -253,12 +279,17 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 			orderID, err := s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 				AccountID: s.account,
 				FIGI:      change.FIGI,
-				Lots:      1,
+				Lots:      lotsInTrade,
 				Price:     bestPrice,
 			})
 			if err != nil {
 				return fmt.Errorf("place limit buy order: %v", err)
 			}
+
+			logger.Info().
+				Str("price", bestPrice.String()).
+				Str("order_id", orderID.S()).
+				Msg("place limit buy order")
 
 			pair.toBuy = order{id: orderID, price: bestPrice}
 		}
