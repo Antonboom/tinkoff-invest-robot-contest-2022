@@ -106,12 +106,16 @@ func main() {
 	}
 
 	if spCfg := cfg.Strategies.SpreadParasite; spCfg.Enabled {
+		figis := make([]tinkoffinvest.FIGI, len(spCfg.Figis))
+		for i, f := range spCfg.Figis {
+			figis[i] = tinkoffinvest.FIGI(f)
+		}
+
 		strategy, err := spreadparasite.New(
 			tinkoffinvest.AccountID(cfg.Account.Number),
 			spCfg.IgnoreInconsistent,
-			spCfg.Depth,
 			spCfg.MinSpreadPercentage,
-			spCfg.MaxTools,
+			figis,
 			tInvestClient,
 			toolsCache,
 		)

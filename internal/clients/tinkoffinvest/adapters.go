@@ -22,12 +22,18 @@ func newDecimal(units, nano int64) decimal.Decimal {
 	return decimal.New(units*_10e9+nano, -9)
 }
 
-var one = decimal.NewFromInt(1)
+var (
+	one    = decimal.NewFromInt(1)
+	_10e9d = decimal.NewFromInt(_10e9)
+)
 
 func adaptDecimalToPbQuotation(d decimal.Decimal) *investpb.Quotation {
+	if d.IsZero() {
+		return new(investpb.Quotation)
+	}
 	return &investpb.Quotation{
 		Units: d.IntPart(),
-		Nano:  int32(d.Mod(one).CoefficientInt64()), // Possible overflow.
+		Nano:  int32(d.Mod(one).Mul(_10e9d).IntPart()), // Possible overflow.
 	}
 }
 
@@ -66,6 +72,6 @@ func adaptPbShareToInstrument(share *investpb.Share) Instrument {
 		ISIN:              share.Isin,
 		Name:              share.Name,
 		Lot:               int(share.Lot),
-		MinPriceIncrement: adaptPbQuotationToDecimal(share.MinPriceIncrement).String(),
+		MinPriceIncrement: adaptPbQuotationToDecimal(share.MinPriceIncrement),
 	}
 }

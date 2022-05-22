@@ -3,6 +3,10 @@ run:
 
 issues:
   max-same-issues: 0
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
 
 linters-settings:
   exhaustive:
@@ -25,7 +29,6 @@ linters:
     - bodyclose
     - deadcode
     - depguard
-    - dogsled
     - dupl
     - durationcheck
     - errcheck
@@ -62,8 +65,10 @@ linters:
     - nestif
     - noctx
     - nolintlint
+    - nosprintfhostport
     - prealloc
     - predeclared
+    - promlinter
     - revive
     - rowserrcheck
     - sqlclosecheck

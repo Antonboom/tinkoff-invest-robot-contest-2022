@@ -12,9 +12,15 @@ import (
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 	toolscache "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/tools-cache"
+	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/common"
 )
 
-const applyingTimeout = 3 * time.Second
+//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package bullsbearsmonmocks OrderPlacer
+
+const (
+	applyingTimeout = 3 * time.Second
+	lotsInTrade     = 1
+)
 
 type OrderPlacer interface {
 	SubscribeForOrderBookChanges(ctx context.Context, reqs []tinkoffinvest.OrderBookRequest) (<-chan tinkoffinvest.OrderBookChange, error) //nolint:lll
@@ -110,6 +116,9 @@ func (s *Strategy) Run(ctx context.Context) error {
 
 	for {
 		select {
+		case <-ctx.Done():
+			return nil
+
 		case <-time.After(5 * time.Second):
 			s.logger.Debug().Msg("no order book changes due to period")
 
@@ -179,11 +188,11 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 		Msg("order book change")
 
 	if buysToSells >= conf.DominanceRatio {
-		return s.placeBuySellPair(ctx, logger, change.FIGI, conf.stocksPerLot, conf.ProfitPercentage, change.LimitUp)
+		return s.placeBuySellPair(ctx, logger, conf, change.LimitUp)
 	}
 
 	if sellsToBuys >= conf.DominanceRatio {
-		return s.placeSellBuyPair(ctx, logger, change.FIGI, conf.stocksPerLot, conf.ProfitPercentage, change.LimitDown)
+		return s.placeSellBuyPair(ctx, logger, conf, change.LimitDown)
 	}
 
 	return nil
@@ -192,15 +201,13 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 func (s *Strategy) placeBuySellPair( //nolint:dupl
 	ctx context.Context,
 	logger zerolog.Logger,
-	figi tinkoffinvest.FIGI,
-	stocksPerLot int,
-	profit float64,
+	conf ToolConfig,
 	limitUp decimal.Decimal,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
-		FIGI:      figi,
-		Lots:      1,
+		FIGI:      conf.FIGI,
+		Lots:      lotsInTrade,
 	})
 	if err != nil {
 		return fmt.Errorf("place market buy order: %v", err)
@@ -210,22 +217,25 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
 	}
-	p := executedPrice.Div(decimal.NewFromInt(int64(stocksPerLot)))
+	p := executedPrice.Div(decimal.NewFromInt(int64(conf.stocksPerLot) * lotsInTrade))
 
 	logger.Info().
 		Str("share_price", p.String()).
 		Str("order_id", orderID.S()).
-		Msg("buy lot by market")
+		Msg("buy lots by market")
 
-	p = p.Mul(decimal.NewFromFloat(1. + profit))
+	p = common.RoundToMinPriceIncrement(
+		p.Mul(decimal.NewFromFloat(1.+conf.ProfitPercentage)),
+		conf.minPriceInc,
+	)
 	if p.GreaterThan(limitUp) {
 		return nil
 	}
 
 	orderID, err = s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
-		FIGI:      figi,
-		Lots:      1,
+		FIGI:      conf.FIGI,
+		Lots:      lotsInTrade,
 		Price:     p,
 	})
 	if err != nil {
@@ -243,15 +253,13 @@ func (s *Strategy) placeBuySellPair( //nolint:dupl
 func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	ctx context.Context,
 	logger zerolog.Logger,
-	figi tinkoffinvest.FIGI,
-	stocksPerLot int,
-	profit float64,
+	conf ToolConfig,
 	limitDown decimal.Decimal,
 ) error {
 	orderID, err := s.orderPlacer.PlaceMarketSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
-		FIGI:      figi,
-		Lots:      1,
+		FIGI:      conf.FIGI,
+		Lots:      lotsInTrade,
 	})
 	if err != nil {
 		return fmt.Errorf("place market sell order: %v", err)
@@ -261,22 +269,25 @@ func (s *Strategy) placeSellBuyPair( //nolint:dupl
 	if err != nil {
 		return fmt.Errorf("wait for market order %s execution: %v", orderID, err)
 	}
-	p := executedPrice.Div(decimal.NewFromInt(int64(stocksPerLot)))
+	p := executedPrice.Div(decimal.NewFromInt(int64(conf.stocksPerLot) * lotsInTrade))
 
 	logger.Info().
 		Str("share_price", p.String()).
 		Str("order_id", orderID.S()).
-		Msg("sell lot by market")
+		Msg("sell lots by market")
 
-	p = p.Mul(decimal.NewFromFloat(1. - profit))
+	p = common.RoundToMinPriceIncrement(
+		p.Mul(decimal.NewFromFloat(1.-conf.ProfitPercentage)),
+		conf.minPriceInc,
+	)
 	if p.LessThan(limitDown) {
 		return nil
 	}
 
 	orderID, err = s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
 		AccountID: s.account,
-		FIGI:      figi,
-		Lots:      1,
+		FIGI:      conf.FIGI,
+		Lots:      lotsInTrade,
 		Price:     p,
 	})
 	if err != nil {

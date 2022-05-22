@@ -49,9 +49,8 @@ type BullsAndBearsMonitoringConfig struct {
 }
 
 type SpreadParasiteConfig struct {
-	Enabled             bool    `toml:"enabled"`
-	IgnoreInconsistent  bool    `toml:"ignore_inconsistent"`
-	Depth               int     `toml:"depth" validate:"required,oneof=[1 10 20 30 40 50]"`
-	MinSpreadPercentage float64 `toml:"min_spread_percentage" validate:"required,gt=0,lte=1"`
-	MaxTools            int     `toml:"max_tools" validate:"required,gt=0"`
+	Enabled             bool     `toml:"enabled"`
+	IgnoreInconsistent  bool     `toml:"ignore_inconsistent"`
+	MinSpreadPercentage float64  `toml:"min_spread_percentage" validate:"required,gt=0,lte=1"`
+	Figis               []string `toml:"figis"`
 }

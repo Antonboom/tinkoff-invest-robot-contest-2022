@@ -10,6 +10,8 @@ import (
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 )
 
+//go:generate mockgen -source=$GOFILE -destination=mocks/cache_generated.go -package toolscachemocks SharesProvider
+
 type SharesProvider interface {
 	GetShareByFIGI(ctx context.Context, figi tinkoffinvest.FIGI) (*tinkoffinvest.Instrument, error)
 }
@@ -48,15 +50,10 @@ func (c *Cache) Get(ctx context.Context, figi tinkoffinvest.FIGI) (Tool, error) 
 		return Tool{}, fmt.Errorf("get share by figi: %v", err)
 	}
 
-	minPriceInc, err := decimal.NewFromString(share.MinPriceIncrement)
-	if err != nil {
-		return Tool{}, fmt.Errorf("invalid share.MinPriceIncrement value %v: %v", share.MinPriceIncrement, err)
-	}
-
 	tool := Tool{
 		FIGI:         share.FIGI,
 		StocksPerLot: share.Lot,
-		MinPriceInc:  minPriceInc,
+		MinPriceInc:  share.MinPriceIncrement,
 	}
 	c.tools[figi] = tool
 	return tool, nil

@@ -3,7 +3,6 @@ package spreadparasite
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -14,7 +13,12 @@ import (
 	toolscache "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/tools-cache"
 )
 
-const applyingTimeout = 3 * time.Second
+const (
+	applyingTimeout = 3 * time.Second
+
+	orderBookDepth = 1 // We are interested in border orders only.
+	maxTools       = 10
+)
 
 type OrderPlacer interface {
 	SubscribeForOrderBookChanges(ctx context.Context, reqs []tinkoffinvest.OrderBookRequest) (<-chan tinkoffinvest.OrderBookChange, error) //nolint:lll
@@ -37,9 +41,8 @@ type ToolsCache interface {
 type Strategy struct {
 	account             tinkoffinvest.AccountID
 	ignoreInconsistent  bool
-	depth               int
+	figis               []tinkoffinvest.FIGI
 	minSpreadPercentage float64
-	maxTools            int
 
 	orderPlacer OrderPlacer
 	toolsCache  ToolsCache
@@ -67,21 +70,20 @@ type order struct {
 func New(
 	account tinkoffinvest.AccountID,
 	ignoreInconsistent bool,
-	depth int,
 	minSpreadPercentage float64,
-	maxTools int,
+	figis []tinkoffinvest.FIGI,
 	orderPlacer OrderPlacer,
 	toolsCache ToolsCache,
 ) (*Strategy, error) {
 	s := &Strategy{
 		account:             account,
 		ignoreInconsistent:  ignoreInconsistent,
-		depth:               depth,
+		figis:               figis,
 		minSpreadPercentage: minSpreadPercentage,
-		maxTools:            maxTools,
 		orderPlacer:         orderPlacer,
 		toolsCache:          toolsCache,
 		orders:              make(map[tinkoffinvest.FIGI]*ordersPair),
+		toolConfigs:         make(map[tinkoffinvest.FIGI]toolConfig),
 	}
 	s.logger = log.With().Str("strategy", s.Name()).Logger()
 
@@ -93,57 +95,22 @@ func (s *Strategy) Name() string {
 }
 
 func (s *Strategy) Run(ctx context.Context) error {
-	tools, err := s.orderPlacer.GetTradeAvailableShares(ctx)
-	if err != nil {
-		return fmt.Errorf("get available instruments: %v", err)
-	}
-
-	reqs := make([]tinkoffinvest.OrderBookRequest, 0, len(tools))
-	figis := make([]tinkoffinvest.FIGI, 0, len(tools))
-
-	for _, t := range tools {
-		logger := s.logger.With().Str("figi", t.FIGI.S()).Logger()
-
-		orderBook, err := s.orderPlacer.GetOrderBook(ctx, tinkoffinvest.OrderBookRequest{
-			FIGI:  t.FIGI,
-			Depth: s.depth,
-		})
+	if len(s.figis) == 0 {
+		figis, err := s.grepFigisWithEnoughSpread(ctx)
 		if err != nil {
-			logger.Err(err).Msg("get order book")
-			continue
+			return fmt.Errorf("grep figis: %v", err)
 		}
-
-		spread := tinkoffinvest.Spread(orderBook.OrderBook)
-
-		logger.Debug().
-			Str("name", t.Name).
-			Float64("spread", spread).
-			Msg("spread")
-
-		if spread >= s.minSpreadPercentage {
-			reqs = append(reqs, tinkoffinvest.OrderBookRequest{FIGI: t.FIGI, Depth: s.depth})
-			figis = append(figis, t.FIGI)
-			s.orders[t.FIGI] = new(ordersPair)
-		}
-
-		select {
-		case <-ctx.Done():
-			return nil
-		case <-time.After(400 * time.Millisecond):
-		}
+		s.figis = figis
 	}
 
-	if len(reqs) == 0 {
-		return fmt.Errorf("no tools with the needed spread")
-	}
-
-	rand.Shuffle(len(reqs), func(i, j int) {
-		reqs[i], reqs[j] = reqs[j], reqs[i]
-	})
-	reqs = reqs[:s.maxTools]
-
-	if err := s.fetchToolConfigs(ctx, figis); err != nil {
+	if err := s.fetchToolConfigs(ctx, s.figis); err != nil {
 		return fmt.Errorf("fetch tool configs: %v", err)
+	}
+
+	reqs := make([]tinkoffinvest.OrderBookRequest, len(s.figis))
+	for i, f := range s.figis {
+		reqs[i] = tinkoffinvest.OrderBookRequest{FIGI: f, Depth: orderBookDepth}
+		s.orders[f] = new(ordersPair)
 	}
 
 	changes, err := s.orderPlacer.SubscribeForOrderBookChanges(ctx, reqs)
@@ -152,6 +119,9 @@ func (s *Strategy) Run(ctx context.Context) error {
 	}
 
 	select {
+	case <-ctx.Done():
+		return nil
+
 	case <-time.After(5 * time.Second):
 		s.logger.Debug().Msg("no order book changes due to period")
 
@@ -170,6 +140,46 @@ func (s *Strategy) Run(ctx context.Context) error {
 		}()
 	}
 	return nil
+}
+
+func (s *Strategy) grepFigisWithEnoughSpread(ctx context.Context) ([]tinkoffinvest.FIGI, error) {
+	tools, err := s.orderPlacer.GetTradeAvailableShares(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("get available instruments: %v", err)
+	}
+
+	figis := make([]tinkoffinvest.FIGI, 0, len(tools))
+	for _, t := range tools {
+		logger := s.logger.With().Str("figi", t.FIGI.S()).Logger()
+
+		orderBook, err := s.orderPlacer.GetOrderBook(ctx, tinkoffinvest.OrderBookRequest{
+			FIGI:  t.FIGI,
+			Depth: orderBookDepth,
+		})
+		if err != nil {
+			logger.Err(err).Msg("get order book")
+			continue
+		}
+
+		spread := tinkoffinvest.Spread(orderBook.OrderBook)
+
+		logger.Debug().
+			Str("name", t.Name).
+			Float64("spread", spread).
+			Msg("spread")
+
+		if spread >= s.minSpreadPercentage {
+			figis = append(figis, t.FIGI)
+		}
+
+		select {
+		case <-ctx.Done():
+			return nil, nil
+		case <-time.After(400 * time.Millisecond):
+		}
+	}
+
+	return figis[:maxTools], nil
 }
 
 func (s *Strategy) fetchToolConfigs(ctx context.Context, figis []tinkoffinvest.FIGI) error {

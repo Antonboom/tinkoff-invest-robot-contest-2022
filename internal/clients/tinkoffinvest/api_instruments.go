@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/shopspring/decimal"
+
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
 
@@ -12,7 +14,7 @@ type Instrument struct {
 	ISIN              string
 	Name              string
 	Lot               int
-	MinPriceIncrement string
+	MinPriceIncrement decimal.Decimal
 }
 
 func (c *Client) GetTradeAvailableShares(ctx context.Context) ([]Instrument, error) {

@@ -28,6 +28,5 @@ profit_percentage = 0.01 # 1%
 [strategies.spread_parasite]
 enabled = false
 ignore_inconsistent = false
-depth = 20
 min_spread_percentage = 0.02 # 2%
-max_tools = 10
+figis = []

@@ -19,6 +19,8 @@ var (
 	ErrOrderCancelled     = errors.New("order cancelled by user")
 )
 
+// WaitForOrderExecution allows waiting order execution via simple polling with GetOrderState method.
+// Useful because investpb.OrdersStreamServiceClient is not working in sandbox.
 func (c *Client) WaitForOrderExecution(ctx context.Context, accountID AccountID, orderID OrderID) (decimal.Decimal, error) {
 	for {
 		select {
