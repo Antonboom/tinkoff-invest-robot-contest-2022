@@ -64,7 +64,7 @@ Strategy consists in placing two counter orders at the spread border with their 
 [strategies.spread_parasite]
 enabled = true                 # Enable the strategy.
 ignore_inconsistent = true     # Ignore inconsistent order book changes.
-min_spread_percentage = 0.002  # If list below is empty, than robot will monitor all instruments with spread > 0.2%.
+min_spread_percentage = 0.002  # If list below is empty, then robot will track all instruments with a spread > 0.2%.
 figis = [                      # Specify if you do not want the robot to select them by itself
     "BBG0029SFXB3",            # (long operation at the start).
     "BBG000RP8V70",
@@ -77,4 +77,35 @@ TBD
 
 ## Architecture
 
-TBD
+<details>
+<summary>Expand</summary>
+
+<img alt="Architecture" src="docs/arch.png">
+
+### Project layout
+```text
+├── api                         # API definitions (.proto, swagger, etc).
+│   └── tinkoff-invest
+├── cmd                         # Executables (useful tools and application binary).
+│   ├── dump-instruments
+│   ├── simulator
+│   └── trading-robot
+├── configs                     # Configuration files.
+├── deploy                      # Deploy files (docker-compose, k8s, etc).
+├── docs
+├── internal                    # Application Golang code.
+│   ├── clients                 # Clients to external systems.
+│   │   └── tinkoffinvest
+│   ├── config                  # Config implementation and structs.
+│   ├── services                # Useful services over clients.
+│   │   ├── portfolio-watcher
+│   │   └── tools-cache
+│   └── strategies              # Trading strategies (core logic).
+│       ├── bulls-and-bears-mon
+│       └── spread-parasite
+├── testdata
+├── vendor
+└── tools
+```
+
+</details>
