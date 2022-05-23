@@ -75,7 +75,7 @@ figis = [                      # Specify if you do not want the robot to select 
 
 Strategies statistic is exported in Prometheus and displayed via Grafana dashboards.
 
-For run with visuzalization need to enable metrics:
+For run with visualization need to enable metrics:
 ```toml
 [metrics]
 enabled = true
