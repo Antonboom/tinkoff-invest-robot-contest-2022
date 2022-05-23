@@ -5,9 +5,15 @@ import (
 	"errors"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
+)
+
+const (
+	codeNotEnoughAssetsForMarginTrade = "30042"
 )
 
 type Client struct {
@@ -54,4 +60,18 @@ func (c *Client) auth(ctx context.Context) context.Context {
 	return metadata.AppendToOutgoingContext(ctx,
 		"authorization", "Bearer "+c.token,
 		"x-app-name", c.appName)
+}
+
+func isStatusError(err error, typpe codes.Code, code string) bool {
+	s, ok := status.FromError(err)
+	if !ok {
+		return false
+	}
+	if s.Code() != typpe {
+		return false
+	}
+	if code != "" {
+		return s.Message() == code
+	}
+	return true
 }

@@ -2,6 +2,7 @@ package bullsbearsmon
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -21,6 +22,8 @@ const (
 	applyingTimeout = 3 * time.Second
 	lotsInTrade     = 1
 )
+
+type l = prometheus.Labels
 
 type OrderPlacer interface {
 	SubscribeForOrderBookChanges(ctx context.Context, reqs []tinkoffinvest.OrderBookRequest) (<-chan tinkoffinvest.OrderBookChange, error) //nolint:lll
@@ -76,7 +79,7 @@ func New(
 		}
 
 		confs[t.FIGI] = t
-		configuredDominanceRatio.With(prometheus.Labels{"figi": t.FIGI.S()}).Set(t.DominanceRatio)
+		configuredDominanceRatio.With(l{"figi": t.FIGI.S()}).Set(t.DominanceRatio)
 	}
 
 	s := &Strategy{
@@ -170,16 +173,16 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 	}
 
 	buys := tinkoffinvest.CountLots(change.Bids)  // Bulls.
-	sells := tinkoffinvest.CountLots(change.Acks) // Bears.
+	sells := tinkoffinvest.CountLots(change.Asks) // Bears.
 
-	tradedLots.With(prometheus.Labels{"lots_type": lotsTypeForBuy, "figi": change.FIGI.S()}).Set(float64(buys))
-	tradedLots.With(prometheus.Labels{"lots_type": lotsTypeForSell, "figi": change.FIGI.S()}).Set(float64(sells))
+	tradedLots.With(l{"lots_type": lotsTypeForBuy, "figi": change.FIGI.S()}).Set(float64(buys))
+	tradedLots.With(l{"lots_type": lotsTypeForSell, "figi": change.FIGI.S()}).Set(float64(sells))
 
 	buysToSells := float64(buys) / float64(sells)
 	sellsToBuys := 1. / buysToSells
 
-	ordersRatio.With(prometheus.Labels{"ratio_type": ratioTypeBuyToSells, "figi": change.FIGI.S()}).Set(buysToSells)
-	ordersRatio.With(prometheus.Labels{"ratio_type": ratioTypeSellsToBuys, "figi": change.FIGI.S()}).Set(sellsToBuys)
+	ordersRatio.With(l{"ratio_type": ratioTypeBuyToSells, "figi": change.FIGI.S()}).Set(buysToSells)
+	ordersRatio.With(l{"ratio_type": ratioTypeSellsToBuys, "figi": change.FIGI.S()}).Set(sellsToBuys)
 
 	logger.Info().
 		Int("buys", buys).
@@ -211,6 +214,9 @@ func (s *Strategy) placeBuySellPair(
 		Lots:      lotsInTrade,
 	})
 	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
 		return fmt.Errorf("place market buy order: %v", err)
 	}
 
@@ -241,6 +247,9 @@ func (s *Strategy) placeBuySellPair(
 		Price:     p,
 	})
 	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
 		return fmt.Errorf("place limit sell order: %v", err)
 	}
 
@@ -265,6 +274,9 @@ func (s *Strategy) placeSellBuyPair(
 		Lots:      lotsInTrade,
 	})
 	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
 		return fmt.Errorf("place market sell order: %v", err)
 	}
 
@@ -295,6 +307,9 @@ func (s *Strategy) placeSellBuyPair(
 		Price:     p,
 	})
 	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
 		return fmt.Errorf("place limit buy order: %v", err)
 	}
 

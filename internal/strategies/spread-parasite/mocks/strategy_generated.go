@@ -38,17 +38,17 @@ func (m *MockOrderPlacer) EXPECT() *MockOrderPlacerMockRecorder {
 }
 
 // CancelOrder mocks base method.
-func (m *MockOrderPlacer) CancelOrder(ctx context.Context, orderID tinkoffinvest.OrderID) error {
+func (m *MockOrderPlacer) CancelOrder(ctx context.Context, accountID tinkoffinvest.AccountID, orderID tinkoffinvest.OrderID) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CancelOrder", ctx, orderID)
+	ret := m.ctrl.Call(m, "CancelOrder", ctx, accountID, orderID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CancelOrder indicates an expected call of CancelOrder.
-func (mr *MockOrderPlacerMockRecorder) CancelOrder(ctx, orderID interface{}) *gomock.Call {
+func (mr *MockOrderPlacerMockRecorder) CancelOrder(ctx, accountID, orderID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelOrder", reflect.TypeOf((*MockOrderPlacer)(nil).CancelOrder), ctx, orderID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelOrder", reflect.TypeOf((*MockOrderPlacer)(nil).CancelOrder), ctx, accountID, orderID)
 }
 
 // GetOrderBook mocks base method.

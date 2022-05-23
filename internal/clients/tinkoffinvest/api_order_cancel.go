@@ -7,11 +7,12 @@ import (
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
 
-func (c *Client) CancelOrder(ctx context.Context, orderID OrderID) error {
+func (c *Client) CancelOrder(ctx context.Context, accountID AccountID, orderID OrderID) error {
 	ctx = c.auth(ctx)
 
 	req := &investpb.CancelOrderRequest{
-		OrderId: orderID.S(),
+		AccountId: accountID.S(),
+		OrderId:   orderID.S(),
 	}
 
 	var err error
@@ -21,7 +22,7 @@ func (c *Client) CancelOrder(ctx context.Context, orderID OrderID) error {
 		_, err = c.orders.CancelOrder(ctx, req)
 	}
 	if err != nil {
-		return fmt.Errorf("grpc canel order call: %v", err)
+		return fmt.Errorf("grpc cancel order call: %v", err)
 	}
 	return nil
 }

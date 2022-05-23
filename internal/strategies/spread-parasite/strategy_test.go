@@ -95,7 +95,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.330000000"),
 					Lots:  12,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.800000000"),
 					Lots:  1,
 				}},
@@ -111,7 +111,7 @@ func TestStrategy(t *testing.T) {
 		orderPlacer.EXPECT().GetOrderState(gomock.Any(), accountID, oid1).Return(decimal.Zero, tinkoffinvest.ErrOrderWaitExecution)
 		orderPlacer.EXPECT().GetOrderState(gomock.Any(), accountID, oid2).Return(decimal.Zero, tinkoffinvest.ErrOrderWaitExecution)
 
-		orderPlacer.EXPECT().CancelOrder(gomock.Any(), oid2).Return(nil)
+		orderPlacer.EXPECT().CancelOrder(gomock.Any(), accountID, oid2).Return(nil)
 		orderPlacer.EXPECT().PlaceLimitBuyOrder(gomock.Any(), tinkoffinvest.PlaceOrderRequest{
 			AccountID: accountID,
 			FIGI:      figis[0],
@@ -126,7 +126,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.350000000"),
 					Lots:  11,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.790000000"),
 					Lots:  2,
 				}},
@@ -142,7 +142,7 @@ func TestStrategy(t *testing.T) {
 		orderPlacer.EXPECT().GetOrderState(gomock.Any(), accountID, oid1).Return(decimal.Zero, tinkoffinvest.ErrOrderWaitExecution)
 		orderPlacer.EXPECT().GetOrderState(gomock.Any(), accountID, oid3).Return(decimal.Zero, tinkoffinvest.ErrOrderWaitExecution)
 
-		orderPlacer.EXPECT().CancelOrder(gomock.Any(), oid1).Return(nil)
+		orderPlacer.EXPECT().CancelOrder(gomock.Any(), accountID, oid1).Return(nil)
 		orderPlacer.EXPECT().PlaceLimitSellOrder(gomock.Any(), tinkoffinvest.PlaceOrderRequest{
 			AccountID: accountID,
 			FIGI:      figis[0],
@@ -157,7 +157,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.350000000"),
 					Lots:  9,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.780000000"),
 					Lots:  3,
 				}},
@@ -178,7 +178,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.350000000"),
 					Lots:  9,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.780000000"),
 					Lots:  3,
 				}},
@@ -216,7 +216,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.350000000"),
 					Lots:  20,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.780000000"),
 					Lots:  21,
 				}},
@@ -254,7 +254,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.360000000"),
 					Lots:  15,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.770000000"),
 					Lots:  15,
 				}},
@@ -289,7 +289,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("60"),
 					Lots:  55,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("100"),
 					Lots:  66,
 				}},

@@ -2,13 +2,18 @@ package tinkoffinvest
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
 	"github.com/shopspring/decimal"
+	"google.golang.org/grpc/codes"
 
 	investpb "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest/pb"
 )
+
+var ErrNotEnoughStocks = errors.New("not enough stocks (shares or money)")
 
 type PlaceOrderRequest struct {
 	AccountID AccountID
@@ -29,7 +34,7 @@ func (c *Client) PlaceMarketSellOrder(ctx context.Context, request PlaceOrderReq
 
 	resp, err := c.postPbOrder(ctx, req)
 	if err != nil {
-		return "", fmt.Errorf("grpc post order call: %v", err)
+		return "", fmt.Errorf("grpc post order call: %w", err)
 	}
 
 	return OrderID(resp.OrderId), nil
@@ -47,7 +52,7 @@ func (c *Client) PlaceMarketBuyOrder(ctx context.Context, request PlaceOrderRequ
 
 	resp, err := c.postPbOrder(ctx, req)
 	if err != nil {
-		return "", fmt.Errorf("grpc post order call: %v", err)
+		return "", fmt.Errorf("grpc post order call: %w", err)
 	}
 
 	return OrderID(resp.OrderId), nil
@@ -69,7 +74,7 @@ func (c *Client) PlaceLimitSellOrder(ctx context.Context, request PlaceOrderRequ
 	}
 	resp, err := c.postPbOrder(ctx, req)
 	if err != nil {
-		return "", fmt.Errorf("grpc post order call: %v", err)
+		return "", fmt.Errorf("grpc post order call: %w", err)
 	}
 
 	return OrderID(resp.OrderId), nil
@@ -92,7 +97,7 @@ func (c *Client) PlaceLimitBuyOrder(ctx context.Context, request PlaceOrderReque
 
 	resp, err := c.postPbOrder(ctx, req)
 	if err != nil {
-		return "", fmt.Errorf("grpc post order call: %v", err)
+		return "", fmt.Errorf("grpc post order call: %w", err)
 	}
 
 	return OrderID(resp.OrderId), nil
@@ -101,8 +106,21 @@ func (c *Client) PlaceLimitBuyOrder(ctx context.Context, request PlaceOrderReque
 func (c *Client) postPbOrder(ctx context.Context, req *investpb.PostOrderRequest) (*investpb.PostOrderResponse, error) {
 	ctx = c.auth(ctx)
 
+	var (
+		resp *investpb.PostOrderResponse
+		err  error
+	)
 	if c.useSandbox {
-		return c.sandbox.PostSandboxOrder(ctx, req)
+		resp, err = c.sandbox.PostSandboxOrder(ctx, req)
+	} else {
+		resp, err = c.orders.PostOrder(ctx, req)
 	}
-	return c.orders.PostOrder(ctx, req)
+	if err != nil {
+		if isStatusError(err, codes.InvalidArgument, codeNotEnoughAssetsForMarginTrade) {
+			log.Warn().Msg("no money no honey")
+			return nil, fmt.Errorf("%v: %w", err, ErrNotEnoughStocks)
+		}
+		return nil, err
+	}
+	return resp, nil
 }

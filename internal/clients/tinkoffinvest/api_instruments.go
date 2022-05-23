@@ -31,6 +31,11 @@ func (c *Client) GetTradeAvailableShares(ctx context.Context) ([]Instrument, err
 		if !av {
 			continue
 		}
+
+		if currency(share.Currency) != currencyRUB {
+			continue
+		}
+
 		result = append(result, adaptPbShareToInstrument(share))
 	}
 	return result, nil

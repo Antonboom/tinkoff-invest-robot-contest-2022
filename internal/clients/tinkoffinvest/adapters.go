@@ -42,7 +42,7 @@ func adaptPbOrderbook(ob *investpb.OrderBook) OrderBookChange {
 		OrderBook: OrderBook{
 			FIGI:      FIGI(ob.Figi),
 			Bids:      adaptPbOrders(ob.Bids),
-			Acks:      adaptPbOrders(ob.Asks),
+			Asks:      adaptPbOrders(ob.Asks),
 			LimitUp:   adaptPbQuotationToDecimal(ob.LimitUp),
 			LimitDown: adaptPbQuotationToDecimal(ob.LimitDown),
 		},

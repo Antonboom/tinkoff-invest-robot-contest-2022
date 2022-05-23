@@ -15,6 +15,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/config"
@@ -47,11 +48,19 @@ func main() {
 	mustNil(err)
 	zerolog.SetGlobalLevel(lvl)
 
-	log.Info().Msg("connect to tinkoff invest api")
-	conn, err := grpc.DialContext(ctx, cfg.Clients.TinkoffInvest.Address,
+	addr := cfg.Clients.TinkoffInvest.Address
+	log.Info().Str("addr", addr).Msg("connect to tinkoff invest api")
+
+	creds := insecure.NewCredentials()
+	if strings.HasSuffix(addr, ":443") {
+		creds = credentials.NewTLS(&tls.Config{InsecureSkipVerify: true}) //nolint:gosec
+	}
+
+	conn, err := grpc.DialContext(ctx, addr,
 		grpc.WithBlock(),
 		grpc.WithUserAgent(cfg.Clients.TinkoffInvest.AppName),
-		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{InsecureSkipVerify: true})), //nolint:gosec
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithTransportCredentials(creds),
 	)
 	mustNil(err)
 

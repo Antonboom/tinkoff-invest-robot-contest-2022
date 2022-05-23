@@ -6,13 +6,17 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/shopspring/decimal"
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 	toolscache "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/tools-cache"
+	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/common"
 )
+
+//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package spreadparasitemocks OrderPlacer,ToolsCache
 
 const (
 	applyingTimeout = 3 * time.Second
@@ -22,7 +26,7 @@ const (
 	lotsInTrade    = 1
 )
 
-//go:generate mockgen -source=$GOFILE -destination=mocks/strategy_generated.go -package spreadparasitemocks OrderPlacer,ToolsCache
+type l = prometheus.Labels
 
 type OrderPlacer interface {
 	SubscribeForOrderBookChanges(ctx context.Context, reqs []tinkoffinvest.OrderBookRequest) (<-chan tinkoffinvest.OrderBookChange, error) //nolint:lll
@@ -30,7 +34,7 @@ type OrderPlacer interface {
 	GetOrderBook(ctx context.Context, req tinkoffinvest.OrderBookRequest) (*tinkoffinvest.OrderBookResponse, error)
 
 	GetOrderState(ctx context.Context, _ tinkoffinvest.AccountID, _ tinkoffinvest.OrderID) (decimal.Decimal, error)
-	CancelOrder(ctx context.Context, orderID tinkoffinvest.OrderID) error
+	CancelOrder(ctx context.Context, accountID tinkoffinvest.AccountID, orderID tinkoffinvest.OrderID) error
 
 	PlaceLimitSellOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
 	PlaceLimitBuyOrder(ctx context.Context, request tinkoffinvest.PlaceOrderRequest) (tinkoffinvest.OrderID, error)
@@ -221,81 +225,119 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 
 	pair := s.orders[change.FIGI]
 
-	{
-		bestPrice := tinkoffinvest.BestPriceForBuy(change.OrderBook)
+	if err := s.correctSellOrder(ctx, pair, change, conf, logger); err != nil {
+		return fmt.Errorf("correct sell order: %s: %v", change.FIGI, err)
+	}
 
-		if orderID := pair.toSell.id; orderID != "" {
-			_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
-			if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
-				pair.toSell = order{}
-			}
-		}
+	if err := s.correctBuyOrder(ctx, pair, change, conf, logger); err != nil {
+		return fmt.Errorf("correct buy order: %s: %v", change.FIGI, err)
+	}
 
-		if currentPrice := pair.toSell.price; currentPrice.IsZero() || currentPrice.GreaterThan(bestPrice) {
-			bestPrice = bestPrice.Sub(conf.minPriceInc)
+	return nil
+}
 
-			if orderID := pair.toSell.id; orderID != "" {
-				if err := s.orderPlacer.CancelOrder(ctx, orderID); err != nil {
-					s.logger.Warn().Str("order_id", orderID.S()).Err(err).Msg("cancel order")
-				}
-			}
+func (s *Strategy) correctSellOrder(
+	ctx context.Context,
+	pair *ordersPair,
+	change tinkoffinvest.OrderBookChange,
+	conf toolConfig,
+	logger zerolog.Logger,
+) error {
+	bestPrice := tinkoffinvest.BestPriceForBuy(change.OrderBook)
+	bestPriceGauge.With(l{"best_price_type": bestPriceTypeToBuy, "figi": change.FIGI.S()}).Set(bestPrice.InexactFloat64())
 
-			orderID, err := s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
-				AccountID: s.account,
-				FIGI:      change.FIGI,
-				Lots:      lotsInTrade,
-				Price:     bestPrice,
-			})
-			if err != nil {
-				return fmt.Errorf("place limit sell order: %v", err)
-			}
-
-			logger.Info().
-				Str("price", bestPrice.String()).
-				Str("order_id", orderID.S()).
-				Msg("place limit sell order")
-
-			pair.toSell = order{id: orderID, price: bestPrice}
+	if orderID := pair.toSell.id; orderID != "" {
+		_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
+		if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
+			pair.toSell = order{}
 		}
 	}
 
-	{
-		bestPrice := tinkoffinvest.BestPriceForSell(change.OrderBook)
+	currentPrice := pair.toSell.price
+	if ok := currentPrice.IsZero() || currentPrice.GreaterThan(bestPrice); !ok {
+		return nil
+	}
 
-		if orderID := pair.toBuy.id; orderID != "" {
-			_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
-			if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
-				pair.toBuy = order{}
-			}
-		}
+	bestPrice = bestPrice.Sub(conf.minPriceInc)
 
-		if currentPrice := pair.toBuy.price; currentPrice.IsZero() || currentPrice.LessThan(bestPrice) {
-			bestPrice = bestPrice.Add(conf.minPriceInc)
-
-			if orderID := pair.toBuy.id; orderID != "" {
-				if err := s.orderPlacer.CancelOrder(ctx, orderID); err != nil {
-					s.logger.Warn().Str("order_id", orderID.S()).Err(err).Msg("cancel order")
-				}
-			}
-
-			orderID, err := s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
-				AccountID: s.account,
-				FIGI:      change.FIGI,
-				Lots:      lotsInTrade,
-				Price:     bestPrice,
-			})
-			if err != nil {
-				return fmt.Errorf("place limit buy order: %v", err)
-			}
-
-			logger.Info().
-				Str("price", bestPrice.String()).
-				Str("order_id", orderID.S()).
-				Msg("place limit buy order")
-
-			pair.toBuy = order{id: orderID, price: bestPrice}
+	if orderID := pair.toSell.id; orderID != "" {
+		if err := s.orderPlacer.CancelOrder(ctx, s.account, orderID); err != nil {
+			s.logger.Warn().Str("order_id", orderID.S()).Err(err).Msg("cancel order")
 		}
 	}
 
+	orderID, err := s.orderPlacer.PlaceLimitSellOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      change.FIGI,
+		Lots:      lotsInTrade,
+		Price:     bestPrice,
+	})
+	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
+		return fmt.Errorf("place limit sell order: %v", err)
+	}
+
+	common.CollectOrderPrice(bestPrice.InexactFloat64(), s.Name(), change.FIGI, common.OrderTypeLimitSell)
+	logger.Info().
+		Str("price", bestPrice.String()).
+		Str("order_id", orderID.S()).
+		Msg("place limit sell order")
+
+	pair.toSell = order{id: orderID, price: bestPrice}
+	return nil
+}
+
+func (s *Strategy) correctBuyOrder(
+	ctx context.Context,
+	pair *ordersPair,
+	change tinkoffinvest.OrderBookChange,
+	conf toolConfig,
+	logger zerolog.Logger,
+) error {
+	bestPrice := tinkoffinvest.BestPriceForSell(change.OrderBook)
+	bestPriceGauge.With(l{"best_price_type": bestPriceTypeToSell, "figi": change.FIGI.S()}).Set(bestPrice.InexactFloat64())
+
+	if orderID := pair.toBuy.id; orderID != "" {
+		_, err := s.orderPlacer.GetOrderState(ctx, s.account, orderID)
+		if !errors.Is(err, tinkoffinvest.ErrOrderWaitExecution) {
+			pair.toBuy = order{}
+		}
+	}
+
+	currentPrice := pair.toBuy.price
+	if ok := currentPrice.IsZero() || currentPrice.LessThan(bestPrice); !ok {
+		return nil
+	}
+
+	bestPrice = bestPrice.Add(conf.minPriceInc)
+
+	if orderID := pair.toBuy.id; orderID != "" {
+		if err := s.orderPlacer.CancelOrder(ctx, s.account, orderID); err != nil {
+			s.logger.Warn().Str("order_id", orderID.S()).Err(err).Msg("cancel order")
+		}
+	}
+
+	orderID, err := s.orderPlacer.PlaceLimitBuyOrder(ctx, tinkoffinvest.PlaceOrderRequest{
+		AccountID: s.account,
+		FIGI:      change.FIGI,
+		Lots:      lotsInTrade,
+		Price:     bestPrice,
+	})
+	if err != nil {
+		if errors.Is(err, tinkoffinvest.ErrNotEnoughStocks) {
+			return nil
+		}
+		return fmt.Errorf("place limit buy order: %v", err)
+	}
+
+	common.CollectOrderPrice(bestPrice.InexactFloat64(), s.Name(), change.FIGI, common.OrderTypeLimitBuy)
+	logger.Info().
+		Str("price", bestPrice.String()).
+		Str("order_id", orderID.S()).
+		Msg("place limit buy order")
+
+	pair.toBuy = order{id: orderID, price: bestPrice}
 	return nil
 }

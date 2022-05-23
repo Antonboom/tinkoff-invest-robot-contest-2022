@@ -104,7 +104,7 @@ func Test_adaptPbOrderbook(t *testing.T) {
 				{Price: decimal.RequireFromString("180.600000000"), Lots: 30},
 				{Price: decimal.RequireFromString("180.610000000"), Lots: 278},
 			},
-			Acks: []Order{
+			Asks: []Order{
 				{Price: decimal.RequireFromString("180.620000000"), Lots: 2},
 				{Price: decimal.RequireFromString("180.650000000"), Lots: 379},
 				{Price: decimal.RequireFromString("180.680000000"), Lots: 100},

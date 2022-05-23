@@ -16,7 +16,7 @@ func CountLots(orders []Order) int {
 }
 
 // Spread returns order book spread as percentage. May be negative.
-// Can affect OrderBook.Bids & OrderBook.Acks slices order.
+// Can affect OrderBook.Bids & OrderBook.Asks slices order.
 func Spread(ob OrderBook) float64 {
 	bestPriceForBuy, bestPriceForSell := BestPriceForBuy(ob), BestPriceForSell(ob)
 	if bestPriceForBuy.IsZero() || bestPriceForSell.IsZero() {
@@ -27,14 +27,14 @@ func Spread(ob OrderBook) float64 {
 
 // BestPriceForBuy returns the lowest price among sell orders.
 func BestPriceForBuy(ob OrderBook) decimal.Decimal {
-	if len(ob.Acks) == 0 {
+	if len(ob.Asks) == 0 {
 		return decimal.Zero
 	}
 
-	sort.Slice(ob.Acks, func(i, j int) bool {
-		return ob.Acks[i].Price.LessThan(ob.Acks[j].Price) // Asc by price.
+	sort.Slice(ob.Asks, func(i, j int) bool {
+		return ob.Asks[i].Price.LessThan(ob.Asks[j].Price) // Asc by price.
 	})
-	return ob.Acks[0].Price
+	return ob.Asks[0].Price
 }
 
 // BestPriceForSell returns the highest price among buy orders.

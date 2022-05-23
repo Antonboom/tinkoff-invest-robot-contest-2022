@@ -71,7 +71,7 @@ func TestSpread(t *testing.T) {
 					{Price: decimal.RequireFromString("232.360000000"), Lots: 4},
 					{Price: decimal.RequireFromString("232.380000000"), Lots: 41},
 				},
-				Acks: []tinkoffinvest.Order{
+				Asks: []tinkoffinvest.Order{
 					{Price: decimal.RequireFromString("232.410000000"), Lots: 166},
 					{Price: decimal.RequireFromString("232.420000000"), Lots: 112},
 					{Price: decimal.RequireFromString("232.450000000"), Lots: 244},
@@ -91,7 +91,7 @@ func TestSpread(t *testing.T) {
 					{Price: decimal.RequireFromString("180.600000000"), Lots: 30},
 					{Price: decimal.RequireFromString("180.610000000"), Lots: 278},
 				},
-				Acks: []tinkoffinvest.Order{
+				Asks: []tinkoffinvest.Order{
 					{Price: decimal.RequireFromString("180.620000000"), Lots: 2},
 					{Price: decimal.RequireFromString("180.650000000"), Lots: 379},
 					{Price: decimal.RequireFromString("180.680000000"), Lots: 100},
@@ -105,8 +105,8 @@ func TestSpread(t *testing.T) {
 	for _, tt := range cases {
 		t.Run(tt.book.FIGI.S(), func(t *testing.T) {
 			ob := tt.book
-			rand.Shuffle(len(ob.Acks), func(i, j int) { ob.Bids[i], ob.Bids[j] = ob.Bids[j], ob.Bids[i] })
-			rand.Shuffle(len(ob.Acks), func(i, j int) { ob.Acks[i], ob.Acks[j] = ob.Acks[j], ob.Acks[i] })
+			rand.Shuffle(len(ob.Asks), func(i, j int) { ob.Bids[i], ob.Bids[j] = ob.Bids[j], ob.Bids[i] })
+			rand.Shuffle(len(ob.Asks), func(i, j int) { ob.Asks[i], ob.Asks[j] = ob.Asks[j], ob.Asks[i] })
 
 			assert.InDelta(t, tt.expSpread, tinkoffinvest.Spread(ob), 0.000001)
 		})
@@ -115,6 +115,6 @@ func TestSpread(t *testing.T) {
 
 func TestSpread_NoOrders(t *testing.T) {
 	assert.Equal(t, 0.0, tinkoffinvest.Spread(tinkoffinvest.OrderBook{Bids: []tinkoffinvest.Order{{Lots: 1}}}))
-	assert.Equal(t, 0.0, tinkoffinvest.Spread(tinkoffinvest.OrderBook{Acks: []tinkoffinvest.Order{{Lots: 1}}}))
+	assert.Equal(t, 0.0, tinkoffinvest.Spread(tinkoffinvest.OrderBook{Asks: []tinkoffinvest.Order{{Lots: 1}}}))
 	assert.Equal(t, 0.0, tinkoffinvest.Spread(tinkoffinvest.OrderBook{}))
 }

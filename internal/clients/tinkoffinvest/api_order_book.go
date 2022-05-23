@@ -25,8 +25,8 @@ type OrderBook struct {
 	FIGI FIGI
 	// Bids are orders to buy.
 	Bids []Order
-	// Acks are orders to sell.
-	Acks []Order
+	// Asks are orders to sell.
+	Asks []Order
 	// LimitUp limits buy orders.
 	LimitUp decimal.Decimal
 	// LimitDown limits sell orders.
@@ -46,7 +46,7 @@ func (c *Client) GetOrderBook(ctx context.Context, req OrderBookRequest) (*Order
 		OrderBook: OrderBook{
 			FIGI:      FIGI(resp.Figi),
 			Bids:      adaptPbOrders(resp.Bids),
-			Acks:      adaptPbOrders(resp.Asks),
+			Asks:      adaptPbOrders(resp.Asks),
 			LimitUp:   adaptPbQuotationToDecimal(resp.LimitUp),
 			LimitDown: adaptPbQuotationToDecimal(resp.LimitDown),
 		},
@@ -117,7 +117,7 @@ func (c *Client) SubscribeForOrderBookChanges(ctx context.Context, reqs []OrderB
 		s, ok := subsMap[instrument.Figi]
 		if !ok {
 			return nil, fmt.Errorf(
-				"tid %v: figi: %v: no response for requested instrumen", resp.TrackingId, instrument.Figi)
+				"tid %v: figi: %v: no response for requested instrument", resp.TrackingId, instrument.Figi)
 		}
 
 		if status := s.SubscriptionStatus; status != investpb.SubscriptionStatus_SUBSCRIPTION_STATUS_SUCCESS {

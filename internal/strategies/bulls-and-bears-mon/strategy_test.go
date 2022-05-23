@@ -79,7 +79,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.330000000"),
 					Lots:  100,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.800000000"),
 					Lots:  100,
 				}},
@@ -117,7 +117,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.330000000"),
 					Lots:  551,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.800000000"),
 					Lots:  100,
 				}},
@@ -155,7 +155,7 @@ func TestStrategy(t *testing.T) {
 					Price: d("120.330000000"),
 					Lots:  1,
 				}},
-				Acks: []tinkoffinvest.Order{{
+				Asks: []tinkoffinvest.Order{{
 					Price: d("120.800000000"),
 					Lots:  6,
 				}},
