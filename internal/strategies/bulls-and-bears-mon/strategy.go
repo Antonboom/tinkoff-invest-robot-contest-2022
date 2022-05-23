@@ -172,11 +172,14 @@ func (s *Strategy) Apply(ctx context.Context, change tinkoffinvest.OrderBookChan
 	buys := tinkoffinvest.CountLots(change.Bids)  // Bulls.
 	sells := tinkoffinvest.CountLots(change.Acks) // Bears.
 
+	tradedLots.With(prometheus.Labels{"lots_type": lotsTypeForBuy, "figi": change.FIGI.S()}).Set(float64(buys))
+	tradedLots.With(prometheus.Labels{"lots_type": lotsTypeForSell, "figi": change.FIGI.S()}).Set(float64(sells))
+
 	buysToSells := float64(buys) / float64(sells)
 	sellsToBuys := 1. / buysToSells
 
-	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeBuyToSells, "figi": change.FIGI.S()}).Set(buysToSells)
-	tradersRatioGauge.With(prometheus.Labels{"type": ratioTypeSellsToBuys, "figi": change.FIGI.S()}).Set(sellsToBuys)
+	ordersRatio.With(prometheus.Labels{"ratio_type": ratioTypeBuyToSells, "figi": change.FIGI.S()}).Set(buysToSells)
+	ordersRatio.With(prometheus.Labels{"ratio_type": ratioTypeSellsToBuys, "figi": change.FIGI.S()}).Set(sellsToBuys)
 
 	logger.Info().
 		Int("buys", buys).
@@ -217,6 +220,7 @@ func (s *Strategy) placeBuySellPair(
 	}
 	p := executedPrice.Div(decimal.NewFromInt(int64(conf.stocksPerLot) * lotsInTrade))
 
+	common.CollectOrderPrice(p.InexactFloat64(), s.Name(), conf.FIGI, common.OrderTypeMarketBuy)
 	logger.Info().
 		Str("share_price", p.String()).
 		Str("order_id", orderID.S()).
@@ -240,6 +244,7 @@ func (s *Strategy) placeBuySellPair(
 		return fmt.Errorf("place limit sell order: %v", err)
 	}
 
+	common.CollectOrderPrice(p.InexactFloat64(), s.Name(), conf.FIGI, common.OrderTypeLimitSell)
 	logger.Info().
 		Str("price", p.String()).
 		Str("order_id", orderID.S()).
@@ -269,6 +274,7 @@ func (s *Strategy) placeSellBuyPair(
 	}
 	p := executedPrice.Div(decimal.NewFromInt(int64(conf.stocksPerLot) * lotsInTrade))
 
+	common.CollectOrderPrice(p.InexactFloat64(), s.Name(), conf.FIGI, common.OrderTypeMarketSell)
 	logger.Info().
 		Str("share_price", p.String()).
 		Str("order_id", orderID.S()).
@@ -292,6 +298,7 @@ func (s *Strategy) placeSellBuyPair(
 		return fmt.Errorf("place limit buy order: %v", err)
 	}
 
+	common.CollectOrderPrice(p.InexactFloat64(), s.Name(), conf.FIGI, common.OrderTypeLimitBuy)
 	logger.Info().
 		Str("price", p.String()).
 		Str("order_id", orderID.S()).

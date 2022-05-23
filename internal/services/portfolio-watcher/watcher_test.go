@@ -20,9 +20,9 @@ func TestWatcher(t *testing.T) {
 	defer ctrl.Finish()
 
 	provider := portfoliowatchermocks.NewMockPortfolioDataProvider(ctrl)
-	w := portfoliowatcher.New(accountID, provider)
+	w := portfoliowatcher.New(time.Second, accountID, provider)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 2500*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
 	defer cancel()
 
 	provider.EXPECT().GetBalance(gomock.Any(), accountID).Return(decimal.RequireFromString("100000"), nil).Times(2)

@@ -104,6 +104,8 @@ func (s *Strategy) Run(ctx context.Context) error {
 		if err != nil {
 			return fmt.Errorf("grep figis: %v", err)
 		}
+
+		s.logger.Debug().Msgf("found figis: %#v", figis)
 		s.figis = figis
 	}
 

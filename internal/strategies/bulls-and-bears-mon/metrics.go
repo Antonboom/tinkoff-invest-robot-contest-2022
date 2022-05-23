@@ -10,6 +10,9 @@ const (
 
 	ratioTypeBuyToSells  = "buys_to_sells"
 	ratioTypeSellsToBuys = "sells_to_buys"
+
+	lotsTypeForSell = "for_sell"
+	lotsTypeForBuy  = "for_buy"
 )
 
 var (
@@ -20,10 +23,17 @@ var (
 		Help:      "The configured min ratio of sell orders to buy orders (and visa versa)",
 	}, []string{"figi"})
 
-	tradersRatioGauge = promauto.NewGaugeVec(prometheus.GaugeOpts{
+	ordersRatio = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: "trading_robot",
 		Subsystem: subsystem,
-		Name:      "traders_ratio",
+		Name:      "orders_ratio",
 		Help:      "The current ratio of sell orders to buy orders (and visa versa)",
-	}, []string{"type", "figi"})
+	}, []string{"ratio_type", "figi"})
+
+	tradedLots = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: "trading_robot",
+		Subsystem: subsystem,
+		Name:      "traded_lots",
+		Help:      "The current amount of orders (in lots)",
+	}, []string{"lots_type", "figi"})
 )

@@ -64,7 +64,7 @@ func main() {
 	mustNil(err)
 
 	toolsCache := toolscache.New(tInvestClient)
-	portfolioWatcher := portfoliowatcher.New(tinkoffinvest.AccountID(cfg.Account.Number), tInvestClient)
+	portfolioWatcher := portfoliowatcher.New(0, tinkoffinvest.AccountID(cfg.Account.Number), tInvestClient)
 
 	if !cfg.Account.Sandbox {
 		_, err = tInvestClient.GetUserInfo(ctx)

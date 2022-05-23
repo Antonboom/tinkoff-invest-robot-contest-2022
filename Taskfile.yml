@@ -85,7 +85,7 @@ tasks:
 
   up:
     cmds:
-      - docker-compose -f ./deploy/docker-compose.yml up
+      - docker-compose -f ./deploy/docker-compose.yml up --build
 
   down:
     cmds:

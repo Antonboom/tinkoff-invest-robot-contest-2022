@@ -14,7 +14,7 @@ import (
 
 //go:generate mockgen -source=$GOFILE -destination=mocks/watcher_generated.go -package portfoliowatchermocks PortfolioDataProvider
 
-const interval = time.Second
+const defaultInterval = 10 * time.Second
 
 type l = prometheus.Labels
 
@@ -24,13 +24,18 @@ type PortfolioDataProvider interface {
 }
 
 type Watcher struct {
+	interval    time.Duration
 	account     tinkoffinvest.AccountID
 	prevBalance decimal.Decimal
 	provider    PortfolioDataProvider
 }
 
-func New(accountID tinkoffinvest.AccountID, provider PortfolioDataProvider) *Watcher {
+func New(interval time.Duration, accountID tinkoffinvest.AccountID, provider PortfolioDataProvider) *Watcher {
+	if interval <= 0 {
+		interval = defaultInterval
+	}
 	return &Watcher{
+		interval:    interval,
 		account:     accountID,
 		prevBalance: decimal.Zero,
 		provider:    provider,
@@ -38,12 +43,16 @@ func New(accountID tinkoffinvest.AccountID, provider PortfolioDataProvider) *Wat
 }
 
 func (w *Watcher) Run(ctx context.Context) error {
+	if err := w.fetchAndSetAccountInfo(ctx); err != nil {
+		log.Err(err).Msg("initial account info fetch")
+	}
+
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
 
-		case <-time.After(interval):
+		case <-time.After(w.interval):
 			if err := w.fetchAndSetAccountInfo(ctx); err != nil {
 				log.Err(err).Msg("periodic account info fetch")
 			}
