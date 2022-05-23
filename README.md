@@ -73,13 +73,33 @@ figis = [                      # Specify if you do not want the robot to select 
 
 ## Visualization
 
-TBD
+Strategies statistic is exported in Prometheus and displayed via Grafana dashboards.
+
+For run with visuzalization need to enable metrics:
+```toml
+[metrics]
+enabled = true
+```
+
+And setup docker-compose with command
+```bash
+$ make up
+# Look at http://localhost:3000/
+```
+
+<img alt="Grafana Dashboard" src="docs/vis.png">
+
+Teardown system and clean resources with
+```bash
+$ make down
+```
 
 ## Architecture
 
 <details>
 <summary>Expand</summary>
 
+<br>
 <img alt="Architecture" src="docs/arch.png">
 
 ### Project layout

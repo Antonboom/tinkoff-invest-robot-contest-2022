@@ -6,7 +6,7 @@ services:
       context: ../
       dockerfile: deploy/Dockerfile
     ports:
-      - "2112:2112"
+      - "2112:2112" # For metrics.
 
   prometheus:
     image: prom/prometheus:v2.35.0

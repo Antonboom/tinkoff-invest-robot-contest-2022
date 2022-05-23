@@ -7,11 +7,15 @@ addr = ":2112"
 
 [account]
 number = ""
-sandbox = false
+sandbox = true
+#number = "production-number-007"
+#sandbox = false
 
 [clients]
 [clients.tinkfoff_invest]
 address = "invest-public-api.tinkoff.ru:443"
+#address = ":7171" # To simulator.
+#address = "host.docker.internal:7171" # To simulator from Docker.
 app_name = "Antonboom.tinkoff-invest-robot-contest-2022"
 token = ""
 
@@ -20,13 +24,21 @@ token = ""
 enabled = true
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
-figi = "BBG004730N88" # SBER
+figi = "BBG004730N88"
 depth = 20
 dominance_ratio = 5.5
 profit_percentage = 0.01 # 1%
+[[strategies.bulls_and_bears_monitoring.instruments]]
+figi = "BBG000BN56Q9"
+depth = 10
+dominance_ratio = 3
+profit_percentage = 0.05 # 5%
 
 [strategies.spread_parasite]
 enabled = false
 ignore_inconsistent = false
 min_spread_percentage = 0.02 # 2%
-figis = []
+figis = [
+    "BBG0029SFXB3",
+    "BBG000RP8V70",
+]

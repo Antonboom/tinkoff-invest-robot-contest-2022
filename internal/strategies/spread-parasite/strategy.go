@@ -201,6 +201,12 @@ func (s *Strategy) fetchToolConfigs(ctx context.Context, figis []tinkoffinvest.F
 		if err != nil {
 			return fmt.Errorf("get cached tool %v: %v", f, err)
 		}
+		if tool.MinPriceInc.IsZero() {
+			return fmt.Errorf("tool %v: zero min price increment", tool.FIGI)
+		}
+		if tool.StocksPerLot <= 0 {
+			return fmt.Errorf("tool %v: invalid stocks per lot amount", tool.FIGI)
+		}
 
 		s.toolConfigs[f] = toolConfig{
 			stocksPerLot: tool.StocksPerLot,

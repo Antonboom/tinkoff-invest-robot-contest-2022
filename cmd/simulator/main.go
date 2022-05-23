@@ -17,6 +17,7 @@ func main() {
 
 	investpb.RegisterInstrumentsServiceServer(srv, sim)
 	investpb.RegisterMarketDataStreamServiceServer(srv, sim)
+	investpb.RegisterSandboxServiceServer(srv, sim)
 
 	lsn, err := net.Listen("tcp", addr)
 	mustNil(err)
