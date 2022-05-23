@@ -7,17 +7,17 @@ addr = ":2112"
 
 [account]
 number = ""
+sandbox = false
 
 [clients]
 [clients.tinkfoff_invest]
-use_sandbox = true
 address = "invest-public-api.tinkoff.ru:443"
 app_name = "Antonboom.tinkoff-invest-robot-contest-2022"
 token = ""
 
 [strategies]
 [strategies.bulls_and_bears_monitoring]
-enabled = false
+enabled = true
 ignore_inconsistent = false
 [[strategies.bulls_and_bears_monitoring.instruments]]
 figi = "BBG004730N88" # SBER

@@ -18,7 +18,8 @@ type MetricsConfig struct {
 }
 
 type AccountConfig struct {
-	Number string `validate:"required"`
+	Number  string `validate:"required"`
+	Sandbox bool   `toml:"sandbox"`
 }
 
 type ClientsConfig struct {
@@ -26,10 +27,9 @@ type ClientsConfig struct {
 }
 
 type TinkoffInvestConfig struct {
-	UseSandbox bool   `toml:"use_sandbox"`
-	Address    string `toml:"address" validate:"required"`
-	AppName    string `toml:"app_name" validate:"required"`
-	Token      string `toml:"token" validate:"required"`
+	Address string `toml:"address" validate:"required"`
+	AppName string `toml:"app_name" validate:"required"`
+	Token   string `toml:"token" validate:"required"`
 }
 
 type StrategiesConfig struct {

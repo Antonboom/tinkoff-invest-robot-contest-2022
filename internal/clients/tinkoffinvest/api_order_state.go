@@ -69,7 +69,7 @@ func (c *Client) GetOrderState(ctx context.Context, accountID AccountID, orderID
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_FILL:
 		return newDecimal(
 			resp.ExecutedOrderPrice.Units,
-			int64(resp.ExecutedOrderPrice.Nano),
+			resp.ExecutedOrderPrice.Nano,
 		), nil
 
 	case investpb.OrderExecutionReportStatus_EXECUTION_REPORT_STATUS_NEW,

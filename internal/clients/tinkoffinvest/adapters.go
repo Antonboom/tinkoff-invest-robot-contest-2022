@@ -12,14 +12,14 @@ func adaptPbQuotationToDecimal(q *investpb.Quotation) decimal.Decimal {
 	if q == nil {
 		return decimal.Zero
 	}
-	return newDecimal(q.Units, int64(q.Nano))
+	return newDecimal(q.Units, q.Nano)
 }
 
-func newDecimal(units, nano int64) decimal.Decimal {
+func newDecimal(units int64, nano int32) decimal.Decimal {
 	if units == 0 && nano == 0 {
 		return decimal.Zero
 	}
-	return decimal.New(units*_10e9+nano, -9)
+	return decimal.New(units*_10e9+int64(nano), -9)
 }
 
 var (

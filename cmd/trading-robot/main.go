@@ -18,6 +18,7 @@ import (
 
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/clients/tinkoffinvest"
 	"github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/config"
+	portfoliowatcher "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/portfolio-watcher"
 	toolscache "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/services/tools-cache"
 	bullsbearsmon "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/bulls-and-bears-mon"
 	spreadparasite "github.com/Antonboom/tinkoff-invest-robot-contest-2022/internal/strategies/spread-parasite"
@@ -58,23 +59,26 @@ func main() {
 		conn,
 		cfg.Clients.TinkoffInvest.Token,
 		cfg.Clients.TinkoffInvest.AppName,
-		cfg.Clients.TinkoffInvest.UseSandbox,
+		cfg.Account.Sandbox,
 	)
 	mustNil(err)
 
 	toolsCache := toolscache.New(tInvestClient)
+	portfolioWatcher := portfoliowatcher.New(tinkoffinvest.AccountID(cfg.Account.Number), tInvestClient)
 
-	if !cfg.Clients.TinkoffInvest.UseSandbox {
+	if !cfg.Account.Sandbox {
 		_, err = tInvestClient.GetUserInfo(ctx)
 		if errors.Is(err, tinkoffinvest.ErrInvalidToken) {
-			stdlog.Panic("unauthenticated: invalid clients.tinkfoff_invest.token")
+			stdlog.Panic("unauthenticated: not real clients.tinkfoff_invest.token")
 			return
 		}
 		mustNil(err)
 	}
 
 	var wg Waiter
-	errCh := make(chan error, 3)
+	errCh := make(chan error, 4)
+
+	wg.Go(func() { errCh <- portfolioWatcher.Run(ctx) })
 
 	if cfg.Metrics.Enabled {
 		wg.Go(func() { errCh <- runMetrics(ctx, cfg.Metrics.Addr) })
