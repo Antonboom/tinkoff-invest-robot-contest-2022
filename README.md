@@ -11,6 +11,10 @@ This is an example of how, following the principles of good architecture (depend
 between layers, etc.), you can build basic blocks on top of any API, based on which **it will not be difficult to create
 and test trading bots of any complexity**.
 
+## Assumptions
+
+It is assumed that the robot works only with ruble shares, using only a ruble account.
+
 ## Launch
 
 ```bash
@@ -87,7 +91,7 @@ $ make up
 # Look at http://localhost:3000/
 ```
 
-<img alt="Grafana Dashboard" src="docs/vis.png">
+<img alt="Grafana Dashboard" src="docs/dashboard.png">
 
 Teardown system and clean resources with
 ```bash

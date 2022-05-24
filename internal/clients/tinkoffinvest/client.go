@@ -14,6 +14,7 @@ import (
 
 const (
 	codeNotEnoughAssetsForMarginTrade = "30042"
+	codePostOrderError                = "30049" // nolint:deadcode,varcheck
 )
 
 type Client struct {

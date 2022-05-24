@@ -14,7 +14,7 @@ import (
 
 //go:generate mockgen -source=$GOFILE -destination=mocks/watcher_generated.go -package portfoliowatchermocks PortfolioDataProvider
 
-const defaultInterval = 10 * time.Second
+const defaultInterval = 5 * time.Second
 
 type l = prometheus.Labels
 
